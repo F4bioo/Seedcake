@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/details_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/plu_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/menu_details"
+        app:navigationIcon="@drawable/plu_ic_arrow_left"
+        app:navigationIconTint="@color/plu_white"
+        app:title="@string/details_title"
+        app:titleTextColor="@color/plu_white" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/plu_size_02"
+        app:layout_constraintBottom_toTopOf="@id/button_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/details_toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true"
+            android:padding="@dimen/plu_size_04">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_qrcode"
+                style="@style/PlutoImageAvatar"
+                android:layout_width="@dimen/plu_size_27"
+                android:layout_height="@dimen/plu_size_27"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plu_illu_shield"
+                app:layout_constraintBottom_toBottomOf="@id/image_qrcode"
+                app:layout_constraintEnd_toEndOf="@id/image_qrcode"
+                app:layout_constraintStart_toStartOf="@id/image_qrcode"
+                app:layout_constraintTop_toTopOf="@id/image_qrcode" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_alias"
+                style="@style/PlutoTextHighlightLarge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/plu_size_04"
+                android:ellipsize="end"
+                android:gravity="center_horizontal"
+                android:maxLines="2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_qrcode"
+                tools:text="Trezor wallet" />
+
+            <com.fappslab.seedcake.libraries.design.pluto.customview.PlutoGradientTextView
+                android:id="@+id/text_encrypted_seed"
+                style="@style/PlutoEncryptedSeed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/plu_size_02"
+                android:layout_marginEnd="@dimen/plu_size_02"
+                app:colorList="@array/plu_gray"
+                app:gradientDirection="end"
+                app:layout_constraintEnd_toStartOf="@id/button_show"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_alias"
+                tools:text="UMDJ3sMCSF9q42IGeFmkSrUhpckbUiVPZR06eBGEApI6uvYKFdADW6i" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/button_show"
+                style="@style/PlutoImageIconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plu_ic_data_object"
+                app:layout_constraintBottom_toBottomOf="@id/text_encrypted_seed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_encrypted_seed" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_encrypted_date"
+                style="@style/PlutoTextSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/plu_ic_lock_clock"
+                android:drawablePadding="@dimen/plu_size_01"
+                android:drawableTint="@color/plu_cyan"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:textColor="@color/plu_cyan"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_encrypted_seed"
+                tools:text="23-jul-2023, 04:15 PM" />
+
+            <include
+                android:id="@+id/include_seed"
+                layout="@layout/include_seed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/plu_size_08"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_encrypted_date" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_edit"
+        style="@style/PlutoPrimaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/plu_size_04"
+        android:text="@string/edit_alias"
+        app:layout_constraintBottom_toTopOf="@id/button_decrypt"
+        app:layout_constraintEnd_toEndOf="@id/button_decrypt"
+        app:layout_constraintStart_toStartOf="@id/button_decrypt" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_decrypt"
+        style="@style/PlutoSecondaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/plu_size_04"
+        android:text="@string/common_decrypt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

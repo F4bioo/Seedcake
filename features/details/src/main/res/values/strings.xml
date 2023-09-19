@@ -1,0 +1,15 @@
+<resources>
+
+    <string name="details_title">Details</string>
+    <string name="edit_alias">Edit alias</string>
+    <string name="colored_seed_message">This color palette represents your seed. You can shuffle and store the colors in the order you want and store each color separately. <b>Please read the three topics below.</b></string>
+    <string name="preserving_your_color_palette"><b>\u2022 Preserving your colored seed:</b> It\'s essential to exercise caution with the image of your colored seed palette. If you print the image, the colors might change, causing tools such as color pickers to lose accuracy. Make sure to confirm the integrity of the colors.</string>
+    <string name="keep_hexadecimal_codes_consistent"><b>\u2022 Keep hexadecimal codes consistent:</b> The hexadecimal codes must align exactly with those created by the app. Any deviation in the hex may obstruct the seed restoration process. Maintaining the accuracy of the original colors is crucial.</string>
+    <string name="handle_with_care"><b>\u2022 Handle with care:</b> Unlike the decrypt mode, the colored seed option does\'t include an extra layer of security and does not require a passphrase to decode. This means that anyone who gets hold of your colored seed could decode it. Be mindful of this risk and consider how and where you keep this information.</string>
+    <string name="colored_seed_security_save">Save to gallery</string>
+    <string name="delete_seed_title">Delete Seed?</string>
+    <string name="delete_seed_message">Deleting is irreversible! Ensure you\'ve saved the seed elsewhere before proceeding.</string>
+    <string name="save_palette_success_toast">Image saved successfully!</string>
+    <string name="save_palette_failure_toast">Image saving failed. Please try again.</string>
+
+</resources>

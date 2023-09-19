@@ -5,6 +5,7 @@ object Modules {
     const val local = ":core:data:local"
 
     // Features
+    const val details = ":features:details"
 
     // Libraries
     const val arch = ":libraries:arch"

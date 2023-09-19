@@ -24,6 +24,8 @@ include ':app'
 include ':core:common:domain',
         ':core:common:navigation',
         ':core:data:local'
+// Features
+include ':features:details'
 
 // Libraries
 include ':libraries:arch',

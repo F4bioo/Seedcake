@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/plu_size_04"
+    android:paddingBottom="@dimen/plu_size_04">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_title"
+        style="@style/PlutoTextHighlightMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_alias" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_layout_alias"
+        style="@style/PlutoTextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/plu_size_04"
+        android:hint="@string/alias"
+        app:counterEnabled="true"
+        app:counterMaxLength="60"
+        app:endIconMode="clear_text"
+        app:placeholderText="@string/alias_example">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_alias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionNext"
+            android:inputType="text|textCapSentences"
+            android:lines="1"
+            android:maxLength="60" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>
