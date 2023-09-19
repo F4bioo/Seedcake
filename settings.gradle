@@ -24,5 +24,6 @@ include ':app'
 include ':core:common:navigation'
 
 // Libraries
-include ':libraries:extension',
+include ':libraries:design',
+        ':libraries:extension',
         ':libraries:logger'

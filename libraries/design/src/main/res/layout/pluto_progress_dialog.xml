@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="@dimen/plu_size_17"
+        android:minHeight="@dimen/plu_size_17"
+        app:cardBackgroundColor="@color/plu_charcoal"
+        app:cardCornerRadius="@dimen/plu_radius_md"
+        app:cardElevation="@dimen/plu_size_none"
+        app:layout_constraintBottom_toTopOf="@id/button_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:strokeWidth="@dimen/plu_size_none">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progress"
+                style="@style/Widget.MaterialComponents.CircularProgressIndicator.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:indeterminateBehavior="cycle"
+                app:indicatorColor="@color/plu_primary"
+                app:indicatorDirectionCircular="clockwise"
+                app:indicatorSize="@dimen/plu_size_08"
+                app:layout_constraintBottom_toTopOf="@id/text_loading"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:showAnimationBehavior="outward"
+                app:trackColor="@color/plu_secondary"
+                app:trackThickness="@dimen/plu_size_01" />
+
+            <TextView
+                android:id="@+id/text_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/plu_size_02"
+                android:gravity="center"
+                android:text="@string/common_await"
+                android:textSize="@dimen/plu_text_size_01"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/progress" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/button_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/plu_size_02"
+        android:contentDescription="@string/common_cancel"
+        android:src="@drawable/plu_ic_cancel"
+        app:backgroundTint="@color/plu_charcoal"
+        app:elevation="@dimen/plu_size_none"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/card_container"
+        app:layout_constraintStart_toStartOf="@id/card_container"
+        app:layout_constraintTop_toBottomOf="@id/card_container" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

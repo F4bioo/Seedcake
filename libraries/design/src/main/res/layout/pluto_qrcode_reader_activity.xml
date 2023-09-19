@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/qrcode_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.camera.view.PreviewView
+        android:id="@+id/camera_preview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#3F000000"
+        app:layout_constraintBottom_toBottomOf="@id/camera_frame_focus"
+        app:layout_constraintEnd_toStartOf="@id/camera_frame_focus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/camera_frame_focus" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#3F000000"
+        app:layout_constraintBottom_toTopOf="@id/camera_frame_focus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#3F000000"
+        app:layout_constraintBottom_toBottomOf="@id/camera_frame_focus"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/camera_frame_focus"
+        app:layout_constraintTop_toTopOf="@id/camera_frame_focus" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#3F000000"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/camera_frame_focus" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/camera_frame_focus"
+        android:layout_width="@dimen/plu_size_34"
+        android:layout_height="@dimen/plu_size_34"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/plu_illu_full_screen" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/check_flash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/plu_bg_rounded_corners_solid"
+        android:button="@drawable/plu_flash_switch_selector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/camera_frame_focus"
+        app:layout_constraintStart_toStartOf="@id/camera_frame_focus"
+        app:layout_constraintTop_toBottomOf="@id/camera_frame_focus" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button_close"
+        style="@style/PlutoImageIconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/plu_size_04"
+        android:src="@drawable/plu_ic_close"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/check_flash"
+        app:layout_constraintStart_toStartOf="@id/check_flash"
+        app:layout_constraintTop_toBottomOf="@id/check_flash"
+        app:tint="@color/plu_white" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

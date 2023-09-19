@@ -1,0 +1,35 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+apply from: "$rootDir/plugins/android-build.gradle"
+
+android {
+    namespace "${Config.applicationId}.libraries.design"
+
+    buildFeatures {
+        viewBinding true
+    }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+        disable 'MissingTranslation', 'ExtraTranslation'
+        xmlReport true
+    }
+}
+
+dependencies {
+    // Libs
+    implementation(libs.workRuntime)
+    implementation(libs.navigationUi)
+    implementation(libs.zxingCore)
+    implementation(libs.cameraCamera2)
+    implementation(libs.cameraLifecycle)
+    implementation(libs.cameraView)
+    implementation(libs.guava)
+    implementation(libs.flexbox)
+
+    // Modules
+    implementation project(Modules.extension)
+    implementation project(Modules.logger)
+}

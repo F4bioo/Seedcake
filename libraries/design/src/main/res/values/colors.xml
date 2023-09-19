@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="plu_primary">#5E35B1</color>
+    <color name="plu_primary_dark">@color/plu_primary</color>
+    <color name="plu_accent">#6200EE</color>
+
+    <color name="plu_on_primary">#FFFFFF</color>
+    <color name="plu_secondary">#FDD835</color>
+    <color name="plu_secondary_variant">#3700B3</color>
+    <color name="plu_on_secondary">@color/plu_primary</color>
+
+    <!--Button-->
+    <color name="plu_primary_button_ripple">#7E59C9</color>
+    <color name="plu_primary_button_bg">@color/plu_primary</color>
+    <color name="plu_primary_button_disabled">#4DFFFFFF</color>
+    <color name="plu_primary_button_enabled">@color/plu_white</color>
+
+    <color name="plu_secondary_button_bg">#E7DDFF</color>
+    <color name="plu_secondary_button_ripple">#0D5E35B1</color>
+    <color name="plu_secondary_button_disabled">#405E35B1</color>
+    <color name="plu_secondary_button_enabled">@color/plu_primary</color>
+    <!--Button-->
+
+    <color name="plu_input_layout_box_selected">#282828</color>
+
+    <color name="plu_white">#FFFFFF</color>
+    <color name="plu_gray">#333333</color>
+    <color name="plu_gray_medium">#696969</color>
+    <color name="plu_gray_light">#AAAAAA</color>
+    <color name="plu_gray_divider">#E4E4E4</color>
+    <color name="plu_green">#4CAF50</color>
+    <color name="plu_red">#E5281A</color>
+    <color name="plu_blue">#3949AB</color>
+    <color name="plu_cyan">#00ACC1</color>
+    <color name="plu_charcoal">#F4F4F4</color>
+
+    <color name="plu_transparent">#00000000</color>
+    <color name="plu_start_gray">#6B6B6B</color>
+    <color name="plu_end_gray">@color/plu_charcoal</color>
+    <color name="plu_bg_pluto_feedback_modal">#FFFFFFFF</color>
+    <color name="plu_step_progress_secondary">#40000000</color>
+    <color name="plu_divider">#F2F2F2</color>
+    <color name="plu_pale_gray">#F7F7F7</color>
+
+    <!--Primary colors application-->
+    <color name="green_200">#98d5b0</color>
+    <color name="green_light">#e5f5eb</color>
+    <color name="green_500">#18ad62</color>
+    <color name="green_700">#008c4c</color>
+
+    <color name="plu_pin_view_divider">#D3D3D3</color>
+    <color name="plu_pin_view_primary">#5E35B1</color>
+    <color name="plu_pin_view_clean">#49454F</color>
+    <color name="plu_lock_page_background">#FFFEFAFD</color>
+
+    <color name="plu_placeholder">#D3D3D3</color>
+
+</resources>
