@@ -5,6 +5,13 @@ object Modules {
     const val local = ":core:data:local"
 
     // Features
+    const val about = ":features:about"
+    const val decrypt = ":features:decrypt"
+    const val details = ":features:details"
+    const val encrypt = ":features:encrypt"
+    const val preferences = ":features:preferences"
+    const val home = ":features:home"
+    const val lock = ":features:lock"
 
     // Libraries
     const val arch = ":libraries:arch"

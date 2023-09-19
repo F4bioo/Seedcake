@@ -1,0 +1,32 @@
+plugins {
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinAndroid)
+}
+apply from: "$rootDir/plugins/android-build.gradle"
+
+android {
+    namespace "${Config.applicationId}.features.about"
+
+    buildFeatures {
+        viewBinding true
+    }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+        disable 'MissingTranslation', 'ExtraTranslation'
+        xmlReport true
+    }
+}
+
+dependencies {
+    // Libs
+    implementation(libs.jodaTime)
+
+    // Modules
+    implementation project(Modules.domain)
+    implementation project(Modules.arch)
+    implementation project(Modules.test)
+    implementation project(Modules.design)
+    implementation project(Modules.extension)
+    implementation project(Modules.navigation)
+}

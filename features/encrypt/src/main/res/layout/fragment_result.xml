@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/plu_size_02"
+        app:layout_constraintBottom_toTopOf="@id/button_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/plu_size_04">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_qrcode"
+                style="@style/PlutoImageAvatar"
+                android:layout_width="@dimen/plu_size_27"
+                android:layout_height="@dimen/plu_size_27"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/avatars" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plu_illu_shield"
+                app:layout_constraintBottom_toBottomOf="@id/image_qrcode"
+                app:layout_constraintEnd_toEndOf="@id/image_qrcode"
+                app:layout_constraintStart_toStartOf="@id/image_qrcode"
+                app:layout_constraintTop_toTopOf="@id/image_qrcode" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_alias"
+                style="@style/PlutoTextHighlightLarge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/plu_size_04"
+                android:ellipsize="end"
+                android:gravity="center_horizontal"
+                android:maxLines="2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_qrcode"
+                tools:text="Trezor wallet" />
+
+            <com.fappslab.seedcake.libraries.design.pluto.customview.PlutoGradientTextView
+                android:id="@+id/text_encrypted_seed"
+                style="@style/PlutoEncryptedSeed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/plu_size_02"
+                android:layout_marginEnd="@dimen/plu_size_02"
+                app:colorList="@array/plu_gray"
+                app:gradientDirection="end"
+                app:layout_constraintEnd_toStartOf="@id/button_show"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_alias"
+                tools:text="UMDJ3sMCSF9q42IGeFmkSrUhpckbUiVPZR06eBGEApI6uvYKFdADW6i" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/button_show"
+                style="@style/PlutoImageIconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plu_ic_data_object"
+                app:layout_constraintBottom_toBottomOf="@id/text_encrypted_seed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_encrypted_seed" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_details_considerations_title"
+                style="@style/PlutoTextHighlightMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/plu_size_08"
+                android:text="@string/details_considerations"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_encrypted_seed" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/topic_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/plu_size_02"
+                android:background="@drawable/plu_bg_rounded_corners_solid"
+                android:padding="@dimen/plu_size_04"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_details_considerations_title">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_details_considerations_topic1"
+                    style="@style/PlutoTextSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/details_consideration_topic1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_details_considerations_topic2"
+                    style="@style/PlutoTextSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/plu_size_02"
+                    android:text="@string/details_consideration_topic2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_details_considerations_topic1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_details_considerations_topic3"
+                    style="@style/PlutoTextSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/plu_size_02"
+                    android:text="@string/details_consideration_topic3"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_details_considerations_topic2" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_save"
+        style="@style/PlutoPrimaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/plu_size_04"
+        android:text="@string/save_in_database"
+        app:layout_constraintBottom_toTopOf="@id/button_close"
+        app:layout_constraintEnd_toEndOf="@id/button_close"
+        app:layout_constraintStart_toStartOf="@id/button_close" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_close"
+        style="@style/PlutoSecondaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/plu_size_04"
+        android:elevation="@dimen/plu_size_none"
+        android:text="@string/common_close"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

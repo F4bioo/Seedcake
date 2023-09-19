@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/plu_size_01"
+    android:layout_marginTop="@dimen/plu_size_01"
+    app:cardBackgroundColor="@color/plu_charcoal"
+    app:cardCornerRadius="@dimen/plu_radius_md"
+    app:cardElevation="@dimen/plu_size_none"
+    app:contentPadding="@dimen/plu_size_06"
+    app:strokeWidth="@dimen/plu_size_none">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_item"
+        style="@style/PlutoTextSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/plu_ic_git_hub"
+        android:drawablePadding="@dimen/plu_size_02"
+        android:drawableTint="@color/plu_pin_view_clean"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Seedcake" />
+
+</com.google.android.material.card.MaterialCardView>

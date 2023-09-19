@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/plu_size_01"
+    android:layout_marginTop="@dimen/plu_size_01"
+    app:cardBackgroundColor="@color/plu_charcoal"
+    app:cardCornerRadius="@dimen/plu_radius_sm"
+    app:cardElevation="@dimen/plu_size_none"
+    app:contentPadding="@dimen/plu_size_04"
+    app:strokeWidth="@dimen/plu_size_none">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_avatar"
+            android:layout_width="@dimen/plu_size_07"
+            android:layout_height="@dimen/plu_size_07"
+            app:layout_constraintBottom_toBottomOf="@id/text_encrypted_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_alias"
+            app:srcCompat="@drawable/plu_ic_encrypt"
+            app:tint="@color/plu_cyan" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_alias"
+            style="@style/PlutoTextHighlightSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintBottom_toTopOf="@id/text_encrypted_seed"
+            app:layout_constraintEnd_toEndOf="@id/text_encrypted_seed"
+            app:layout_constraintStart_toStartOf="@id/text_encrypted_seed"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Trezor wallet" />
+
+        <com.fappslab.seedcake.libraries.design.pluto.customview.PlutoGradientTextView
+            android:id="@+id/text_encrypted_seed"
+            style="@style/PlutoTextMin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/plu_size_02"
+            android:layout_marginTop="@dimen/plu_size_02"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textStyle="italic"
+            app:colorList="@array/plu_gray"
+            app:gradientDirection="end"
+            app:layout_constraintBottom_toTopOf="@id/text_encrypted_date"
+            app:layout_constraintEnd_toStartOf="@id/button_arrow"
+            app:layout_constraintStart_toEndOf="@id/image_avatar"
+            app:layout_constraintTop_toBottomOf="@id/text_alias"
+            tools:text="UMDJ3sMCSF9q42IGeFmkSrUhpckbUiVPZR06eBGEApI6uvYKFdADW6i" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_clock"
+            android:layout_width="@dimen/plu_size_04"
+            android:layout_height="@dimen/plu_size_04"
+            app:layout_constraintBottom_toBottomOf="@id/text_encrypted_date"
+            app:layout_constraintStart_toStartOf="@id/text_encrypted_seed"
+            app:layout_constraintTop_toTopOf="@id/text_encrypted_date"
+            app:srcCompat="@drawable/plu_ic_lock_clock"
+            app:tint="@color/plu_cyan" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_encrypted_date"
+            style="@style/PlutoTextMin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/plu_size_01"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/plu_cyan"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/text_encrypted_seed"
+            app:layout_constraintStart_toEndOf="@id/image_clock"
+            app:layout_constraintTop_toBottomOf="@id/text_encrypted_seed"
+            tools:text="23-jul-2023, 04:15 PM" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/button_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/image_avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/image_avatar"
+            app:srcCompat="@drawable/plu_ic_chevron_right"
+            app:tint="@color/plu_cyan" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

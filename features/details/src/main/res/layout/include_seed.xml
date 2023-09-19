@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/seed_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/plu_bg_rounded_corners_stroke"
+    android:paddingHorizontal="@dimen/plu_size_04"
+    android:paddingTop="@dimen/plu_size_02"
+    android:paddingBottom="@dimen/plu_size_04"
+    android:visibility="gone"
+    tools:visibility="visible">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_show_seed"
+        style="@style/PlutoTextHighlightSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/decrypted_seed"
+        app:layout_constraintBottom_toBottomOf="@id/check_eye"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/check_eye" />
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/check_eye"
+        android:layout_width="@dimen/plu_size_07"
+        android:layout_height="@dimen/plu_size_07"
+        android:layout_marginStart="@dimen/plu_size_02"
+        android:button="@drawable/plu_eye_switch_selector"
+        android:padding="@dimen/plu_size_02"
+        app:layout_constraintStart_toEndOf="@id/text_show_seed"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ViewFlipper
+        android:id="@+id/flipper_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:measureAllChildren="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/check_eye">
+
+        <include layout="@layout/include_lines" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_decrypted_seed"
+                style="@style/PlutoTextMedium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="advance above add acoustic almost ability action adjust across alert absurd abandon advance above add acoustic almost ability action adjust across alert absurd abandon" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/plu_divider"
+                android:layout_marginTop="@dimen/plu_size_04"
+                android:background="@color/plu_divider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_decrypted_seed" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_colorful_seed_title"
+                style="@style/PlutoTextHighlightSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/plu_size_04"
+                android:text="@string/colored_seed"
+                app:layout_constraintEnd_toStartOf="@id/button_info"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/divider" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/colored_seed_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_colorful_seed_title">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/image_qrcode"
+                    android:layout_width="@dimen/plu_size_24"
+                    android:layout_height="@dimen/plu_size_24"
+                    android:layout_marginTop="@dimen/plu_size_04"
+                    android:background="@drawable/plu_bg_rounded_corners_solid_pale_gray"
+                    android:scaleType="centerCrop"
+                    app:contentPadding="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@tools:sample/avatars" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/plu_illu_rgb"
+                    app:layout_constraintBottom_toBottomOf="@id/image_qrcode"
+                    app:layout_constraintEnd_toEndOf="@id/image_qrcode"
+                    app:layout_constraintStart_toStartOf="@id/image_qrcode"
+                    app:layout_constraintTop_toTopOf="@id/image_qrcode" />
+
+                <LinearLayout
+                    android:id="@+id/palette_container"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/plu_size_04"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/image_qrcode"
+                    tools:background="#0D000000"
+                    tools:layout_height="200dp" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/button_info"
+                style="@style/PlutoImageIconButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/plu_ic_info"
+                app:layout_constraintBottom_toBottomOf="@id/text_colorful_seed_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/text_colorful_seed_title"
+                app:tint="@color/plu_blue" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ViewFlipper>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

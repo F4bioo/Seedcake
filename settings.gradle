@@ -24,6 +24,14 @@ include ':app'
 include ':core:common:domain',
         ':core:common:navigation',
         ':core:data:local'
+// Features
+include ':features:about',
+        ':features:decrypt',
+        ':features:details',
+        ':features:encrypt',
+        ':features:home',
+        ':features:lock',
+        ':features:preferences'
 
 // Libraries
 include ':libraries:arch',
