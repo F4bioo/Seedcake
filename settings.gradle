@@ -29,8 +29,8 @@ include ':features:about',
         ':features:decrypt',
         ':features:details',
         ':features:encrypt',
-        ':features:home',
-        ':features:lock'
+        ':features:lock',
+        ':features:preferences'
 
 // Libraries
 include ':libraries:arch',

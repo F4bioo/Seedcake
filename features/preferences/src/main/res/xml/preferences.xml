@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <PreferenceCategory
+        android:key="privacy_category"
+        android:title="Security Settings">
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="check_box_pin"
+            android:summaryOff="PIN lock is disabled. Tap to enable."
+            android:summaryOn="PIN lock is enabled. Tap to disable."
+            android:title="PIN Lock" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:enabled="false"
+            android:key="check_box_fingerprint"
+            android:summaryOff="Fingerprint lock is disabled. Tap to enable."
+            android:summaryOn="Fingerprint lock is enabled. Tap to disable."
+            android:title="Unlock with fingerprint"
+            app:isPreferenceVisible="false"
+            tools:isPreferenceVisible="true" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="check_box_screen_shield"
+            android:summaryOff="Screen Shield is disabled. Tap to protect your app content from screen capture and recording."
+            android:summaryOn="Screen Shield is enabled. Your app content is protected from screen capture and recording."
+            android:title="Screen Shield Protection" />
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>

@@ -9,6 +9,7 @@ object Modules {
     const val decrypt = ":features:decrypt"
     const val details = ":features:details"
     const val encrypt = ":features:encrypt"
+    const val preferences = ":features:preferences"
     const val lock = ":features:lock"
 
     // Libraries

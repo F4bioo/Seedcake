@@ -1,0 +1,36 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs.kotlin'
+}
+apply from: "$rootDir/plugins/android-build.gradle"
+
+android {
+    namespace "${Config.applicationId}.features.preferences"
+
+    buildFeatures {
+        viewBinding true
+    }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+        disable 'MissingTranslation', 'ExtraTranslation'
+        xmlReport true
+    }
+}
+
+dependencies {
+    // Libs
+    implementation(libs.navigationFragment)
+    implementation(libs.navigationUi)
+
+    // Modules
+    implementation project(Modules.local)
+    implementation project(Modules.domain)
+    implementation project(Modules.arch)
+    implementation project(Modules.design)
+    implementation project(Modules.test)
+    implementation project(Modules.extension)
+    implementation project(Modules.navigation)
+    implementation project(Modules.security)
+}
