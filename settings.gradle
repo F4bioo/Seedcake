@@ -20,6 +20,9 @@ rootProject.name = "Seedcake"
 // App
 include ':app'
 
+// Core
+include ':core:common:navigation'
+
 // Libraries
 include ':libraries:extension',
         ':libraries:logger'
