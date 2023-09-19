@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/plu_ic_home"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/decrypt"
+        android:icon="@drawable/plu_ic_decrypt"
+        android:title="Decrypt" />
+
+    <item
+        android:id="@+id/preferences"
+        android:icon="@drawable/plu_ic_settings"
+        android:title="Preferences" />
+
+</menu>
