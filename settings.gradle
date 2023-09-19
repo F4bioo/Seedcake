@@ -14,4 +14,11 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Seedcake"
+
+// keep it in alphabetical order
+
+// App
 include ':app'
+
+// Libraries
+include ':libraries:extension'
