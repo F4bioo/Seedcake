@@ -9,4 +9,5 @@ object Modules {
     const val design = ":libraries:design"
     const val extension = ":libraries:extension"
     const val logger = ":libraries:logger"
+    const val test = ":libraries:test"
 }

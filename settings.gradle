@@ -27,4 +27,5 @@ include ':core:common:navigation'
 include ':libraries:arch',
         ':libraries:design',
         ':libraries:extension',
-        ':libraries:logger'
+        ':libraries:logger',
+        ':libraries:test'
