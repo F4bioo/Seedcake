@@ -1,0 +1,40 @@
+private void setupKotlinCodeCoverage(Project proj) {
+    proj.tasks.register('kotlinCodeCoverage', JacocoReport) {
+        dependsOn 'test'
+
+        group = 'Coverage reports'
+        description = 'Generates a coverage report for Kotlin modules.'
+
+        def excludes = rootProject.ext.commonExcludes
+
+        reports {
+            html.required.set(true)
+            html.outputLocation = layout.buildDirectory.dir("reports/jacoco/kotlin-code-coverage/${proj.name}")
+        }
+
+        def sourceDirs = [
+                "${proj.projectDir}/src/main/java",
+                "${proj.projectDir}/src/main/kotlin"
+        ]
+        def kotlinTree = fileTree(
+                dir: "$proj.buildDir/classes/kotlin/main",
+                excludes: excludes
+        )
+        sourceDirectories.from = files(sourceDirs)
+        classDirectories.from = files(kotlinTree)
+        executionData.from = fileTree(dir: "${proj.buildDir}/jacoco", includes: ['**/*.exec'])
+    }
+}
+
+subprojects {
+    apply plugin: 'jacoco'
+    jacoco {
+        toolVersion = libs.versions.jacoco.get()
+    }
+
+    afterEvaluate { proj ->
+        proj.plugins.withId('org.jetbrains.kotlin.jvm') {
+            setupKotlinCodeCoverage(proj)
+        }
+    }
+}

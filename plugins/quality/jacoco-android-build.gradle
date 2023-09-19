@@ -1,0 +1,66 @@
+private void setupAndroidCodeCoverage(Project proj) {
+    proj.android {
+        testOptions {
+            buildTypes {
+                debug.testCoverageEnabled = true
+            }
+        }
+    }
+
+    proj.tasks.withType(Test).tap {
+        configureEach {
+            jacoco {
+                excludes = ['jdk.internal.*']
+            }
+        }
+    }
+
+    proj.tasks.register("androidCodeCoverage", JacocoReport) {
+        dependsOn tasks.withType(Test), "testDebugUnitTest", "createDebugCoverageReport"
+
+        group = 'Coverage reports'
+        description = 'Generates a coverage report for Android modules.'
+
+        def excludes = rootProject.ext.commonExcludes
+
+        reports {
+            html.required.set(true)
+            html.outputLocation = layout.buildDirectory.dir("reports/jacoco/android-code-coverage/${proj.name}")
+        }
+
+        def sourceDirs = [
+                "${proj.projectDir}/src/main/java",
+                "${proj.projectDir}/src/main/kotlin",
+                "${proj.projectDir}/src/debug/java",
+                "${proj.projectDir}/src/debug/kotlin"
+        ]
+        def javaTree = fileTree(
+                dir: "${proj.buildDir}/intermediates/javac/debug/classes",
+                excludes: excludes
+        )
+        def kotlinTree = fileTree(
+                dir: "${proj.buildDir}/tmp/kotlin-classes/debug",
+                excludes: excludes
+        )
+
+        sourceDirectories.from = files(sourceDirs)
+        classDirectories.from = files([javaTree, kotlinTree])
+        executionData.from = fileTree(dir: proj.buildDir, includes: ['**/*.exec'])
+    }
+}
+
+subprojects {
+    apply plugin: 'jacoco'
+    jacoco {
+        toolVersion = libs.versions.jacoco.get()
+    }
+
+    afterEvaluate { proj ->
+        proj.plugins.withId('com.android.application') {
+            setupAndroidCodeCoverage(proj)
+        }
+        proj.plugins.withId('com.android.library') {
+            setupAndroidCodeCoverage(proj)
+        }
+    }
+}

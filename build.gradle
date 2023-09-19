@@ -3,3 +3,56 @@ plugins {
 id 'com.android.application' version '8.1.1' apply false
     id 'org.jetbrains.kotlin.android' version '1.9.0' apply false
 }
+
+ext.commonExcludes = [
+        '**/ViewExtensionKt.*',
+        '**/CommonDiffCallback.*',
+        '**/*$*',
+        '**/databinding/*Binding.*',
+        '**/R.class',
+        '**/R$*.class',
+        '**/BuildConfig.*',
+        '**/Manifest*.*',
+        '**/*Test*.*',
+        'android/**/*.*',
+        // butterKnife
+        '**/*$ViewInjector*.*',
+        '**/*$ViewBinder*.*',
+        '**/Lambda$*.class',
+        '**/Lambda.class',
+        '**/*Lambda.class',
+        '**/*Lambda*.class',
+        '**/*_MembersInjector.class',
+        '**/Dagger*Component*.*',
+        '**/*Module_*Factory.class',
+        '**/di/module/*',
+        '**/*_Factory*.*',
+        '**/*Module*.*',
+        '**/*Dagger*.*',
+        '**/*Hilt*.*',
+        // kotlin
+        '**/*MapperImpl*.*',
+        '**/*$ViewInjector*.*',
+        '**/*$ViewBinder*.*',
+        '**/BuildConfig.*',
+        '**/*Component*.*',
+        '**/*BR*.*',
+        '**/Manifest*.*',
+        '**/*$Lambda$*.*',
+        '**/*Companion*.*',
+        '**/*Module*.*',
+        '**/*Dagger*.*',
+        '**/*Hilt*.*',
+        '**/*MembersInjector*.*',
+        '**/*_MembersInjector.class',
+        '**/*_Factory*.*',
+        '**/*_Provide*Factory*.*',
+        '**/*Extensions*.*',
+        '**/*Directions$*',
+        '**/*Directions.*',
+        '**/*Args.*'
+]
+
+apply from: "$rootDir/plugins/quality/jacoco-android-build.gradle"
+apply from: "$rootDir/plugins/quality/jacoco-kotlin-build.gradle"
+apply from: "$rootDir/plugins/quality/jacoco-unified-build.gradle"
