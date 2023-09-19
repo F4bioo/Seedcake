@@ -27,7 +27,8 @@ include ':core:common:domain',
 // Features
 include ':features:decrypt',
         ':features:details',
-        ':features:encrypt'
+        ':features:encrypt',
+        ':features:lock'
 
 // Libraries
 include ':libraries:arch',

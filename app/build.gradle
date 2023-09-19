@@ -78,6 +78,7 @@ dependencies {
     implementation project(Modules.details)
     implementation project(Modules.decrypt)
     implementation project(Modules.encrypt)
+    implementation project(Modules.lock)
     implementation project(Modules.security)
     implementation project(Modules.test)
     implementation project(Modules.logger)

@@ -1,0 +1,31 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+apply from: "$rootDir/plugins/android-build.gradle"
+
+android {
+    namespace "${Config.applicationId}.features.lock"
+
+    buildFeatures {
+        viewBinding true
+    }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+        disable 'MissingTranslation', 'ExtraTranslation'
+        xmlReport true
+    }
+}
+
+dependencies {
+    // Libs
+
+    // Modules
+    implementation project(Modules.domain)
+    implementation project(Modules.arch)
+    implementation project(Modules.design)
+    implementation project(Modules.test)
+    implementation project(Modules.extension)
+    implementation project(Modules.navigation)
+}
