@@ -1,44 +1,73 @@
+import io.gitlab.arturbosch.detekt.Detekt
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'androidx.navigation.safeargs.kotlin'
 }
+apply from: "$rootDir/plugins/android-build.gradle"
+apply from: "$rootDir/config/detekt/detekt-build.gradle"
+
+def keystorePropertiesFile = rootProject.file("$rootDir/keystore/keystore.properties")
 
 android {
-    namespace 'com.fappslab.seedcake'
-    compileSdk 33
+    namespace Config.namespace
 
     defaultConfig {
-        applicationId "com.fappslab.seedcake"
-        minSdk 28
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        applicationId Config.applicationId
+        versionCode Config.versionCode
+        versionName Config.versionName
     }
+    signingConfigs {
+        if (keystorePropertiesFile.exists()) {
+            def keystoreProperties = new Properties()
+            keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signing {
+                storeFile rootProject.file(keystoreProperties['STORE_FILE'])
+                storePassword keystoreProperties['STORE_PASSWORD']
+                keyPassword keystoreProperties['KEY_PASSWORD']
+                keyAlias keystoreProperties['KEY_ALIAS']
+            }
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+    buildTypes.configureEach { buildType ->
+        if (buildType.name == 'staging' || buildType.name == 'release') {
+            if (keystorePropertiesFile.exists()) {
+                buildType.signingConfig = signingConfigs.signing
+            } else {
+                println("keystore.properties not found for ${buildType.name} variant, skipping signing config")
+            }
+        }
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+        disable 'MissingTranslation', 'ExtraTranslation'
+        xmlReport true
+    }
+}
+
+tasks.withType(Detekt).configureEach {
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+        txt.required.set(false)
+        sarif.required.set(false)
+        md.required.set(false)
     }
 }
 
 dependencies {
+    // Libs
+    implementation(libs.navigationFragment)
+    implementation(libs.navigationUi)
+    implementation(libs.jodaTime)
 
-    implementation 'androidx.core:core-ktx:1.9.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    // Modules
+
 }
