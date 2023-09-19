@@ -21,7 +21,8 @@ rootProject.name = "Seedcake"
 include ':app'
 
 // Core
-include ':core:common:navigation'
+include ':core:common:domain',
+        ':core:common:navigation'
 
 // Libraries
 include ':libraries:arch',
