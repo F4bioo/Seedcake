@@ -1,0 +1,48 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+apply from: "$rootDir/plugins/android-build.gradle"
+
+android {
+    namespace "${Config.applicationId}.core.data.local"
+
+    defaultConfig {
+        // Room database
+        buildConfigField "String", "DB_NAME", '"seedcake.db"'
+
+        // Security preferences
+        buildConfigField "String", "SECURE_PREFS_FILE_NAME", '"secure_preferences"'
+        buildConfigField "String", "SECURE_PREFS_PIN_KEY", '"secure_pin"'
+
+        // Shared preferences
+        buildConfigField "String", "SIMPLE_PREFS_FILE_NAME", '"simple_preferences"'
+        buildConfigField "String", "SIMPLE_PREFS_PIN_KEY", '"check_box_pin"'
+        buildConfigField "String", "SIMPLE_PREFS_FINGERPRINT_KEY", '"check_box_fingerprint"'
+        buildConfigField "String", "SIMPLE_PREFS_SCREEN_SHIELD", '"check_box_screen_shield"'
+    }
+    buildFeatures {
+        buildConfig true
+    }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+        disable 'MissingTranslation', 'ExtraTranslation'
+        xmlReport true
+    }
+}
+
+dependencies {
+    // Libs
+    implementation(libs.securityCrypto)
+    implementation(libs.roomRuntime)
+    implementation(libs.roomKtx)
+    kapt(libs.roomKapt)
+
+    // Modules
+    implementation project(Modules.domain)
+    implementation project(Modules.arch)
+    implementation project(Modules.test)
+    implementation project(Modules.security)
+}
