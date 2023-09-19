@@ -28,4 +28,5 @@ include ':libraries:arch',
         ':libraries:design',
         ':libraries:extension',
         ':libraries:logger',
+        ':libraries:security',
         ':libraries:test'
