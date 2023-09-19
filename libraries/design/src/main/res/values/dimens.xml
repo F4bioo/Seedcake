@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="plu_size_none">0dp</dimen>
+    <dimen name="plu_size_01">4dp</dimen>
+    <dimen name="plu_size_02">8dp</dimen>
+    <dimen name="plu_size_03">12dp</dimen>
+    <dimen name="plu_size_04">16dp</dimen>
+    <dimen name="plu_size_05">20dp</dimen>
+    <dimen name="plu_size_06">24dp</dimen>
+    <dimen name="plu_size_07">32dp</dimen>
+    <dimen name="plu_size_08">40dp</dimen>
+    <dimen name="plu_size_09">48dp</dimen>
+    <dimen name="plu_size_10">56dp</dimen>
+    <dimen name="plu_size_11">64dp</dimen>
+    <dimen name="plu_size_12">72dp</dimen>
+    <dimen name="plu_size_13">80dp</dimen>
+    <dimen name="plu_size_14">88dp</dimen>
+    <dimen name="plu_size_15">96dp</dimen>
+    <dimen name="plu_size_16">104dp</dimen>
+    <dimen name="plu_size_17">112dp</dimen>
+    <dimen name="plu_size_18">120dp</dimen>
+    <dimen name="plu_size_19">128dp</dimen>
+    <dimen name="plu_size_20">136dp</dimen>
+    <dimen name="plu_size_21">144dp</dimen>
+    <dimen name="plu_size_22">152dp</dimen>
+    <dimen name="plu_size_23">160dp</dimen>
+    <dimen name="plu_size_24">168dp</dimen>
+    <dimen name="plu_size_25">176dp</dimen>
+    <dimen name="plu_size_26">184dp</dimen>
+    <dimen name="plu_size_27">192dp</dimen>
+    <dimen name="plu_size_28">200dp</dimen>
+    <dimen name="plu_size_29">208dp</dimen>
+    <dimen name="plu_size_30">216dp</dimen>
+    <dimen name="plu_size_31">224dp</dimen>
+    <dimen name="plu_size_32">232dp</dimen>
+    <dimen name="plu_size_33">240dp</dimen>
+    <dimen name="plu_size_34">248dp</dimen>
+    <dimen name="plu_size_35">256dp</dimen>
+    <dimen name="plu_size_36">264dp</dimen>
+    <dimen name="plu_size_37">272dp</dimen>
+    <dimen name="plu_size_38">280dp</dimen>
+    <dimen name="plu_size_39">288dp</dimen>
+    <dimen name="plu_size_40">296dp</dimen>
+    <dimen name="plu_size_41">304dp</dimen>
+
+    <dimen name="plu_text_size_01">12sp</dimen>
+    <dimen name="plu_text_size_02">16sp</dimen>
+    <dimen name="plu_text_size_03">18sp</dimen>
+    <dimen name="plu_text_size_04">24sp</dimen>
+    <dimen name="plu_text_size_05">32sp</dimen>
+    <dimen name="plu_text_size_15">96sp</dimen>
+
+    <dimen name="plu_radius_la">32dp</dimen>
+    <dimen name="plu_radius_md">24dp</dimen>
+    <dimen name="plu_radius_sm">16dp</dimen>
+    <dimen name="plu_radius_mi">8dp</dimen>
+    <dimen name="plu_radius_ti">4dp</dimen>
+
+    <dimen name="plu_divider">1dp</dimen>
+
+</resources>

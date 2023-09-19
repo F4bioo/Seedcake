@@ -1,0 +1,33 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+apply from: "$rootDir/plugins/android-build.gradle"
+
+android {
+    namespace "${Config.applicationId}.libraries.arch"
+
+    buildFeatures {
+        viewBinding true
+        buildConfig true
+    }
+    lint {
+        abortOnError false
+        checkReleaseBuilds false
+        disable 'MissingTranslation', 'ExtraTranslation'
+        xmlReport true
+    }
+}
+
+dependencies {
+    // Libs
+    api(libs.startup)
+    implementation(libs.jodaTime)
+    implementation(libs.securityCrypto)
+    implementation(libs.testKotlinCoroutines)
+    implementation(libs.testJUnit)
+
+    // Modules
+    implementation project(Modules.design)
+    implementation project(Modules.extension)
+}

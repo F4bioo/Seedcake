@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="plu_gray">
+        <item>@color/plu_start_gray</item>
+        <item>@color/plu_end_gray</item>
+    </array>
+
+    <array name="icon_steps">
+        <item>@drawable/plu_ic_one</item>
+        <item>@drawable/plu_ic_two</item>
+        <item>@drawable/plu_ic_three</item>
+    </array>
+
+</resources>

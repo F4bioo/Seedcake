@@ -22,3 +22,11 @@ include ':app'
 
 // Core
 include ':core:common:navigation'
+
+// Libraries
+include ':libraries:arch',
+        ':libraries:design',
+        ':libraries:extension',
+        ':libraries:logger',
+        ':libraries:security',
+        ':libraries:test'

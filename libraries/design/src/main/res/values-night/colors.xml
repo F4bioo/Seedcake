@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="plu_primary">#2D2B32</color>
+    <color name="plu_primary_dark">@color/plu_primary</color>
+    <color name="plu_accent">#03DAC6</color>
+
+    <color name="plu_on_primary">#000000</color>
+    <color name="plu_secondary">#03DAC6</color>
+    <color name="plu_secondary_variant">#018786</color>
+    <color name="plu_on_secondary">#828282</color>
+
+    <!--Button-->
+    <color name="plu_primary_button_ripple">#333139</color>
+
+    <color name="plu_secondary_button_bg">#222125</color>
+    <color name="plu_secondary_button_ripple">#0D918F9E</color>
+    <color name="plu_secondary_button_disabled">#40918F9E</color>
+    <color name="plu_secondary_button_enabled">#918F9E</color>
+    <!--Button-->
+
+    <color name="plu_input_layout_box_selected">#E4E4E4</color>
+
+    <color name="plu_gray_divider">#474747</color>
+    <color name="plu_charcoal">#46434D</color>
+
+    <color name="plu_start_gray">#B2B2B2</color>
+    <color name="plu_end_gray">@color/plu_charcoal</color>
+    <color name="plu_bg_pluto_feedback_modal">#222222</color>
+    <color name="plu_step_progress_secondary">#40FFFFFF</color>
+    <color name="plu_divider">#242328</color>
+
+    <color name="plu_pin_view_divider">#585858</color>
+    <color name="plu_pin_view_primary">#CFBBFE</color>
+    <color name="plu_pin_view_clean">#C9C3CF</color>
+    <color name="plu_lock_page_background">#FF1C1B1F</color>
+
+    <color name="plu_placeholder">#585858</color>
+
+</resources>

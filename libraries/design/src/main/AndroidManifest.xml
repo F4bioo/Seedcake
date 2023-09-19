@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity
+            android:name=".pluto.activity.qrcode.reader.PlutoQrcodeReaderActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Pluto.FullScreen" />
+        <receiver
+            android:name=".clipboardcleanup.RetryClearClipboardReceiver"
+            android:exported="false" />
+    </application>
+
+</manifest>

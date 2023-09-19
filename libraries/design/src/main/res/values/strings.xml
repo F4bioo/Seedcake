@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Seedcake</string>
+
+    <string name="common_error">Error</string>
+    <string name="common_try_again_title">Oops! Try again</string>
+    <string name="common_try_again">Try again</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_enter">Enter</string>
+    <string name="common_next">Next</string>
+    <string name="common_save">Save</string>
+    <string name="common_validate">Validate</string>
+    <string name="common_unlock">Unlock</string>
+    <string name="common_close">Close</string>
+    <string name="common_about">About</string>
+    <string name="common_decrypt">Decrypt</string>
+    <string name="common_decode">Decode</string>
+    <string name="common_reset">Reset</string>
+    <string name="common_unlock_title">Unlock</string>
+    <string name="common_copied_to_clipboard">Copied to clipboard.</string>
+    <string name="common_unlock_message">Scan your fingerprint</string>
+    <string name="common_passphrase">Passphrase</string>
+    <string name="common_delete">Delete</string>
+    <string name="common_copy">Copy</string>
+    <string name="common_await">Wait…</string>
+    <string name="common_got_it">I got it</string>
+    <string name="common_continue">Continue</string>
+    <string name="common_proceed">Proceed</string>
+    <string name="common_error_title">Something went wrong!</string>
+    <string name="common_cleanup_title">Clipboard cleared</string>
+    <string name="common_cleanup_success_message">Your clipboard has been cleared for security reasons.</string>
+    <string name="common_cleanup_failure_message">Failed to clear your clipboard automatically. For your security, please clear your clipboard manually or tap \'Try Again\'.</string>
+    <string name="common_storage_permission_denied_title">Storage access permission denied</string>
+    <string name="common_storage_permission_always_denied_message">To use this feature, you need to grant storage access. You can change the permission at any time in the device settings.</string>
+    <string name="common_camera_permission_denied_title">Camera access permission denied</string>
+    <string name="common_camera_permission_always_denied_message">To use this feature, you need to grant camera access. You can change the permission at any time in the device settings.</string>
+    <string name="common_camera_permission_always_denied_primary_button">Access settings</string>
+    <string name="common_camera_permission_denied_message">To use this feature, you need to grant camera access. Please allow the permission when asked.</string>
+    <string name="common_camera_permission_denied_primary_button">Try again</string>
+
+    <!--Validation dialog-->
+    <string name="passphrase_for_decryption">Passphrase for decryption</string>
+
+    <string name="pin_cannot_be_empty">PIN cannot be empty</string>
+    <string name="pin_must_be_exactly_4_digits">PIN must be exactly 4 digits</string>
+    <string name="pins_do_not_match">PINs do not match</string>
+    <string name="number_zero">0</string>
+    <string name="number_one">1</string>
+    <string name="number_two">2</string>
+    <string name="number_three">3</string>
+    <string name="number_four">4</string>
+    <string name="number_five">5</string>
+    <string name="number_six">6</string>
+    <string name="number_seven">7</string>
+    <string name="number_eight">8</string>
+    <string name="number_nine">9</string>
+    <string name="btn_reset">Reset</string>
+    <string name="btn_backspace">Backspace</string>
+    <string name="pin_setup_pin_lock">Setup PIN Lock</string>
+    <string name="pin_lock">PIN Lock</string>
+    <string name="pin_lock_warning"><b>\u2022 Choose a PIN you\'ll remember:</b> If forgotten, there\'s no recovery. You\'ll have to uninstall the app, losing all stored information.</string>
+
+    <string name="encrypted_seed">Encrypted seed</string>
+    <string name="colored_seed">Colored seed</string>
+    <string name="decrypted_seed">Decrypted seed</string>
+    <string name="field_required">Field must be filled.</string>
+    <string name="alias_example">Eg: Primary wallet, Trezor wallet…</string>
+    <string name="alias">Alias</string>
+
+</resources>

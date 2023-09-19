@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PlutoGradientTextView">
+        <attr name="colorList" format="reference" />
+        <attr name="gradientDirection" format="enum">
+            <enum name="start" value="0" />
+            <enum name="end" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="PlutoStepProgressView">
+        <attr name="progress" format="integer" />
+        <attr name="iconList" format="reference" />
+        <attr name="primaryColor" format="color" />
+        <attr name="secondaryColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="PlutoSuggestionInputView">
+        <attr name="wordList" format="reference" />
+        <attr name="setHint" format="string" />
+        <attr name="inputLayoutStyle" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="PlutoSwitchView">
+        <attr name="checked" format="boolean" />
+        <attr name="checkedIcon" format="reference" />
+        <attr name="uncheckedIcon" format="reference" />
+    </declare-styleable>
+
+</resources>

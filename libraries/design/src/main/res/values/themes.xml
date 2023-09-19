@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="PlutoTheme" parent="Pluto" />
+
+    <!-- Base application theme. -->
+    <style name="Pluto" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/plu_primary</item>
+        <item name="colorPrimaryVariant">@color/plu_primary_dark</item>
+        <item name="colorOnPrimary">@color/plu_on_primary</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/plu_secondary</item>
+        <item name="colorSecondaryVariant">@color/plu_secondary_variant</item>
+        <item name="colorOnSecondary">@color/plu_on_secondary</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Pluto.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Pluto.FullScreen" parent="@style/Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/plu_lock_page_background</item>
+        <item name="android:windowBackground">@color/plu_lock_page_background</item>
+        <item name="android:colorBackground">@color/plu_lock_page_background</item>
+        <!--<item name="android:windowContentOverlay">@null</item>-->
+    </style>
+
+    <style name="PlutoTextLarge" parent="TextAppearance.AppCompat.Large">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:selectable">true</item>
+    </style>
+
+    <style name="PlutoTextMedium" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:selectable">true</item>
+    </style>
+
+    <style name="PlutoTextSmall" parent="TextAppearance.AppCompat.Small">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:selectable">true</item>
+    </style>
+
+    <style name="PlutoTextMin" parent="android:TextAppearance">
+        <item name="android:textSize">@dimen/plu_text_size_01</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:selectable">true</item>
+    </style>
+
+    <style name="PlutoTextHighlightLarge" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:selectable">true</item>
+    </style>
+
+    <style name="PlutoTextHighlightMedium" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:selectable">true</item>
+    </style>
+
+    <style name="PlutoTextHighlightSmall" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:selectable">true</item>
+    </style>
+
+    <style name="PlutoTextHighlightMin" parent="android:TextAppearance">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/plu_text_size_01</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:selectable">true</item>
+    </style>
+
+    <style name="PlutoPrimaryButton" parent="Widget.Material3.Button.UnelevatedButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/plu_size_09</item>
+        <item name="android:insetTop">@dimen/plu_size_none</item>
+        <item name="android:insetBottom">@dimen/plu_size_none</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/plu_text_size_02</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="cornerRadius">@dimen/plu_size_02</item>
+        <item name="android:textColor">@color/plu_selector_primary_button</item>
+        <item name="android:backgroundTint">@color/plu_primary_button_bg</item>
+        <item name="rippleColor">@color/plu_primary_button_ripple</item>
+    </style>
+
+    <style name="PlutoSecondaryButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/plu_size_09</item>
+        <item name="android:insetTop">@dimen/plu_size_none</item>
+        <item name="android:insetBottom">@dimen/plu_size_none</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/plu_text_size_02</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="cornerRadius">@dimen/plu_size_02</item>
+        <item name="android:textColor">@color/plu_selector_secondary_button</item>
+        <item name="strokeColor">@color/plu_selector_secondary_button</item>
+        <item name="rippleColor">@color/plu_secondary_button_ripple</item>
+    </style>
+
+    <style name="PlutoTertiaryButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/plu_size_09</item>
+        <item name="android:insetTop">@dimen/plu_size_none</item>
+        <item name="android:insetBottom">@dimen/plu_size_none</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/plu_text_size_02</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="cornerRadius">@dimen/plu_size_02</item>
+        <item name="android:textColor">@color/plu_selector_secondary_button</item>
+        <item name="rippleColor">@color/plu_secondary_button_ripple</item>
+    </style>
+
+    <style name="PlutoImageIconButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:padding">@dimen/plu_size_01</item>
+        <item name="tint">@color/plu_gray_medium</item>
+    </style>
+
+    <style name="PlutoImageAvatar" parent="ShapeAppearance.MaterialComponents">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/plu_pale_gray</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="contentPadding">@dimen/plu_size_03</item>
+        <item name="shapeAppearance">@style/PlutoImageRoundedSm</item>
+    </style>
+
+    <style name="PlutoImageCircle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="PlutoImageRoundedMd">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20%</item>
+    </style>
+
+    <style name="PlutoImageRoundedSm">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">6%</item>
+    </style>
+
+    <style name="PlutoFabRoundedSquare" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="PlutoBottomSheet" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+
+    <style name="PlutoTextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="errorIconDrawable">@null</item>
+    </style>
+
+    <style name="PlutoEncryptedSeed" parent="PlutoTextSmall">
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:padding">@dimen/plu_size_02</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+    <style name="BottomSheetStyle" parent="@style/Widget.Material3.BottomSheet.Modal">
+        <item name="shapeAppearance">@style/BottomSheetTopRadius</item>
+    </style>
+
+    <style name="BottomSheetTopRadius" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/plu_size_04</item>
+    </style>
+
+    <style name="PlutoFullScreenDialogStyle" parent="Theme.Material3.DayNight.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/plu_lock_page_background</item>
+        <item name="android:windowBackground">@color/plu_lock_page_background</item>
+        <item name="android:colorBackground">@color/plu_lock_page_background</item>
+    </style>
+
+    <style name="PlutoFullScreenDialogAnimStyle" parent="Theme.Material3.DayNight.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/plu_lock_page_background</item>
+        <item name="android:windowBackground">@color/plu_lock_page_background</item>
+        <item name="android:colorBackground">@color/plu_lock_page_background</item>
+        <item name="android:windowAnimationStyle">@style/DialogAnimationFromBottomToTop</item>
+    </style>
+
+    <style name="DialogAnimationFromBottomToTop">
+        <item name="android:windowEnterAnimation">@anim/plu_from_up_to_bottom_anim</item>
+        <item name="android:windowExitAnimation">@anim/plu_from_bottom_to_up_anim</item>
+    </style>
+
+    <style name="PlutoSeedPalette">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/plu_size_02</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="PlutoTabLayout">
+        <item name="tabTextAppearance">@style/TabTextAppearance</item>
+        <item name="tabIndicatorAnimationMode">elastic</item>
+        <item name="tabMode">scrollable</item>
+    </style>
+
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="keyboard_row">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:divider">@drawable/keyboard_divider</item>
+        <item name="android:gravity">center</item>
+        <item name="android:showDividers">middle</item>
+    </style>
+
+    <style name="text_keys_button" parent="PlutoTextHighlightMedium">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_margin">1dp</item>
+        <item name="android:padding">@dimen/plu_size_04</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/keyboard_button_bg</item>
+    </style>
+
+    <style name="image_keys_button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_margin">1dp</item>
+        <item name="android:padding">@dimen/plu_size_04</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:background">@drawable/keyboard_button_bg</item>
+    </style>
+
+</resources>
