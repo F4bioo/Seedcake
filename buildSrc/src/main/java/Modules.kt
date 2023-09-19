@@ -5,6 +5,7 @@ object Modules {
     // Features
 
     // Libraries
+    const val arch = ":libraries:arch"
     const val design = ":libraries:design"
     const val extension = ":libraries:extension"
     const val logger = ":libraries:logger"

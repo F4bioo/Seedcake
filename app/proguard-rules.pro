@@ -14,6 +14,10 @@
 -keep class java.lang.invoke.** { *; }
 -keep interface java.lang.invoke.** { *; }
 
+# Startup
+-keep class androidx.startup.AppInitializer
+-keep class * extends androidx.startup.Initializer
+
 # Parcelable
 -keep class * implements android.os.Parcelable {
   public static final android.os.Parcelable$Creator *;
