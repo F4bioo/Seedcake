@@ -1,0 +1,99 @@
+apply plugin: 'kotlin-parcelize'
+
+android {
+    compileSdk Config.compileSdk
+
+    defaultConfig {
+        minSdk Config.minSdk
+        targetSdk Config.targetSdk
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        staging {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    "$rootDir/app/proguard-rules.pro",
+                    "$rootDir/app/proguard-rules-staging.pro"
+        }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
+                    "$rootDir/app/proguard-rules.pro"
+        }
+    }
+    setupApplicationBuildTypes(buildTypes)
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+        freeCompilerArgs += ["-opt-in=kotlin.RequiresOptIn"]
+    }
+    kotlin {
+        jvmToolchain(17)
+    }
+}
+
+def setupApplicationBuildTypes(buildTypes) {
+    buildTypes.all { buildType ->
+        if (project.plugins.hasPlugin("com.android.application")) {
+            if (buildType.name == 'release') {
+                buildType.shrinkResources true
+            } else {
+                buildType.applicationIdSuffix = ".${buildType.name}"
+                buildType.versionNameSuffix = "-${buildType.name}"
+            }
+        }
+    }
+}
+
+dependencies {
+    // Libs
+    implementation(libs.bundles.basicAndroid)
+    implementation(libs.preferenceKtx)
+    implementation(libs.preference)
+    implementation(libs.biometric)
+    implementation(libs.koinCore)
+    implementation(libs.koinAndroid)
+    implementation(libs.lifecycleViewModel)
+    implementation(libs.lifecycleRuntime)
+    implementation(libs.fragmentKtx)
+    implementation(libs.coroutinesAndroid)
+    implementation(libs.coroutinesCore)
+
+    // TestLibs
+    implementation(libs.testKoin)
+    implementation(libs.testKotlin)
+    implementation(libs.testKoinJunit4)
+    implementation(libs.testKotlinJUnit)
+    implementation(libs.testTurbine)
+    implementation(libs.testEspressoCore)
+    implementation(libs.testEspressoContrib)
+    implementation(libs.testFragment)
+    implementation(libs.testKotlinCoroutines)
+    implementation(libs.testArcCore)
+
+    testImplementation(libs.testJUnit)
+    testImplementation(libs.testKoin)
+    testImplementation(libs.testKoinJunit4)
+    testImplementation(libs.testMockkUnit)
+    testImplementation(libs.testKotlinCoroutines)
+    testImplementation(libs.testTurbine)
+    testImplementation(libs.testRunner)
+    testImplementation(libs.testKotlin)
+    testImplementation(libs.testKotlinJUnit)
+    testImplementation(libs.testArcCore)
+
+    androidTestImplementation(libs.testExtJunit)
+    androidTestImplementation(libs.testEspressoCore)
+    androidTestImplementation(libs.testEspressoContrib)
+    androidTestImplementation(libs.testKoin)
+    androidTestImplementation(libs.testKoinJunit4)
+    androidTestImplementation(libs.testMockkAndroid)
+    androidTestImplementation(libs.testFragment)
+    androidTestImplementation(libs.testArcCore)
+    androidTestImplementation(libs.testExtJunitKtx)
+    androidTestImplementation(libs.testCoreKtx)
+}
