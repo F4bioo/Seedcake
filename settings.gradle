@@ -21,4 +21,5 @@ rootProject.name = "Seedcake"
 include ':app'
 
 // Libraries
-include ':libraries:extension'
+include ':libraries:extension',
+        ':libraries:logger'
