@@ -29,6 +29,7 @@ include ':features:about',
         ':features:decrypt',
         ':features:details',
         ':features:encrypt',
+        ':features:home',
         ':features:lock',
         ':features:preferences'
 
