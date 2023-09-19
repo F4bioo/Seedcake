@@ -1,5 +1,6 @@
 object Modules {
     // Core
+    const val domain = ":core:common:domain"
     const val navigation = ":core:common:navigation"
 
     // Features
