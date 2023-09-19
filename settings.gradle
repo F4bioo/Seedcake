@@ -22,7 +22,8 @@ include ':app'
 
 // Core
 include ':core:common:domain',
-        ':core:common:navigation'
+        ':core:common:navigation',
+        ':core:data:local'
 
 // Libraries
 include ':libraries:arch',
