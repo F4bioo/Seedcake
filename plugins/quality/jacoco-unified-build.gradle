@@ -1,0 +1,109 @@
+tasks.register('unifiedCodeCoverage', JacocoReport) {
+
+    group = 'Coverage reports'
+    description = "Generate overall Jacoco coverage report for all modules."
+
+    def excludes = rootProject.ext.commonExcludes
+
+    subprojects.each { proj ->
+        proj.tasks.matching {
+            it.name == 'androidCodeCoverage' || it.name == 'kotlinCodeCoverage'
+        }.each { task ->
+            dependsOn task
+        }
+
+        if (proj.plugins.hasPlugin('com.android.application') || proj.plugins.hasPlugin('com.android.library')) {
+            def sourceDirs = [
+                    "${proj.projectDir}/src/main/java",
+                    "${proj.projectDir}/src/main/kotlin",
+                    "${proj.projectDir}/src/debug/java",
+                    "${proj.projectDir}/src/debug/kotlin"
+            ]
+            def javaTree = fileTree(
+                    dir: "${proj.buildDir}/intermediates/javac/debug/classes",
+                    excludes: excludes
+            )
+            def kotlinTree = fileTree(
+                    dir: "${proj.buildDir}/tmp/kotlin-classes/debug",
+                    excludes: excludes
+            )
+
+            sourceDirectories.from += files(sourceDirs)
+            classDirectories.from += files([javaTree, kotlinTree])
+
+        } else if (proj.plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
+            def sourceDirs = [
+                    "${proj.projectDir}/src/main/java",
+                    "${proj.projectDir}/src/main/kotlin"
+            ]
+            def kotlinTree = fileTree(
+                    dir: "$proj.buildDir/classes/kotlin/main",
+                    excludes: excludes
+            )
+            sourceDirectories.from += files(sourceDirs)
+            classDirectories.from += files(kotlinTree)
+        }
+        executionData.from += fileTree(dir: "${proj.buildDir}", includes: ['**/*.exec'])
+    }
+
+    reports {
+        xml.required.set(true)
+        xml.outputLocation.set(file("${project.buildDir}/reports/jacoco/unified-code-coverage/jacoco.xml"))
+        html.required.set(true)
+        html.outputLocation = layout.buildDirectory.dir('reports/jacoco/unified-code-coverage')
+    }
+}
+
+tasks.register('verifyCodeCoverage', JacocoCoverageVerification) {
+    dependsOn 'unifiedCodeCoverage'
+
+    group = 'Coverage reports'
+    description = "Check the percentage of the coverage."
+
+    def excludes = rootProject.ext.commonExcludes
+
+    subprojects.each { proj ->
+
+        if (proj.plugins.hasPlugin('com.android.application') || proj.plugins.hasPlugin('com.android.library')) {
+            def sourceDirs = [
+                    "${proj.projectDir}/src/main/java",
+                    "${proj.projectDir}/src/main/kotlin",
+                    "${proj.projectDir}/src/debug/java",
+                    "${proj.projectDir}/src/debug/kotlin"
+            ]
+            def javaTree = fileTree(
+                    dir: "${proj.buildDir}/intermediates/javac/debug/classes",
+                    excludes: excludes
+            )
+            def kotlinTree = fileTree(
+                    dir: "${proj.buildDir}/tmp/kotlin-classes/debug",
+                    excludes: excludes
+            )
+
+            sourceDirectories.from += files(sourceDirs)
+            classDirectories.from += files([javaTree, kotlinTree])
+
+        } else if (proj.plugins.hasPlugin("org.jetbrains.kotlin.jvm")) {
+            def sourceDirs = [
+                    "${proj.projectDir}/src/main/java",
+                    "${proj.projectDir}/src/main/kotlin"
+            ]
+            def kotlinTree = fileTree(
+                    dir: "$proj.buildDir/classes/kotlin/main",
+                    excludes: excludes
+            )
+            sourceDirectories.from += files(sourceDirs)
+            classDirectories.from += files(kotlinTree)
+        }
+
+        executionData.from += fileTree(dir: "${proj.buildDir}", includes: ['**/*.exec'])
+
+        violationRules {
+            rule {
+                limit {
+                    minimum = 0.1
+                }
+            }
+        }
+    }
+}
