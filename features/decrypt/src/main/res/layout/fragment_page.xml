@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scroll_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/plu_size_04">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_layout_unreadable_seed"
+            style="@style/PlutoTextInputLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:endIconDrawable="@drawable/plu_ic_qrcode"
+            app:endIconMode="custom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:hint="@tools:sample/lorem">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_unreadable_seed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:minHeight="@dimen/plu_size_21"
+                android:padding="@dimen/plu_size_04" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/seed_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/plu_size_08"
+            android:background="@drawable/plu_bg_rounded_corners_stroke"
+            android:paddingHorizontal="@dimen/plu_size_04"
+            android:paddingTop="@dimen/plu_size_02"
+            android:paddingBottom="@dimen/plu_size_04"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_layout_unreadable_seed"
+            tools:visibility="visible">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_eye_description"
+                style="@style/PlutoTextHighlightSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/check_eye"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/check_eye"
+                tools:text="@tools:sample/lorem" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/check_eye"
+                android:layout_width="@dimen/plu_size_07"
+                android:layout_height="@dimen/plu_size_07"
+                android:layout_marginStart="@dimen/plu_size_02"
+                android:button="@drawable/plu_eye_switch_selector"
+                android:padding="@dimen/plu_size_02"
+                app:layout_constraintStart_toEndOf="@id/text_eye_description"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ViewFlipper
+                android:id="@+id/flipper_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:measureAllChildren="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/check_eye">
+
+                <include layout="@layout/include_lines" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_readable_seed"
+                    style="@style/PlutoTextMedium"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textIsSelectable="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="advance above add acoustic almost ability action adjust across alert absurd abandon advance above add acoustic almost ability action adjust across alert absurd abandon" />
+
+            </ViewFlipper>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_primary"
+            style="@style/PlutoPrimaryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/plu_size_04"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/seed_container"
+            tools:text="@tools:sample/lorem" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

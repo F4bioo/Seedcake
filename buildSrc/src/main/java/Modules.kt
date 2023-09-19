@@ -5,6 +5,7 @@ object Modules {
     const val local = ":core:data:local"
 
     // Features
+    const val decrypt = ":features:decrypt"
     const val details = ":features:details"
     const val encrypt = ":features:encrypt"
 

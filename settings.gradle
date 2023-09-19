@@ -25,7 +25,8 @@ include ':core:common:domain',
         ':core:common:navigation',
         ':core:data:local'
 // Features
-include ':features:details',
+include ':features:decrypt',
+        ':features:details',
         ':features:encrypt'
 
 // Libraries
