@@ -1,0 +1,31 @@
+<resources>
+
+    <!--Encrypt-->
+    <string name="passphrase_strength_requirements">Passphrase must contain at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a special character.</string>
+    <string name="passphrase_mismatch_title">Passphrase Mismatch</string>
+    <string name="passphrase_mismatch_message">The entered passphrases do not match. Please ensure you enter the same passphrase in both fields.</string>
+    <string name="passphrase">Passphrase</string>
+    <string name="seed_bip_39">Mnemonic seed (BIP-39)</string>
+    <string name="seeds_example">Eg: abandon baby cabbage dad eager fabric gadget habit ice jacket kangaroo lab…</string>
+    <string name="encrypt">Encrypt</string>
+
+    <!--Disclaimer-->
+    <string name="suggested_use"><b>\u2022 Suggested use:</b> It\'s highly suggested to use Seedcake on a device that\'s offline and formatted, if possible. Think of it as a temporary help or a quick fix when physical storage isn\'t available. Cryptosteel or similar offer long-term safety.</string>
+    <string name="disclaimer_title">Disclaimer</string>
+    <string name="seed_responsibility"><b>\u2022 Seed responsibility:</b> You understand that you are entirely responsible for the secure storage of your seeds. Seeds are extremely sensitive data and should be handled with utmost care. The loss, exposure, or misuse of your seeds can result in the irreversible loss of digital assets.</string>
+    <string name="responsible_use"><b>\u2022 Responsible use:</b> You agree to use the Seedcake app responsibly. This includes, but is not limited to, following all guidelines and recommendations provided by the app regarding seed security.</string>
+    <string name="indemnification"><b>\u2022 Indemnification:</b> You agree to indemnify the developers and operators of the Seedcake app from any liability for losses you may suffer as a result of using the app.</string>
+    <string name="consent_agreement">By checking the box, you confirm that you have read and understood this <b><i>Consent Agreement</i></b> and agree to abide by its terms.</string>
+    <string name="dialog_title_consent_unconfirmed">Consent Agreement Unconfirmed</string>
+    <string name="dialog_message_consent_unconfirmed">To proceed, you must confirm that you have read and understood the Consent Agreement. Please check the box to indicate your agreement.</string>
+    <string name="passphrase_warning"><b>\u2022 Warning::</b> Seedcake does not store your passphrase locally or remotely. If you lose your passphrase, there\'s nothing we can do to assist you.
+        \n\n<b>\u2022 Caution:</b> For your safety, establish a strong passphrase exclusive to this application. Never reuse a passphrase that\'s already in use.</string>
+
+    <!--Result-->
+    <string name="details_considerations">Considerations</string>
+    <string name="details_consideration_topic1">\u2022 Seedcake is a temporary storage solution.</string>
+    <string name="details_consideration_topic2">\u2022 For long term, consider a Cryptosteel or similar.</string>
+    <string name="details_consideration_topic3">\u2022 <b>IMPORTANT:</b> Seedcake doesn\'t store your passphrase. Without the correct passphrase, decryption is impossible!</string>
+    <string name="save_in_database">Save in database</string>
+
+</resources>

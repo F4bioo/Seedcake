@@ -6,6 +6,7 @@ object Modules {
 
     // Features
     const val details = ":features:details"
+    const val encrypt = ":features:encrypt"
 
     // Libraries
     const val arch = ":libraries:arch"

@@ -76,6 +76,7 @@ dependencies {
     implementation project(Modules.navigation)
     implementation project(Modules.local)
     implementation project(Modules.details)
+    implementation project(Modules.encrypt)
     implementation project(Modules.security)
     implementation project(Modules.test)
     implementation project(Modules.logger)
