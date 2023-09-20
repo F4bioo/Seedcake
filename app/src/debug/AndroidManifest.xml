@@ -9,12 +9,14 @@
         android:name="com.fappslab.seedcake.application.BaseApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:debuggable="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/PlutoTheme"
+        tools:ignore="HardcodedDebugMode"
         tools:targetApi="31">
         <provider
             android:name="androidx.startup.InitializationProvider"
@@ -34,6 +36,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
         <activity
             android:name="com.fappslab.seedcake.presentation.MainActivity"
             android:exported="true">
@@ -43,9 +46,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service
-            android:name="com.fappslab.features.lock.presentation.LockService"
-            android:exported="false" />
     </application>
 
 </manifest>
