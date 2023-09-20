@@ -1,3 +1,13 @@
+name: Sync Config File
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - develop
+
 jobs:
   sync-config:
     name: Sync Config
