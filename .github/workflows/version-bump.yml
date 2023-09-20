@@ -49,9 +49,9 @@ jobs:
           git fetch origin
           git checkout ${{ github.head_ref }}
 
-          python scripts/version-bump.py
+          python ./scripts/version-bump.py
 
-      - name: Copy new_version.txt
+      - name: Copy new_version value
         run: cp scripts/new_version.txt ./
 
       - name: Read new version from file
@@ -65,3 +65,6 @@ jobs:
           git add buildSrc/src/main/java/Config.kt
           git commit -m "bump app version to ${{ env.VERSION_NAME }}"
           git push origin ${{ github.head_ref }}
+
+      - name: Remove temp files
+        run: rm new_version.txt
