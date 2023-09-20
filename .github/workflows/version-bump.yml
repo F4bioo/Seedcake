@@ -49,8 +49,7 @@ jobs:
           git fetch origin
           git checkout ${{ github.head_ref }}
 
-          cd scripts
-          python ./version-bump.py
+          python scripts/version-bump.py
 
       - name: Copy new_version.txt
         run: cp scripts/new_version.txt ./
