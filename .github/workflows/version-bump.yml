@@ -6,6 +6,9 @@ on:
       - opened
     branches:
       - master
+  push:
+    branches:
+      - master
 
 permissions:
   contents: write
@@ -57,6 +60,9 @@ jobs:
       - name: Debug VERSION_NAME
         run:
           echo "Debug VERSION_NAME = ${{ env.VERSION_NAME }}"
+
+      - name: Debug entire line
+        run: grep 'const val versionName' buildSrc/src/main/java/Config.kt
 
       - name: Commit changes
         run: |
