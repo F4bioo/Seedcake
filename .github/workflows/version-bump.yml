@@ -4,9 +4,7 @@ on:
   pull_request:
     types:
       - opened
-    branches:
-      - master
-  push:
+      - synchronize
     branches:
       - master
 
