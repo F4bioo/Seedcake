@@ -63,3 +63,7 @@ try:
 except IOError:
     print(f"Error: Could not write to the file {file_path}.")
     exit(1)
+
+new_version = f"{new_prefix}.{current_date}"
+with open("new_version.txt", "w") as f:
+    f.write(new_version)
