@@ -8,6 +8,7 @@ import androidx.core.content.pm.PackageInfoCompat
 import com.fappslab.seedcake.libraries.extension.orDash
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 private const val DATE_PATTERN = "EEE, d MMM yyyy HH:mm"
 private const val YEAR_OFFSET_DIVISOR = 100_000_000
@@ -44,7 +45,7 @@ internal fun Context.getReleaseDate(): String? {
         val versionCode = PackageInfoCompat.getLongVersionCode(packageInfo).toInt()
         val localDateTime = versionCode.toLocalDateTime()
 
-        localDateTime.format(DateTimeFormatter.ofPattern(DATE_PATTERN))
+        localDateTime.format(DateTimeFormatter.ofPattern(DATE_PATTERN, Locale.US))
     }.getOrNull()
 }
 
