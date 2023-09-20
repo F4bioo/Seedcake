@@ -32,16 +32,17 @@ jobs:
         run: |
           git fetch origin master
           DIFF_OUTPUT=$(git diff origin/master...${{ github.head_ref }} -- buildSrc/src/main/java/Config.kt)
-
+          
           if [ -z "$DIFF_OUTPUT" ]; then
             cp buildSrc/src/main/java/ConfigMaster.kt buildSrc/src/main/java/Config.kt
-            git status
-            git diff --exit-code || { echo "No changes to commit"; exit 0; }
-
-            git config --local user.email "action@github.com"
-            git config --local user.name "GitHub Action"
-
-            git add buildSrc/src/main/java/Config.kt
-            git commit -m "Sync Config.kt from master branch"
-            git push origin ${{ github.head_ref }}
+          
+            if git diff --exit-code; then
+              echo "No changes to commit"
+            else
+              git config --local user.email "action@github.com"
+              git config --local user.name "GitHub Action"
+              git add buildSrc/src/main/java/Config.kt
+              git commit -m "Sync Config.kt from master branch"
+              git push origin ${{ github.head_ref }}
+            fi
           fi
