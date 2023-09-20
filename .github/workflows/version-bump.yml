@@ -52,13 +52,14 @@ jobs:
           cd scripts
           python ./version-bump.py
 
+      - name: Debug versionName line
+        run: grep 'const val versionName' buildSrc/src/main/java/Config.kt
+
       - name: Get versionName
         run: echo "VERSION_NAME=$(awk -F '[ :=]' '/const val versionName/ { gsub(/[\042\047]+/, "", $7); print $7 }' buildSrc/src/main/java/Config.kt)" >> $GITHUB_ENV
 
       - name: Debug VERSION_NAME
-        run: |
-          set -x
-          echo "VERSION_NAME=${{ env.VERSION_NAME }}"
+        run: echo "VERSION_NAME is ${{ env.VERSION_NAME }}"
 
       - name: Debug entire line
         run: grep 'const val versionName' buildSrc/src/main/java/Config.kt
