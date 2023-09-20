@@ -1,5 +1,5 @@
 <resources>
     <string name="subtitle_about">Seedcake is free and open-source, brought to you from Bitcoiners to Bitcoiners.</string>
     <string name="review_about">Could you please leave us a review?</string>
-    <string name="version_about"><![CDATA[<b>Seedcake:</b> v%1$s; (build: %2$s); release: %3$s; package: %4$s]]></string>
+    <string name="version_about"><![CDATA[<b>Seedcake:</b> v%1$s; (build: %2$s); \nrelease: %3$s; package: %4$s]]></string>
 </resources>
