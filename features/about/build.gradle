@@ -7,6 +7,8 @@ apply from: "$rootDir/plugins/android-build.gradle"
 android {
     namespace "${Config.applicationId}.features.about"
 
+    resourcePrefix "about"
+
     buildFeatures {
         viewBinding true
     }
@@ -19,9 +21,6 @@ android {
 }
 
 dependencies {
-    // Libs
-    implementation(libs.jodaTime)
-
     // Modules
     implementation project(Modules.domain)
     implementation project(Modules.arch)
