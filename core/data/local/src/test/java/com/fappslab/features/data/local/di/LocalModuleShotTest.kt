@@ -3,14 +3,11 @@ package com.fappslab.features.data.local.di
 import android.content.Context
 import android.content.SharedPreferences
 import com.fappslab.features.data.local.db.SeedcakeDao
-import com.fappslab.features.data.local.db.client.SecurePreferences
-import com.fappslab.features.data.local.db.client.SimplePreferences
 import com.fappslab.libraries.security.bip39colors.BIP39Colors
 import com.fappslab.libraries.security.bip39words.Bip39Words
 import com.fappslab.libraries.security.cryptography.CryptoManager
 import com.fappslab.libraries.test.koin.KoinModuleTest
 import com.fappslab.libraries.test.rules.CoroutineTestRule
-import com.fappslab.seedcake.libraries.arch.source.Source
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.Rule
