@@ -52,7 +52,7 @@ jobs:
           python ./scripts/version-bump.py
 
       - name: Copy new_version value
-        run: cp scripts/new_version.txt ./
+        run: cp ./scripts/new_version.txt ./
 
       - name: Read new version from file
         id: version
