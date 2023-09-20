@@ -53,7 +53,7 @@ jobs:
           python ./version-bump.py
 
       - name: Get versionName
-        run: echo "VERSION_NAME=$(grep 'const val versionName' buildSrc/src/main/java/Config.kt | sed 's/\"//g' | sed \"s/'//g\" | awk '{print $7}')" >> $GITHUB_ENV
+        run: echo "VERSION_NAME=$(awk -F '[ :=]' '/const val versionName/ { gsub(/[\042\047]+/, "", $7); print $7 }' buildSrc/src/main/java/Config.kt)" >> $GITHUB_ENV
 
       - name: Debug VERSION_NAME
         run: |
