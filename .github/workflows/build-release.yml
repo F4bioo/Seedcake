@@ -43,7 +43,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Get versionName
-        run: echo "VERSION_NAME=$(grep 'const val versionName' buildSrc/src/main/java/Config.kt | awk '{print $5}' | tr -d '"' | tr -d "'")" >> $GITHUB_ENV
+        run: echo "VERSION_NAME=$(awk -F '[ :=]' '/const val versionName/ { gsub(/[\042\047]+/, "", $9); print $9 }' buildSrc/src/main/java/Config.kt)" >> $GITHUB_ENV
 
       - name: Decode Keystore File
         run: |
