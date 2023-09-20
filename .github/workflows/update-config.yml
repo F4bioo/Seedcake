@@ -1,13 +1,3 @@
-name: Sync Config File
-
-on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
-    branches:
-      - develop
-
 jobs:
   sync-config:
     name: Sync Config
@@ -35,7 +25,7 @@ jobs:
           
           if [ -z "$DIFF_OUTPUT" ]; then
             cp buildSrc/src/main/java/ConfigMaster.kt buildSrc/src/main/java/Config.kt
-            git diff --exit-code || exit 0  # Exit if no changes
+            git diff --exit-code || { echo "No changes to commit"; exit 0; }
           
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
