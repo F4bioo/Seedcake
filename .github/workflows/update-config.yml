@@ -35,10 +35,11 @@ jobs:
           
           if [ -z "$DIFF_OUTPUT" ]; then
             cp buildSrc/src/main/java/ConfigMaster.kt buildSrc/src/main/java/Config.kt
-
+            git diff --exit-code || exit 0  # Exit if no changes
+          
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
-
+          
             git add buildSrc/src/main/java/Config.kt
             git commit -m "Sync Config.kt from master branch"
             git push origin ${{ github.head_ref }}
