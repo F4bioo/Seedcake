@@ -51,23 +51,17 @@ jobs:
 
           python scripts/version-bump.py
 
-      - name: Debug versionName line
-        run: grep 'const val versionName' buildSrc/src/main/java/Config.kt
+      - name: Copy new_version.txt
+        run: cp scripts/new_version.txt ./
 
-      - name: Get versionName
-        run: echo "VERSION_NAME=$(grep 'const val versionName' buildSrc/src/main/java/Config.kt | awk '{print $7}' | tr -d '"' | tr -d "'")" >> $GITHUB_ENV
-
-      - name: Debug VERSION_NAME
-        run: echo "VERSION_NAME is ${{ env.VERSION_NAME }} - VersionName = $VERSION_NAME"
-
-      - name: Debug entire line
-        run: grep 'const val versionName' buildSrc/src/main/java/Config.kt
+      - name: Read new version from file
+        id: version
+        run: echo "VERSION_NAME=$(<new_version.txt)" >> $GITHUB_ENV
 
       - name: Commit changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-
           git add buildSrc/src/main/java/Config.kt
           git commit -m "bump app version to ${{ env.VERSION_NAME }}"
           git push origin ${{ github.head_ref }}
