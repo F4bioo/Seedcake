@@ -1,0 +1,11 @@
+/.github/workflows/* @F4bioo
+*.gradle @F4bioo
+gradle.properties @F4bioo
+gradlew @F4bioo
+*.bat @F4bioo
+/pubkey/* @F4bioo
+/scripts/* @F4bioo
+/buildSrc/* @F4bioo
+*.gitignore @F4bioo
+*.md @F4bioo
+*.kts @F4bioo
