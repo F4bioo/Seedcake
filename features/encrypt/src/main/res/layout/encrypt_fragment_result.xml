@@ -84,7 +84,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/plu_size_08"
-                android:text="@string/details_considerations"
+                android:text="@string/encrypt_details_considerations"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_encrypted_seed" />
@@ -106,7 +106,7 @@
                     style="@style/PlutoTextSmall"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/details_consideration_topic1"
+                    android:text="@string/encrypt_details_consideration_topic1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -117,7 +117,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/plu_size_02"
-                    android:text="@string/details_consideration_topic2"
+                    android:text="@string/encrypt_encrypt_details_consideration_topic2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_details_considerations_topic1" />
@@ -128,7 +128,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/plu_size_02"
-                    android:text="@string/details_consideration_topic3"
+                    android:text="@string/encrypt_details_consideration_topic3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_details_considerations_topic2" />
@@ -145,7 +145,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/plu_size_04"
-        android:text="@string/save_in_database"
+        android:text="@string/encrypt_save_in_database"
         app:layout_constraintBottom_toTopOf="@id/button_close"
         app:layout_constraintEnd_toEndOf="@id/button_close"
         app:layout_constraintStart_toStartOf="@id/button_close" />

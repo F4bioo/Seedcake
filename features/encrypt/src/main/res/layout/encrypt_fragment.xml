@@ -72,7 +72,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/plu_size_02"
-                android:hint="@string/passphrase"
+                android:hint="@string/encrypt_passphrase"
                 app:endIconMode="password_toggle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -100,7 +100,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/input_layout_passphrase2"
-                app:placeholderText="@string/seeds_example">
+                app:placeholderText="@string/encrypt_seeds_example">
 
                 <androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView
                     android:id="@+id/input_mnemonic"
@@ -108,7 +108,7 @@
                     android:layout_height="wrap_content"
                     android:completionThreshold="3"
                     android:gravity="top"
-                    android:hint="@string/seed_bip_39"
+                    android:hint="@string/encrypt_seed_bip_39"
                     android:inputType="textMultiLine"
                     android:minHeight="@dimen/plu_size_21"
                     android:padding="@dimen/plu_size_04" />
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/plu_bg_rounded_corners_solid"
                 android:padding="@dimen/plu_size_04"
-                android:text="@string/passphrase_warning"
+                android:text="@string/encrypt_passphrase_warning"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

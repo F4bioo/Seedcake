@@ -25,14 +25,14 @@ internal class EncryptViewModel(
     fun onAfterChangePassphrase1(passphrase: String) {
         val errorRes = passphrase.takeUnless { it.isEmpty() }
             ?.takeIf { isValidPassphraseUseCase(it).not() }
-            ?.let { R.string.passphrase_strength_requirements }
+            ?.let { R.string.encrypt_passphrase_strength_requirements }
         onState { it.copy(passphrase1ErrorRes = errorRes) }
     }
 
     fun onAfterChangePassphrase2(passphrase: String) {
         val errorRes = passphrase.takeUnless { it.isEmpty() }
             ?.takeIf { isValidPassphraseUseCase(it).not() }
-            ?.let { R.string.passphrase_strength_requirements }
+            ?.let { R.string.encrypt_passphrase_strength_requirements }
         onState { it.copy(passphrase2ErrorRes = errorRes) }
     }
 

@@ -8,7 +8,7 @@ import com.fappslab.seedcake.features.encrypt.R
 internal class CachedSeedAdapter(
     context: Context,
     private val wordList: List<String>
-) : ArrayAdapter<String>(context, R.layout.dropdown_item, wordList) {
+) : ArrayAdapter<String>(context, R.layout.encrypt_dropdown_item, wordList) {
 
     private val cache = mutableMapOf<String, List<String>>()
     private var filteredItems = wordList
