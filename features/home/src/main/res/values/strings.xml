@@ -1,5 +1,5 @@
 <resources>
 
-    <string name="empty_garden_prompt">No gardener starts with a full garden. Plant your first seed!</string>
+    <string name="home_empty_garden_prompt">No gardener starts with a full garden. Plant your first seed!</string>
 
 </resources>

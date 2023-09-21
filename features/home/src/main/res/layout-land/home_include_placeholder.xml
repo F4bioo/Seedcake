@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/plu_size_02"
         android:gravity="center"
-        android:text="@string/empty_garden_prompt"
+        android:text="@string/home_empty_garden_prompt"
         android:textColor="@color/plu_placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
