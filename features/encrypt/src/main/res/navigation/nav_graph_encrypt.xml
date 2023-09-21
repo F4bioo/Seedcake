@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_encrypt"
-    app:startDestination="@id/disclaimerFragment">
+    app:startDestination="@id/disclaimerFragment"
+    tools:ignore="ResourceName">
 
     <fragment
         android:id="@+id/disclaimerFragment"
