@@ -23,8 +23,8 @@ import com.fappslab.features.details.presentation.viewmodel.DetailsViewAction
 import com.fappslab.features.details.presentation.viewmodel.DetailsViewModel
 import com.fappslab.features.details.presentation.viewmodel.DetailsViewState
 import com.fappslab.seedcake.features.details.R
-import com.fappslab.seedcake.features.details.databinding.FragmentDetailsBinding
-import com.fappslab.seedcake.features.details.databinding.ModalEditBinding
+import com.fappslab.seedcake.features.details.databinding.DetailsFragmentBinding
+import com.fappslab.seedcake.features.details.databinding.DetailsModalEditBinding
 import com.fappslab.seedcake.libraries.arch.dateformat.toDateFormatted
 import com.fappslab.seedcake.libraries.arch.koin.koinlazy.KoinLazy
 import com.fappslab.seedcake.libraries.arch.koin.koinlazy.subModules
@@ -44,12 +44,12 @@ import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.core.scope.Scope
 
-internal class DetailsFragment : Fragment(R.layout.fragment_details), KoinLazy {
+internal class DetailsFragment : Fragment(R.layout.details_fragment), KoinLazy {
 
-    private val binding: FragmentDetailsBinding by viewBinding()
+    private val binding: DetailsFragmentBinding by viewBinding()
     private val viewModel: DetailsViewModel by activityViewModel { parametersOf(args) }
     private val args: DetailsArgs by viewArgs()
-    private val modalEditBinding by lazy { ModalEditBinding.inflate(layoutInflater) }
+    private val modalEditBinding by lazy { DetailsModalEditBinding.inflate(layoutInflater) }
     private val permissionLauncher = permissionLauncher { viewModel.onPermission(result = it) }
 
     override val scope: Scope by fragmentScope()

@@ -126,8 +126,8 @@ internal class DetailsViewModel(
 
     fun onSaveToGalleryResult(isSuccess: Boolean) {
         val message = if (isSuccess) {
-            R.string.save_palette_success_toast
-        } else R.string.save_palette_failure_toast
+            R.string.details_save_palette_success_toast
+        } else R.string.details_save_palette_failure_toast
         onAction { DetailsViewAction.SaveToGalleryResult(message) }
     }
 

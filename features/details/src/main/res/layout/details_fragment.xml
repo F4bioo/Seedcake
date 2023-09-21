@@ -13,7 +13,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/menu_details"
+        app:menu="@menu/details_menu"
         app:navigationIcon="@drawable/plu_ic_arrow_left"
         app:navigationIconTint="@color/plu_white"
         app:title="@string/details_title"
@@ -113,7 +113,7 @@
 
             <include
                 android:id="@+id/include_seed"
-                layout="@layout/include_seed"
+                layout="@layout/details_include_seed"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/plu_size_08"
@@ -132,7 +132,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/plu_size_04"
-        android:text="@string/edit_alias"
+        android:text="@string/details_edit_alias"
         app:layout_constraintBottom_toTopOf="@id/button_decrypt"
         app:layout_constraintEnd_toEndOf="@id/button_decrypt"
         app:layout_constraintStart_toStartOf="@id/button_decrypt" />

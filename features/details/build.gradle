@@ -7,6 +7,8 @@ apply from: "$rootDir/plugins/android-build.gradle"
 android {
     namespace "${Config.applicationId}.features.details"
 
+    resourcePrefix "details"
+
     buildFeatures {
         viewBinding true
     }

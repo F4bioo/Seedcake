@@ -22,7 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/plu_size_04"
-        android:text="@string/colored_seed_message"
+        android:text="@string/details_colored_seed_message"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_title" />
@@ -43,7 +43,7 @@
             style="@style/PlutoTextSmall"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/preserving_your_color_palette"
+            android:text="@string/details_preserving_your_color_palette"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -54,7 +54,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/plu_size_02"
-            android:text="@string/keep_hexadecimal_codes_consistent"
+            android:text="@string/details_keep_hexadecimal_codes_consistent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_topic1" />
@@ -65,7 +65,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/plu_size_02"
-            android:text="@string/handle_with_care"
+            android:text="@string/details_handle_with_care"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
