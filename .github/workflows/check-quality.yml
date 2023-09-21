@@ -62,10 +62,20 @@ jobs:
       - name: Run Tests
         run: ./gradlew testDebugUnitTest
 
+  check_job_flag:
+    needs: check-tests
+    name: Check Job Flag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Should Run Android Tests
+        run: |
+          echo "Current Job Flag value is: ${{ vars.SHOULD_RUN_ANDROID_TESTS }}"    
+
   check-android-tests:
+    needs: check_job_flag
+    if: ${{ vars.SHOULD_RUN_ANDROID_TESTS == 'true' }}
     name: Check Android Tests
     runs-on: macos-latest
-    needs: check-tests
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3

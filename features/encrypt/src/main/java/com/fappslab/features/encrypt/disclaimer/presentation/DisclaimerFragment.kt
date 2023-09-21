@@ -8,7 +8,8 @@ import com.fappslab.features.encrypt.disclaimer.di.DisclaimerModuleLoad
 import com.fappslab.features.encrypt.disclaimer.presentation.extension.showDisclaimerErrorDialog
 import com.fappslab.features.encrypt.disclaimer.presentation.viewmodel.DisclaimerViewAction
 import com.fappslab.features.encrypt.disclaimer.presentation.viewmodel.DisclaimerViewModel
-import com.fappslab.features.encrypt.main.presentation.PROGRESS_KEY
+import com.fappslab.features.encrypt.main.presentation.REQUEST_KEY_PROGRESS
+import com.fappslab.features.encrypt.main.presentation.model.ProgressType.Progress1
 import com.fappslab.seedcake.features.encrypt.R
 import com.fappslab.seedcake.features.encrypt.databinding.EncryptFragmentDisclaimerBinding
 import com.fappslab.seedcake.libraries.arch.koin.koinlazy.KoinLazy
@@ -63,7 +64,7 @@ internal class DisclaimerFragment : Fragment(R.layout.encrypt_fragment_disclaime
     }
 
     private fun progressStepState(progress: Int) {
-        setFragmentResult(PROGRESS_KEY, pair = "progress1" to progress)
+        setFragmentResult(REQUEST_KEY_PROGRESS, pair = Progress1.name to progress)
     }
 
     private fun checkBoxConfirmState(isConfirmChecked: Boolean) {

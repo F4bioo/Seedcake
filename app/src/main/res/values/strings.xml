@@ -1,3 +1,5 @@
 <resources>
-
+    <string name="home">Home</string>
+    <string name="decrypt">Decrypt</string>
+    <string name="preferences">Preferences</string>
 </resources>

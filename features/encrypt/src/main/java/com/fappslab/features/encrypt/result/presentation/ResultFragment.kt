@@ -6,7 +6,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.fappslab.features.encrypt.main.presentation.PROGRESS_KEY
+import com.fappslab.features.encrypt.main.presentation.REQUEST_KEY_PROGRESS
+import com.fappslab.features.encrypt.main.presentation.model.ProgressType.Progress3
 import com.fappslab.features.encrypt.result.di.ResultModuleLoad
 import com.fappslab.features.encrypt.result.presentation.extension.showFullEncryptedSeedModal
 import com.fappslab.features.encrypt.result.presentation.viewmodel.ResultViewAction
@@ -85,7 +86,7 @@ internal class ResultFragment : Fragment(R.layout.encrypt_fragment_result), Koin
     }
 
     private fun progressStepState(progress: Int) {
-        setFragmentResult(PROGRESS_KEY, pair = "progress3" to progress)
+        setFragmentResult(REQUEST_KEY_PROGRESS, pair = Progress3.name to progress)
     }
 
     private fun saveButtonState(isEnabled: Boolean) {

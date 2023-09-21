@@ -12,6 +12,7 @@ import com.fappslab.features.encrypt.main.presentation.adapter.SpaceTokenizer
 import com.fappslab.features.encrypt.main.presentation.extension.getEncryptParams
 import com.fappslab.features.encrypt.main.presentation.extension.showLoadingDialog
 import com.fappslab.features.encrypt.main.presentation.extension.showPassphraseMismatchErrorDialog
+import com.fappslab.features.encrypt.main.presentation.model.ProgressType.Progress2
 import com.fappslab.features.encrypt.main.presentation.viewmodel.EncryptViewAction
 import com.fappslab.features.encrypt.main.presentation.viewmodel.EncryptViewModel
 import com.fappslab.features.encrypt.result.presentation.model.ResultArgs
@@ -106,7 +107,7 @@ internal class EncryptFragment : Fragment(R.layout.encrypt_fragment), KoinLazy {
     }
 
     private fun progressStepState(progress: Int) {
-        setFragmentResult(PROGRESS_KEY, pair = "progress2" to progress)
+        setFragmentResult(REQUEST_KEY_PROGRESS, pair = Progress2.name to progress)
     }
 
     private fun showPassphraseMismatchErrorDialogState(shouldShow: Boolean) {
