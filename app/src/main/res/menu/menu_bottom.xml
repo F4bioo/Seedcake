@@ -4,16 +4,16 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/plu_ic_home"
-        android:title="Home" />
+        android:title="@string/home" />
 
     <item
         android:id="@+id/decrypt"
         android:icon="@drawable/plu_ic_decrypt"
-        android:title="Decrypt" />
+        android:title="@string/decrypt" />
 
     <item
         android:id="@+id/preferences"
         android:icon="@drawable/plu_ic_settings"
-        android:title="Preferences" />
+        android:title="@string/preferences" />
 
 </menu>

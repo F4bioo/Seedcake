@@ -1,12 +1,10 @@
 package com.fappslab.seedcake
 
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-
+import androidx.test.platform.app.InstrumentationRegistry
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Assert.assertEquals
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -19,6 +17,11 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.fappslab.seedcake", appContext.packageName)
+        val expectedPackageName = when {
+            appContext.packageName.endsWith(suffix = ".debug") -> "com.fappslab.seedcake.debug"
+            appContext.packageName.endsWith(suffix = ".staging") -> "com.fappslab.seedcake.staging"
+            else -> "com.fappslab.seedcake"
+        }
+        assertEquals(expectedPackageName, appContext.packageName)
     }
 }

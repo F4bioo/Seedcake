@@ -4,12 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.fappslab.features.encrypt.main.presentation.model.ProgressType.Progress1
+import com.fappslab.features.encrypt.main.presentation.model.ProgressType.Progress2
+import com.fappslab.features.encrypt.main.presentation.model.ProgressType.Progress3
 import com.fappslab.seedcake.features.encrypt.R
 import com.fappslab.seedcake.features.encrypt.databinding.EncryptActivityBinding
 import com.fappslab.seedcake.libraries.design.viewbinding.viewBinding
 import com.fappslab.seedcake.libraries.extension.onFragmentResult
 
-const val PROGRESS_KEY = "PROGRESS_KEY"
+const val REQUEST_KEY_PROGRESS = "REQUEST_KEY_PROGRESS"
 
 class EncryptActivity : AppCompatActivity(R.layout.encrypt_activity) {
 
@@ -21,11 +24,11 @@ class EncryptActivity : AppCompatActivity(R.layout.encrypt_activity) {
     }
 
     private fun setupObservables() {
-        onFragmentResult(PROGRESS_KEY) {
+        onFragmentResult(REQUEST_KEY_PROGRESS) {
             val progress = when {
-                containsKey("progress3") -> 2
-                containsKey("progress2") -> 1
-                else -> 0
+                containsKey(Progress3.name) -> Progress3.ordinal
+                containsKey(Progress2.name) -> Progress2.ordinal
+                else -> Progress1.ordinal
             }
             binding.stepProgress.updateProgress(progress)
         }
