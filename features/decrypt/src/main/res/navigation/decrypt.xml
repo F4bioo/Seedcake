@@ -11,5 +11,5 @@
         android:id="@+id/decryptFragment"
         android:name="com.fappslab.features.decrypt.presentation.DecryptFragment"
         android:label="Decrypt"
-        tools:layout="@layout/fragment_decrypt" />
+        tools:layout="@layout/decrypt_fragment" />
 </navigation>

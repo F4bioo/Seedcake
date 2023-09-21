@@ -35,7 +35,7 @@ internal object PageFactory {
             PageType.EncryptedSeed -> PageArgs(
                 pageType = pageType,
                 hintTextRes = R.string.encrypted_seed,
-                placeholderTextRes = R.string.encrypted_seed_example,
+                placeholderTextRes = R.string.decrypt_encrypted_seed_example,
                 eyeDescriptionTextRes = R.string.decrypted_seed,
                 primaryButtonTextRes = R.string.common_decrypt
             )
@@ -43,8 +43,8 @@ internal object PageFactory {
             PageType.ColoredSeed -> PageArgs(
                 pageType = pageType,
                 hintTextRes = R.string.colored_seed,
-                placeholderTextRes = R.string.colored_seed_example,
-                eyeDescriptionTextRes = R.string.uncolored_seed,
+                placeholderTextRes = R.string.decrypt_colored_seed_example,
+                eyeDescriptionTextRes = R.string.decrypt_uncolored_seed,
                 primaryButtonTextRes = R.string.common_decode
             )
         }

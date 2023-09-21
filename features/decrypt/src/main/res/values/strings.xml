@@ -1,9 +1,9 @@
 <resources>
 
-    <string name="unlock_encrypted_seed">Unlock encrypted seed</string>
-    <string name="unlock_colored_seed">Unlock colored seed</string>
-    <string name="uncolored_seed">Uncolored seed</string>
-    <string name="encrypted_seed_example">Eg: UMDJ3sMCSF9q42IGeFmkSrUhpckbUiVPZR06eBGEApI6uvYKFdADW6i…</string>
-    <string name="colored_seed_example">Eg: #027F81 #2BA61E #3FD254 #3FD254 #3FD254 #9D05EF  #9D05EF…</string>
+    <string name="decrypt_unlock_encrypted_seed">Unlock encrypted seed</string>
+    <string name="decrypt_unlock_colored_seed">Unlock colored seed</string>
+    <string name="decrypt_uncolored_seed">Uncolored seed</string>
+    <string name="decrypt_encrypted_seed_example">Eg: UMDJ3sMCSF9q42IGeFmkSrUhpckbUiVPZR06eBGEApI6uvYKFdADW6i…</string>
+    <string name="decrypt_colored_seed_example">Eg: #027F81 #2BA61E #3FD254 #3FD254 #3FD254 #9D05EF  #9D05EF…</string>
 
 </resources>

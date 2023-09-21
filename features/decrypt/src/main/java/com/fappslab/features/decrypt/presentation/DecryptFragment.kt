@@ -10,12 +10,12 @@ import com.fappslab.features.decrypt.presentation.extension.setTabName
 import com.fappslab.features.decrypt.presentation.model.PageArgs
 import com.fappslab.features.decrypt.presentation.model.PageType
 import com.fappslab.seedcake.features.decrypt.R
-import com.fappslab.seedcake.features.decrypt.databinding.FragmentDecryptBinding
+import com.fappslab.seedcake.features.decrypt.databinding.DecryptFragmentBinding
 import com.fappslab.seedcake.libraries.design.viewbinding.viewBinding
 
-internal class DecryptFragment : Fragment(R.layout.fragment_decrypt) {
+internal class DecryptFragment : Fragment(R.layout.decrypt_fragment) {
 
-    private val binding: FragmentDecryptBinding by viewBinding()
+    private val binding: DecryptFragmentBinding by viewBinding()
     private val decryptAdapter by lazy { DecryptAdapter(childFragmentManager, lifecycle) }
     private val changeCallback by lazy { PagerChangeCallback() }
 
