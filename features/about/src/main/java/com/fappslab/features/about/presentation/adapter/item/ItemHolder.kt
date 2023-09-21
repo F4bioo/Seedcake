@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.fappslab.features.about.presentation.model.Item
 import com.fappslab.features.about.presentation.model.OnItem
-import com.fappslab.seedcake.features.about.databinding.AdapterItemBinding
+import com.fappslab.seedcake.features.about.databinding.AboutAdapterItemBinding
 import com.fappslab.seedcake.libraries.arch.adapter.BaseViewHolder
 import com.fappslab.seedcake.libraries.arch.adapter.OnBaseItemClicked
 
 internal class ItemHolder(
-    private val binding: AdapterItemBinding,
+    private val binding: AboutAdapterItemBinding,
     private val itemClicked: OnBaseItemClicked<OnItem>
 ) : BaseViewHolder<Item>(binding.root) {
 
@@ -22,7 +22,7 @@ internal class ItemHolder(
     companion object {
         fun create(parent: ViewGroup, itemClicked: OnBaseItemClicked<OnItem>): ItemHolder {
             val inflater = LayoutInflater.from(parent.context)
-            val binding = AdapterItemBinding.inflate(inflater, parent, false)
+            val binding = AboutAdapterItemBinding.inflate(inflater, parent, false)
 
             return ItemHolder(binding, itemClicked)
         }

@@ -13,7 +13,7 @@ import com.fappslab.features.encrypt.result.presentation.viewmodel.ResultViewAct
 import com.fappslab.features.encrypt.result.presentation.viewmodel.ResultViewModel
 import com.fappslab.features.encrypt.result.presentation.viewmodel.ResultViewState
 import com.fappslab.seedcake.features.encrypt.R
-import com.fappslab.seedcake.features.encrypt.databinding.FragmentResultBinding
+import com.fappslab.seedcake.features.encrypt.databinding.EncryptFragmentResultBinding
 import com.fappslab.seedcake.libraries.arch.koin.koinlazy.KoinLazy
 import com.fappslab.seedcake.libraries.arch.koin.koinlazy.subModules
 import com.fappslab.seedcake.libraries.arch.koin.koinload.KoinLoad
@@ -28,9 +28,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.core.scope.Scope
 
-internal class ResultFragment : Fragment(R.layout.fragment_result), KoinLazy {
+internal class ResultFragment : Fragment(R.layout.encrypt_fragment_result), KoinLazy {
 
-    private val binding: FragmentResultBinding by viewBinding()
+    private val binding: EncryptFragmentResultBinding by viewBinding()
     private val viewModel: ResultViewModel by viewModel { parametersOf(args.result) }
     private val args: ResultFragmentArgs by navArgs()
     private val backCallback = object : OnBackPressedCallback(false) {

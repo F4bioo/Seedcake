@@ -23,7 +23,7 @@
                 style="@style/PlutoTextHighlightLarge"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/disclaimer_title"
+                android:text="@string/encrypt_disclaimer_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +34,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/plu_size_02"
-                android:text="@string/seed_responsibility"
+                android:text="@string/encrypt_seed_responsibility"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_disclaimer_title" />
@@ -45,7 +45,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/plu_size_02"
-                android:text="@string/responsible_use"
+                android:text="@string/encrypt_responsible_use"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_seed_responsibility" />
@@ -56,7 +56,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/plu_size_02"
-                android:text="@string/indemnification"
+                android:text="@string/encrypt_indemnification"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/Text_responsible_use" />
@@ -69,7 +69,7 @@
                 android:layout_marginTop="@dimen/plu_size_08"
                 android:background="@drawable/plu_bg_rounded_corners_solid"
                 android:padding="@dimen/plu_size_04"
-                android:text="@string/suggested_use"
+                android:text="@string/encrypt_suggested_use"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +94,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/plu_size_04"
-        android:text="@string/consent_agreement"
+        android:text="@string/encrypt_consent_agreement"
         app:layout_constraintBottom_toTopOf="@id/button_continue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

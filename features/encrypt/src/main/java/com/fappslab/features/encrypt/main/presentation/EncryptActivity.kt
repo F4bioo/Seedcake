@@ -5,15 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.fappslab.seedcake.features.encrypt.R
-import com.fappslab.seedcake.features.encrypt.databinding.ActivityEncryptBinding
+import com.fappslab.seedcake.features.encrypt.databinding.EncryptActivityBinding
 import com.fappslab.seedcake.libraries.design.viewbinding.viewBinding
 import com.fappslab.seedcake.libraries.extension.onFragmentResult
 
 const val PROGRESS_KEY = "PROGRESS_KEY"
 
-class EncryptActivity : AppCompatActivity(R.layout.activity_encrypt) {
+class EncryptActivity : AppCompatActivity(R.layout.encrypt_activity) {
 
-    private val binding: ActivityEncryptBinding by viewBinding(R.id.encrypted_root)
+    private val binding: EncryptActivityBinding by viewBinding(R.id.encrypted_root)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,4 +1,4 @@
 <resources>
-    <string name="pin_lock">PIN Lock</string>
-    <string name="pin_lock_warning"><b>\u2022 Choose a PIN you\'ll remember:</b> If forgotten, there\'s no recovery. You\'ll have to uninstall the app, losing all stored information.</string>
+    <string name="preferences_pin_lock">PIN Lock</string>
+    <string name="preferences_pin_lock_warning"><b>\u2022 Choose a PIN you\'ll remember:</b> If forgotten, there\'s no recovery. You\'ll have to uninstall the app, losing all stored information.</string>
 </resources>

@@ -8,10 +8,6 @@ internal class AboutViewModel(
     items: List<Item>
 ) : ViewModel<AboutViewState, AboutViewAction>(AboutViewState(items = items)) {
 
-    fun onFooterClicked(releaseData: CharSequence) {
-        onAction { AboutViewAction.FooterClicked(releaseData.toString()) }
-    }
-
     fun onAdapterItem(item: OnItem) {
         val action = when (item) {
             OnItem.Close -> AboutViewAction.CloseClicked
@@ -19,5 +15,9 @@ internal class AboutViewModel(
             is OnItem.Item -> AboutViewAction.ItemClicked(item.url)
         }
         onAction { action }
+    }
+
+    fun onFooterClicked(releaseData: CharSequence) {
+        onAction { AboutViewAction.FooterClicked(releaseData.toString()) }
     }
 }

@@ -8,6 +8,8 @@ apply from: "$rootDir/plugins/android-build.gradle"
 android {
     namespace "${Config.applicationId}.features.decrypt"
 
+    resourcePrefix "decrypt"
+
     buildFeatures {
         viewBinding true
     }

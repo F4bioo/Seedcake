@@ -9,9 +9,9 @@ import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import com.fappslab.seedcake.features.details.R
-import com.fappslab.seedcake.features.details.databinding.IncludeSeedBinding
-import com.fappslab.seedcake.features.details.databinding.ModalEditBinding
-import com.fappslab.seedcake.features.details.databinding.ModalInfoBinding
+import com.fappslab.seedcake.features.details.databinding.DetailsIncludeSeedBinding
+import com.fappslab.seedcake.features.details.databinding.DetailsModalEditBinding
+import com.fappslab.seedcake.features.details.databinding.DetailsModalInfoBinding
 import com.fappslab.seedcake.libraries.arch.simplepermission.extension.permissionLauncher
 import com.fappslab.seedcake.libraries.arch.simplepermission.launcher.PermissionLauncher
 import com.fappslab.seedcake.libraries.arch.simplepermission.model.PermissionStatus
@@ -55,13 +55,13 @@ internal fun Fragment.showInfoModal(
     closeBlock: (Boolean) -> Unit,
     primaryBlock: () -> Unit
 ) {
-    val binding = ModalInfoBinding.inflate(layoutInflater)
+    val binding = DetailsModalInfoBinding.inflate(layoutInflater)
 
     plutoFeedbackModal {
         customView = binding.root
         closeButton = { closeBlock(false) }
         primaryButton = {
-            buttonTextRes = R.string.colored_seed_security_save
+            buttonTextRes = R.string.details_colored_seed_security_save
             buttonAction = {
                 primaryBlock.invoke()
                 dismissAllowingStateLoss()
@@ -76,8 +76,8 @@ internal fun Fragment.showDeleteSeedModal(
     primaryBlock: () -> Unit
 ) {
     plutoFeedbackModal {
-        titleRes = R.string.delete_seed_title
-        messageRes = R.string.delete_seed_message
+        titleRes = R.string.details_delete_seed_title
+        messageRes = R.string.details_delete_seed_message
         closeButton = { closeBlock(false) }
         primaryButton = {
             buttonTextRes = R.string.common_proceed
@@ -87,7 +87,7 @@ internal fun Fragment.showDeleteSeedModal(
 }
 
 internal fun Fragment.showEditAliasModal(
-    binding: ModalEditBinding,
+    binding: DetailsModalEditBinding,
     shouldShow: Boolean,
     closeBlock: (Boolean) -> Unit,
     primaryBlock: (String) -> Unit
@@ -141,7 +141,7 @@ internal fun View.saveToGalleryAction(resultBlock: (Boolean) -> Unit) {
     )
 }
 
-internal fun IncludeSeedBinding.setPalletColors(coloredSeed: List<Pair<String, String>>) {
+internal fun DetailsIncludeSeedBinding.setPalletColors(coloredSeed: List<Pair<String, String>>) {
     val hexColors = coloredSeed.joinToString(separator = " ") { it.first }
     val bitmap = PlutoQrcodeCreator.create(hexColors)
     imageQrcode.setImageBitmap(bitmap)

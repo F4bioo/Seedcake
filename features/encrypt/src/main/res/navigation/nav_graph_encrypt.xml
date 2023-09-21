@@ -3,13 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_encrypt"
-    app:startDestination="@id/disclaimerFragment">
+    app:startDestination="@id/disclaimerFragment"
+    tools:ignore="ResourceName">
 
     <fragment
         android:id="@+id/disclaimerFragment"
         android:name="com.fappslab.features.encrypt.disclaimer.presentation.DisclaimerFragment"
         android:label="Disclaimer"
-        tools:layout="@layout/fragment_disclaimer">
+        tools:layout="@layout/encrypt_fragment_disclaimer">
         <action
             android:id="@+id/navigate_to_encryptFragment"
             app:destination="@id/encryptFragment" />
@@ -19,7 +20,7 @@
         android:id="@+id/encryptFragment"
         android:name="com.fappslab.features.encrypt.main.presentation.EncryptFragment"
         android:label="Encrypt"
-        tools:layout="@layout/fragment_encrypt">
+        tools:layout="@layout/encrypt_fragment">
 
         <action
             android:id="@+id/navigate_to_resultFragment"
@@ -30,7 +31,7 @@
         android:id="@+id/resultFragment"
         android:name="com.fappslab.features.encrypt.result.presentation.ResultFragment"
         android:label="Result"
-        tools:layout="@layout/fragment_result">
+        tools:layout="@layout/encrypt_fragment_result">
 
         <argument
             android:name="result"

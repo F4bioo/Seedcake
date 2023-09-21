@@ -15,7 +15,7 @@ import com.fappslab.features.decrypt.presentation.viewmodel.DecryptViewAction
 import com.fappslab.features.decrypt.presentation.viewmodel.DecryptViewModel
 import com.fappslab.features.decrypt.presentation.viewmodel.DecryptViewState
 import com.fappslab.seedcake.features.decrypt.R
-import com.fappslab.seedcake.features.decrypt.databinding.FragmentPageBinding
+import com.fappslab.seedcake.features.decrypt.databinding.DecryptFragmentPageBinding
 import com.fappslab.seedcake.libraries.arch.koin.koinlazy.KoinLazy
 import com.fappslab.seedcake.libraries.arch.koin.koinlazy.subModules
 import com.fappslab.seedcake.libraries.arch.koin.koinload.KoinLoad
@@ -36,9 +36,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.core.scope.Scope
 
-internal class PageFragment : Fragment(R.layout.fragment_page), KoinLazy {
+internal class PageFragment : Fragment(R.layout.decrypt_fragment_page), KoinLazy {
 
-    private val binding: FragmentPageBinding by viewBinding()
+    private val binding: DecryptFragmentPageBinding by viewBinding()
     private val viewModel: DecryptViewModel by viewModel { parametersOf(args.pageType) }
     private val args: PageArgs by viewArgs()
     private val permissionLauncher = permissionLauncher { status ->
