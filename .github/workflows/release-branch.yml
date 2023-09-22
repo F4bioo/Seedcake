@@ -1,0 +1,104 @@
+name: Create Release Branch
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_branch:
+        description: 'Select the base branch for creating the release branch'
+        required: true
+        default: 'develop'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  check-actor:
+    name: Check Actor
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Authorized User
+        run: |
+          if [[ "${{ github.actor }}" != "F4bioo" ]]; then
+            echo "Unauthorized user. Exiting."
+            exit 1
+          fi
+
+  create-release-branch:
+    needs: check-actor
+    name: Create Release Branch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.MY_GH_TOKEN }}    
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Generate version details
+        run: python scripts/version-bump.py
+
+      - name: Read new version details from file
+        id: version_details
+        run: |
+          VERSION_CODE=$(sed -n '1p' scripts/new_version_details.txt)
+          VERSION_NAME=$(sed -n '2p' scripts/new_version_details.txt)
+          echo "VERSION_CODE=${VERSION_CODE}" >> $GITHUB_ENV
+          echo "VERSION_NAME=${VERSION_NAME}" >> $GITHUB_ENV
+          echo "BUMP_BRANCH=bump/${VERSION_NAME}_${VERSION_CODE}" >> $GITHUB_ENV
+          echo "RELEASE_BRANCH=release/${VERSION_NAME}_${VERSION_CODE}" >> $GITHUB_ENV
+
+      - name: Create Bump Version Branch "${{ env.BUMP_BRANCH }}"
+        run: |
+          git checkout ${{ github.event.inputs.base_branch }}
+          git checkout -b ${{ env.BUMP_BRANCH }}
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add buildSrc/src/main/java/Config.kt
+          git commit -m "Changed: Bump app version v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}"
+          git push origin ${{ env.BUMP_BRANCH }}
+
+      - name: Open Bump Version Branch PR
+        env:
+          GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
+        run: |
+          gh pr create --base ${{ github.event.inputs.base_branch }} --head ${{ env.BUMP_BRANCH }} --title "Added: Create version bump v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --body "This PR includes version bump for release v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --repo ${{ github.repository }}
+
+      - name: Get Bump Version PR Number
+        id: pr_number
+        env:
+          GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
+        run: |
+          PR_NUMBER=$(gh pr list --base ${{ github.event.inputs.base_branch }} --head ${{ env.BUMP_BRANCH }} --state open --json number -q '.[0].number')
+          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+
+      - name: Merge Bump Version Branch to "${{ github.event.inputs.base_branch }}"
+        env:
+          GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
+        run: |
+          gh pr merge ${{ env.PR_NUMBER }} --auto --squash
+
+      - name: Delete Bump Version Branch
+        env:
+          GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
+        run: |
+          git push origin --delete ${{ env.BUMP_BRANCH }}
+
+      - name: Create Release Branch
+        run: |            
+            git checkout ${{ github.event.inputs.base_branch }}
+            git pull --rebase
+            git checkout -b ${{ env.RELEASE_BRANCH }}
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git push origin ${{ env.RELEASE_BRANCH }}
+
+      - name: Open Release Branch PR
+        env:
+          GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
+        run: |
+          gh pr create --base master --head ${{ env.RELEASE_BRANCH }} --title "Added: Create release branch v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --body "This PR includes the latest version for release v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --repo ${{ github.repository }}
