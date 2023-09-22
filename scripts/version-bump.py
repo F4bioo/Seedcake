@@ -1,7 +1,13 @@
 #!/usr/bin/env python3
 
 import re
+import argparse
 from datetime import datetime
+
+# Adicione a análise dos argumentos no início do script
+parser = argparse.ArgumentParser(description='Bump version of the app.')
+parser.add_argument('--read-only', action='store_true', help='Only generate the new version details without modifying the config file')
+args = parser.parse_args()
 
 # Constants
 FIRST_RELEASE_YEAR = 2023
@@ -56,14 +62,16 @@ for line in lines:
         updated_lines.append(line.rstrip('\n'))
 
 # Write updated lines back to the file
-try:
-    with open(file_path, 'w') as file:
-        file.write('\n'.join(updated_lines))
-        file.write('\n')
-except IOError:
-    print(f"Error: Could not write to the file {file_path}.")
-    exit(1)
+if not args.read_only:
+    try:
+        with open(file_path, 'w') as file:
+            file.write('\n'.join(updated_lines))
+            file.write('\n')
+    except IOError:
+        print(f"Error: Could not write to the file {file_path}.")
+        exit(1)
 
-new_version = f"{new_prefix}.{current_date}"
-with open("scripts/new_version.txt", "w") as f:
-    f.write(new_version)
+# Write the new version details to a text file
+versionName_new = f"{new_prefix}.{current_date}"
+with open("scripts/new_version_details.txt", "w") as f:
+    f.write(f"{versionCode_new}\n{versionName_new}")
