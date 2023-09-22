@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       base_branch:
-        description: 'Release candidate must be generated from the develop branch.'
+        description: 'Release candidate must be generated from the staging branch.'
         required: true
-        default: 'develop'
+        default: 'staging'
 
 permissions:
   contents: write
@@ -17,10 +17,10 @@ jobs:
     name: Check Environment
     runs-on: ubuntu-latest
     steps:
-      - name: Check if Base Branch is develop
+      - name: Check if Base Branch is staging
         run: |
-          if [[ "${{ github.event.inputs.base_branch }}" != "develop" ]]; then
-            echo "This workflow can only be run on the develop branch. Exiting."
+          if [[ "${{ github.event.inputs.base_branch }}" != "staging" ]]; then
+            echo "This workflow can only be run on the staging branch. Exiting."
             exit 1
           fi
 
@@ -61,7 +61,7 @@ jobs:
 
       - name: Create Bump Version Branch "${{ env.BUMP_BRANCH }}"
         run: |
-          git checkout develop
+          git checkout staging
           git checkout -b ${{ env.BUMP_BRANCH }}
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
@@ -73,17 +73,17 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
         run: |
-          gh pr create --base develop --head ${{ env.BUMP_BRANCH }} --title "Added: Create version bump v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --body "This PR includes version bump for release v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --repo ${{ github.repository }}
+          gh pr create --base staging --head ${{ env.BUMP_BRANCH }} --title "Added: Create version bump v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --body "This PR includes version bump for release v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --repo ${{ github.repository }}
 
       - name: Get Bump Version PR Number
         id: bump_pr_number
         env:
           GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
         run: |
-          BUMP_PR_NUMBER=$(gh pr list --base develop --head ${{ env.BUMP_BRANCH }} --state open --json number -q '.[0].number')
+          BUMP_PR_NUMBER=$(gh pr list --base staging --head ${{ env.BUMP_BRANCH }} --state open --json number -q '.[0].number')
           echo "BUMP_PR_NUMBER=$BUMP_PR_NUMBER" >> $GITHUB_ENV
 
-      - name: Merge Bump Version Branch to develop
+      - name: Merge Bump Version Branch to staging
         env:
           GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
         run: |
@@ -97,7 +97,7 @@ jobs:
 
       - name: Create Release Branch
         run: |            
-            git checkout develop
+            git checkout staging
             git pull --rebase
             git checkout -b ${{ env.RELEASE_BRANCH }}
             git config --local user.email "action@github.com"
