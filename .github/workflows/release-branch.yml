@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       base_branch:
-        description: 'Select the base branch for creating the release branch'
+        description: 'Release candidate must be generated from the develop branch.'
         required: true
         default: 'develop'
 
@@ -13,10 +13,17 @@ permissions:
   pull-requests: write
 
 jobs:
-  check-actor:
-    name: Check Actor
+  check_environment:
+    name: Check Environment
     runs-on: ubuntu-latest
     steps:
+      - name: Check if Base Branch is develop
+        run: |
+          if [[ "${{ github.event.inputs.base_branch }}" != "develop" ]]; then
+            echo "This workflow can only be run on the develop branch. Exiting."
+            exit 1
+          fi
+
       - name: Check Authorized User
         run: |
           if [[ "${{ github.actor }}" != "F4bioo" ]]; then
@@ -25,7 +32,7 @@ jobs:
           fi
 
   create-release-branch:
-    needs: check-actor
+    needs: check_environment
     name: Create Release Branch
     runs-on: ubuntu-latest
     steps:
@@ -54,7 +61,7 @@ jobs:
 
       - name: Create Bump Version Branch "${{ env.BUMP_BRANCH }}"
         run: |
-          git checkout ${{ github.event.inputs.base_branch }}
+          git checkout develop
           git checkout -b ${{ env.BUMP_BRANCH }}
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
@@ -66,21 +73,21 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
         run: |
-          gh pr create --base ${{ github.event.inputs.base_branch }} --head ${{ env.BUMP_BRANCH }} --title "Added: Create version bump v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --body "This PR includes version bump for release v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --repo ${{ github.repository }}
+          gh pr create --base develop --head ${{ env.BUMP_BRANCH }} --title "Added: Create version bump v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --body "This PR includes version bump for release v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --repo ${{ github.repository }}
 
       - name: Get Bump Version PR Number
-        id: pr_number
+        id: bump_pr_number
         env:
           GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
         run: |
-          PR_NUMBER=$(gh pr list --base ${{ github.event.inputs.base_branch }} --head ${{ env.BUMP_BRANCH }} --state open --json number -q '.[0].number')
-          echo "PR_NUMBER=$PR_NUMBER" >> $GITHUB_ENV
+          BUMP_PR_NUMBER=$(gh pr list --base develop --head ${{ env.BUMP_BRANCH }} --state open --json number -q '.[0].number')
+          echo "BUMP_PR_NUMBER=$BUMP_PR_NUMBER" >> $GITHUB_ENV
 
-      - name: Merge Bump Version Branch to "${{ github.event.inputs.base_branch }}"
+      - name: Merge Bump Version Branch to develop
         env:
           GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
         run: |
-          gh pr merge ${{ env.PR_NUMBER }} --auto --squash
+          gh pr merge ${{ env.BUMP_PR_NUMBER }} --auto --squash
 
       - name: Delete Bump Version Branch
         env:
@@ -90,7 +97,7 @@ jobs:
 
       - name: Create Release Branch
         run: |            
-            git checkout ${{ github.event.inputs.base_branch }}
+            git checkout develop
             git pull --rebase
             git checkout -b ${{ env.RELEASE_BRANCH }}
             git config --local user.email "action@github.com"
@@ -102,3 +109,23 @@ jobs:
           GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
         run: |
           gh pr create --base master --head ${{ env.RELEASE_BRANCH }} --title "Added: Create release branch v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --body "This PR includes the latest version for release v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --repo ${{ github.repository }}
+
+      - name: Get Release PR Number
+        id: release_pr_number
+        env:
+          GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
+        run: |
+          RELEASE_PR_NUMBER=$(gh pr list --base master --head ${{ env.RELEASE_BRANCH }} --state open --json number -q '.[0].number')
+          echo "RELEASE_PR_NUMBER=$RELEASE_PR_NUMBER" >> $GITHUB_ENV
+
+      - name: Merge Release Branch to master
+        env:
+          GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
+        run: |
+          gh pr merge ${{ env.RELEASE_PR_NUMBER }} --auto --merge
+
+      - name: Delete Release Branch
+        env:
+          GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
+        run: |
+          git push origin --delete ${{ env.RELEASE_BRANCH }}
