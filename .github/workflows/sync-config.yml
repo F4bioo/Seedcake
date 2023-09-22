@@ -1,0 +1,48 @@
+name: Sync Bumped File
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - develop
+
+jobs:
+  sync-config:
+    name: Sync Config
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Checkout master branch
+        run: git checkout master
+
+      - name: Copy Config.kt from master
+        run: cp buildSrc/src/main/java/Config.kt buildSrc/src/main/java/ConfigMaster.kt
+
+      - name: Checkout PR branch
+        run: git checkout ${{ github.head_ref }}
+
+      - name: Determine if Config.kt should be updated
+        run: |
+          git fetch origin master
+          DIFF_OUTPUT=$(git diff origin/master...${{ github.head_ref }} -- buildSrc/src/main/java/Config.kt)
+          
+          if [ -z "$DIFF_OUTPUT" ]; then
+            cp buildSrc/src/main/java/ConfigMaster.kt buildSrc/src/main/java/Config.kt
+          
+            if git diff --exit-code; then
+              echo "No changes to commit"
+            else
+              git config --local user.email "action@github.com"
+              git config --local user.name "GitHub Action"
+              git add buildSrc/src/main/java/Config.kt
+              git commit -m "Changed: Sync Config.kt from master branch"
+              git push origin ${{ github.head_ref }}
+            fi
+          fi
