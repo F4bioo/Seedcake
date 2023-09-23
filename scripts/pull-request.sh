@@ -4,7 +4,7 @@
 script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Source o script menuselect.sh
-source "${script_dir}/menuselect.sh
+source "${script_dir}/menuselect.sh"
 
 # Jump to repository root
 cd "$(git rev-parse --show-toplevel)"
