@@ -42,7 +42,6 @@ bump_version() {
 }
 
 # Function to commit and push changes
-# Function to commit and push changes
 commit_and_push() {
   git add $CONFIG_FILE
   commit_message="Added: Create release branch v$new_prefix.$current_date build $versionCode"
@@ -59,14 +58,11 @@ commit_and_push() {
   new_branch="release/${new_prefix}.${current_date}_${versionCode}"
   git checkout -b $new_branch
 
-  # Set master as the upstream branch for the new release branch
-  git branch --set-upstream-to=origin/master $new_branch
-
   # Ask if user wants to push immediately
   read -p "Do you want to push these changes now? (y/n): " do_push
   if [ "$do_push" == "y" ]; then
     git push origin $new_branch
-    echo "Branch $new_branch created and push done successfully to master."
+    echo "Branch $new_branch created and push done successfully."
   else
     echo "Branch $new_branch created. Remember to push the changes."
   fi
