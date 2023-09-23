@@ -68,7 +68,7 @@ commit_and_push() {
     read -p "Do você quer criar um PR para essas mudanças agora? (y/n): " do_pr
     if [ "$do_pr" == "y" ]; then
       # Aqui você pode chamar o script pull-request.sh
-      scripts/pull-request.sh
+      ./scripts/pull-request.sh
     fi
   else
     echo "Branch $new_branch created. Remember to push the changes."
