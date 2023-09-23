@@ -1,5 +1,10 @@
 #!/bin/sh
-source ./menuselect.sh
+
+# Save the current directory
+current_dir=$(pwd)
+
+# Source the menuselect.sh script
+source "${current_dir}/menuselect.sh"
 
 # Jump to repository root
 cd "$(git rev-parse --show-toplevel)"
