@@ -1,10 +1,10 @@
 #!/bin/sh
 
-# Save the current directory
-current_dir=$(pwd)
+# Obtenha o diretório do script atual
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Source the menuselect.sh script
-source "${current_dir}/menuselect.sh"
+# Source o script menuselect.sh
+source "${script_dir}/menuselect.sh
 
 # Jump to repository root
 cd "$(git rev-parse --show-toplevel)"
