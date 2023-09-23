@@ -70,8 +70,3 @@ if not args.read_only:
     except IOError:
         print(f"Error: Could not write to the file {file_path}.")
         exit(1)
-
-# Write the new version details to a text file
-versionName_new = f"{new_prefix}.{current_date}"
-with open("scripts/new_version_details.txt", "w") as f:
-    f.write(f"{versionCode_new}\n{versionName_new}")
