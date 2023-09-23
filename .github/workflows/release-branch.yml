@@ -51,13 +51,6 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Merge develop into staging
-        run: |
-          git checkout staging
-          git fetch origin develop
-          git merge origin/develop
-          git push origin staging
-
       - name: Generate version details
         run: python scripts/version-bump.py
 
