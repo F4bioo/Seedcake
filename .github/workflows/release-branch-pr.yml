@@ -1,0 +1,22 @@
+name: Create Pull Request for Release
+
+on:
+  push:
+    branches:
+      - 'release/*'
+
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Create Pull Request
+        uses: repo-sync/pull-request@v2
+        with:
+          source_branch: ${{ github.ref }}
+          destination_branch: "master"
+          pr_title: "New release based on ${{ github.ref }}"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
