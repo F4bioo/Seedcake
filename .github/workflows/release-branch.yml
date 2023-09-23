@@ -2,11 +2,6 @@ name: Create Release Branch
 
 on:
   workflow_dispatch:
-    inputs:
-      base_branch:
-        description: 'Release candidate must be generated from the staging branch.'
-        required: true
-        default: 'staging'
 
 permissions:
   contents: write
@@ -17,10 +12,10 @@ jobs:
     name: Check Environment
     runs-on: ubuntu-latest
     steps:
-      - name: Check if Base Branch is staging
+      - name: Check if Running on develop
         run: |
-          if [[ "${{ github.event.inputs.base_branch }}" != "staging" ]]; then
-            echo "This workflow can only be run on the staging branch. Exiting."
+          if [[ "${{ github.ref }}" != "refs/heads/develop" ]]; then
+            echo "This workflow can only be run on the develop branch. Exiting."
             exit 1
           fi
 
@@ -39,101 +34,49 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
+          fetch-depth: 0
+          ref: develop
           token: ${{ secrets.MY_GH_TOKEN }}
 
-      - name: Setup Git Config
+      - name: Pull Latest Changes From develop
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git pull --rebase origin develop
 
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
 
-      - name: Merge develop into staging
-        run: |
-          git checkout staging
-          git fetch origin develop
-          git merge origin/develop
-          git push origin staging
-
       - name: Generate version details
         run: python scripts/version-bump.py
 
-      - name: Read new version details from file
+      - name: Read New Version Details From File
         id: version_details
         run: |
           VERSION_CODE=$(sed -n '1p' scripts/new_version_details.txt)
           VERSION_NAME=$(sed -n '2p' scripts/new_version_details.txt)
           echo "VERSION_CODE=${VERSION_CODE}" >> $GITHUB_ENV
           echo "VERSION_NAME=${VERSION_NAME}" >> $GITHUB_ENV
-          echo "BUMP_BRANCH=bump/${VERSION_NAME}_${VERSION_CODE}" >> $GITHUB_ENV
           echo "RELEASE_BRANCH=release/${VERSION_NAME}_${VERSION_CODE}" >> $GITHUB_ENV
 
-      - name: Create Bump Version Branch "${{ env.BUMP_BRANCH }}"
+      - name: Setup Git Local Configs
         run: |
-          git checkout staging
-          git checkout -b ${{ env.BUMP_BRANCH }}
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+      - name: Push Bumped File to develop
+        run: |
           git add buildSrc/src/main/java/Config.kt
           git commit -m "Changed: Bump app version v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}"
-          git push origin ${{ env.BUMP_BRANCH }}
-
-      - name: Open Bump Version Branch PR
-        env:
-          GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
-        run: |
-          gh pr create --base staging --head ${{ env.BUMP_BRANCH }} --title "Added: Create version bump v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --body "This PR includes version bump for release v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --repo ${{ github.repository }}
-
-      - name: Get Bump Version PR Number
-        id: bump_pr_number
-        env:
-          GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
-        run: |
-          BUMP_PR_NUMBER=$(gh pr list --base staging --head ${{ env.BUMP_BRANCH }} --state open --json number -q '.[0].number')
-          echo "BUMP_PR_NUMBER=$BUMP_PR_NUMBER" >> $GITHUB_ENV
-
-      - name: Merge Bump Version Branch to staging
-        env:
-          GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
-        run: |
-          gh pr merge ${{ env.BUMP_PR_NUMBER }} --auto --squash
-
-      - name: Delete Bump Version Branch
-        env:
-          GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
-        run: |
-          git push origin --delete ${{ env.BUMP_BRANCH }}
+          git push -u origin develop
 
       - name: Create Release Branch
         run: |
-          git checkout staging
-          git pull --rebase
           git checkout -b ${{ env.RELEASE_BRANCH }}
-          git push origin ${{ env.RELEASE_BRANCH }}
+          git push -u origin ${{ env.RELEASE_BRANCH }}
 
-      - name: Open Release Branch PR
+      - name: Create Release Pull Request
         env:
-          GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr create --base master --head ${{ env.RELEASE_BRANCH }} --title "Added: Create release branch v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --body "This PR includes the latest version for release v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --repo ${{ github.repository }}
-
-      - name: Get Release PR Number
-        id: release_pr_number
-        env:
-          GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
-        run: |
-          RELEASE_PR_NUMBER=$(gh pr list --base master --head ${{ env.RELEASE_BRANCH }} --state open --json number -q '.[0].number')
-          echo "RELEASE_PR_NUMBER=$RELEASE_PR_NUMBER" >> $GITHUB_ENV
-
-      - name: Merge Release Branch to master
-        env:
-          GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
-        run: |
-          gh pr merge ${{ env.RELEASE_PR_NUMBER }} --auto --merge
-
-      - name: Delete Release Branch
-        env:
-          GH_TOKEN: ${{ secrets.MY_GH_TOKEN }}
-        run: |
-          git push origin --delete ${{ env.RELEASE_BRANCH }}
+          gh pr create --base master --head ${{ env.RELEASE_BRANCH }} --title "Added: Create release candidate v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --body "This PR includes the latest version for release v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --reviewer "F4bioo"
