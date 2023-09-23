@@ -13,6 +13,10 @@ fi
 versionCode=$(grep "const val versionCode" $CONFIG_FILE | awk '{print $5}')
 versionName=$(grep "const val versionName" $CONFIG_FILE | awk '{print $5}' | tr -d \")
 
+# Debug: Imprimir valores extraídos
+echo "versionCode extraído: $versionCode"
+echo "versionName extraído: $versionName"
+
 # Verificar se os valores foram extraídos corretamente
 if [[ -z "$versionCode" || -z "$versionName" ]]; then
     echo "Não foi possível extrair versionCode ou versionName do arquivo Config.kt."
@@ -28,6 +32,10 @@ fi
 newVersionCode=$((versionCode + 1))
 current_date=$(date +"%Y.%m.%d")
 newVersionName="$current_date"
+
+# Debug: Imprimir novos valores
+echo "Novo versionCode: $newVersionCode"
+echo "Novo versionName: $newVersionName"
 
 # Atualizar Config.kt com novos valores
 sed -i.bak "s/const val versionCode: Int = $versionCode/const val versionCode: Int = $newVersionCode/" $CONFIG_FILE
