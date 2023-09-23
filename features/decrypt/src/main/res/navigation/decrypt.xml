@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/decrypt"
     android:label="Decrypt"
-    app:startDestination="@id/decryptFragment">
+    app:startDestination="@id/decryptFragment"
+    tools:ignore="ResourceName">
 
 
     <fragment
         android:id="@+id/decryptFragment"
         android:name="com.fappslab.features.decrypt.presentation.DecryptFragment"
         android:label="Decrypt"
-        tools:layout="@layout/fragment_decrypt" />
+        tools:layout="@layout/decrypt_fragment" />
 </navigation>

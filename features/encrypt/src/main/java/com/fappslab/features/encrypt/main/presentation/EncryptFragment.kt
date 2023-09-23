@@ -12,12 +12,13 @@ import com.fappslab.features.encrypt.main.presentation.adapter.SpaceTokenizer
 import com.fappslab.features.encrypt.main.presentation.extension.getEncryptParams
 import com.fappslab.features.encrypt.main.presentation.extension.showLoadingDialog
 import com.fappslab.features.encrypt.main.presentation.extension.showPassphraseMismatchErrorDialog
+import com.fappslab.features.encrypt.main.presentation.model.ProgressType.Progress2
 import com.fappslab.features.encrypt.main.presentation.viewmodel.EncryptViewAction
 import com.fappslab.features.encrypt.main.presentation.viewmodel.EncryptViewModel
 import com.fappslab.features.encrypt.result.presentation.model.ResultArgs
 import com.fappslab.libraries.security.bip39words.Bip39Words
 import com.fappslab.seedcake.features.encrypt.R
-import com.fappslab.seedcake.features.encrypt.databinding.FragmentEncryptBinding
+import com.fappslab.seedcake.features.encrypt.databinding.EncryptFragmentBinding
 import com.fappslab.seedcake.libraries.arch.koin.koinlazy.KoinLazy
 import com.fappslab.seedcake.libraries.arch.koin.koinlazy.subModules
 import com.fappslab.seedcake.libraries.arch.koin.koinload.KoinLoad
@@ -35,9 +36,9 @@ import org.koin.core.scope.Scope
 
 private const val DELIMITERS = " "
 
-internal class EncryptFragment : Fragment(R.layout.fragment_encrypt), KoinLazy {
+internal class EncryptFragment : Fragment(R.layout.encrypt_fragment), KoinLazy {
 
-    private val binding: FragmentEncryptBinding by viewBinding()
+    private val binding: EncryptFragmentBinding by viewBinding()
     private val viewModel: EncryptViewModel by viewModel()
     private val bip39Words: Bip39Words by inject()
 
@@ -106,7 +107,7 @@ internal class EncryptFragment : Fragment(R.layout.fragment_encrypt), KoinLazy {
     }
 
     private fun progressStepState(progress: Int) {
-        setFragmentResult(PROGRESS_KEY, pair = "progress2" to progress)
+        setFragmentResult(REQUEST_KEY_PROGRESS, pair = Progress2.name to progress)
     }
 
     private fun showPassphraseMismatchErrorDialogState(shouldShow: Boolean) {

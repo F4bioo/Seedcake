@@ -65,8 +65,8 @@ internal fun EditText.onAfterTextChanged(changeBLock: (String) -> Unit) {
 
 internal fun ViewPager2.setTabName(tabLayout: TabLayout) {
     val texts = listOf(
-        context.getString(R.string.unlock_encrypted_seed),
-        context.getString(R.string.unlock_colored_seed)
+        context.getString(R.string.decrypt_unlock_encrypted_seed),
+        context.getString(R.string.decrypt_unlock_colored_seed)
     )
     TabLayoutMediator(tabLayout, this) { tab, position ->
         tab.text = texts[position]

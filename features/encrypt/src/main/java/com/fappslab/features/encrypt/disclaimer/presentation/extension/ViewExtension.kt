@@ -12,8 +12,8 @@ internal fun DisclaimerFragment.showDisclaimerErrorDialog(
     primaryBlock: () -> Unit
 ) {
     plutoFeedbackDialog {
-        titleRes = R.string.dialog_title_consent_unconfirmed
-        messageRes = R.string.dialog_message_consent_unconfirmed
+        titleRes = R.string.encrypt_dialog_title_consent_unconfirmed
+        messageRes = R.string.encrypt_dialog_message_consent_unconfirmed
         primaryButton = {
             buttonAction = primaryBlock
         }

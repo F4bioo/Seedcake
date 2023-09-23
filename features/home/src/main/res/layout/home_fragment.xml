@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <include layout="@layout/include_placeholder" />
+            <include layout="@layout/home_include_placeholder" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_seeds"
@@ -26,7 +26,7 @@
                 android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="5"
-                tools:listitem="@layout/adapter_item" />
+                tools:listitem="@layout/home_adapter_item" />
 
         </ViewFlipper>
 

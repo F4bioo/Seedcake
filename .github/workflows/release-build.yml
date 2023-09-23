@@ -6,7 +6,19 @@ on:
       - master
 
 jobs:
+  check-actor:
+    name: Check Actor
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Authorized User
+        run: |
+          if [[ "${{ github.actor }}" != "F4bioo" ]]; then
+            echo "Unauthorized user. Exiting."
+            exit 1
+          fi
+
   check_job_flag:
+    needs: check-actor
     name: Check Job Flag
     runs-on: ubuntu-latest
     steps:

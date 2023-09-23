@@ -30,6 +30,10 @@ fun <T> Fragment.setFragmentResult(requestKey: String, pair: Pair<String, T?>) {
     activity?.supportFragmentManager?.setFragmentResult(requestKey, bundleOf(pair))
 }
 
+fun Fragment.setFragmentResult(requestKey: String, result: Bundle) {
+    activity?.supportFragmentManager?.setFragmentResult(requestKey, result)
+}
+
 fun Fragment.addBackPressedCallback(
     enabled: Boolean = true,
     onBackPressed: () -> Unit

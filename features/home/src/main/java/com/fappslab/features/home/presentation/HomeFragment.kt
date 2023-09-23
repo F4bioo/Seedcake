@@ -11,7 +11,7 @@ import com.fappslab.features.home.presentation.adapter.HomeAdapter
 import com.fappslab.features.home.presentation.viewmodel.HomeViewAction
 import com.fappslab.features.home.presentation.viewmodel.HomeViewModel
 import com.fappslab.seedcake.features.home.R
-import com.fappslab.seedcake.features.home.databinding.FragmentHomeBinding
+import com.fappslab.seedcake.features.home.databinding.HomeFragmentBinding
 import com.fappslab.seedcake.libraries.arch.koin.koinlazy.KoinLazy
 import com.fappslab.seedcake.libraries.arch.koin.koinlazy.subModules
 import com.fappslab.seedcake.libraries.arch.koin.koinload.KoinLoad
@@ -23,9 +23,9 @@ import org.koin.androidx.scope.fragmentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.scope.Scope
 
-class HomeFragment : Fragment(R.layout.fragment_home), KoinLazy {
+class HomeFragment : Fragment(R.layout.home_fragment), KoinLazy {
 
-    private val binding: FragmentHomeBinding by viewBinding()
+    private val binding: HomeFragmentBinding by viewBinding()
     private val viewModel: HomeViewModel by viewModel()
     private val detailsNavigation: DetailsNavigation by inject()
     private val encryptNavigation: EncryptNavigation by inject()

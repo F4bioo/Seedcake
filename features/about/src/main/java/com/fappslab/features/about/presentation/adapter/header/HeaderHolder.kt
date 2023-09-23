@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.fappslab.features.about.presentation.model.Header
 import com.fappslab.features.about.presentation.model.OnItem
-import com.fappslab.seedcake.features.about.databinding.AdapterHeaderBinding
+import com.fappslab.seedcake.features.about.databinding.AboutAdapterHeaderBinding
 import com.fappslab.seedcake.libraries.arch.adapter.BaseViewHolder
 import com.fappslab.seedcake.libraries.arch.adapter.OnBaseItemClicked
 
 internal class HeaderHolder(
-    private val binding: AdapterHeaderBinding,
+    private val binding: AboutAdapterHeaderBinding,
     private val itemClicked: OnBaseItemClicked<OnItem>
 ) : BaseViewHolder<Header>(binding.root) {
 
@@ -25,7 +25,7 @@ internal class HeaderHolder(
     companion object {
         fun create(parent: ViewGroup, itemClicked: OnBaseItemClicked<OnItem>): HeaderHolder {
             val inflater = LayoutInflater.from(parent.context)
-            val binding = AdapterHeaderBinding.inflate(inflater, parent, false)
+            val binding = AboutAdapterHeaderBinding.inflate(inflater, parent, false)
 
             return HeaderHolder(binding, itemClicked)
         }

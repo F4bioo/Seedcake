@@ -79,7 +79,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/check_eye">
 
-                <include layout="@layout/include_lines" />
+                <include layout="@layout/decrypt_include_lines" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/text_readable_seed"

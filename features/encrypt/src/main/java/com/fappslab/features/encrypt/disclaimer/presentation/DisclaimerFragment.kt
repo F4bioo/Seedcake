@@ -8,9 +8,10 @@ import com.fappslab.features.encrypt.disclaimer.di.DisclaimerModuleLoad
 import com.fappslab.features.encrypt.disclaimer.presentation.extension.showDisclaimerErrorDialog
 import com.fappslab.features.encrypt.disclaimer.presentation.viewmodel.DisclaimerViewAction
 import com.fappslab.features.encrypt.disclaimer.presentation.viewmodel.DisclaimerViewModel
-import com.fappslab.features.encrypt.main.presentation.PROGRESS_KEY
+import com.fappslab.features.encrypt.main.presentation.REQUEST_KEY_PROGRESS
+import com.fappslab.features.encrypt.main.presentation.model.ProgressType.Progress1
 import com.fappslab.seedcake.features.encrypt.R
-import com.fappslab.seedcake.features.encrypt.databinding.FragmentDisclaimerBinding
+import com.fappslab.seedcake.features.encrypt.databinding.EncryptFragmentDisclaimerBinding
 import com.fappslab.seedcake.libraries.arch.koin.koinlazy.KoinLazy
 import com.fappslab.seedcake.libraries.arch.koin.koinlazy.subModules
 import com.fappslab.seedcake.libraries.arch.koin.koinload.KoinLoad
@@ -23,9 +24,9 @@ import org.koin.androidx.scope.fragmentScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.scope.Scope
 
-internal class DisclaimerFragment : Fragment(R.layout.fragment_disclaimer), KoinLazy {
+internal class DisclaimerFragment : Fragment(R.layout.encrypt_fragment_disclaimer), KoinLazy {
 
-    private val binding: FragmentDisclaimerBinding by viewBinding()
+    private val binding: EncryptFragmentDisclaimerBinding by viewBinding()
     private val viewModel: DisclaimerViewModel by viewModel()
 
     override val scope: Scope by fragmentScope()
@@ -63,7 +64,7 @@ internal class DisclaimerFragment : Fragment(R.layout.fragment_disclaimer), Koin
     }
 
     private fun progressStepState(progress: Int) {
-        setFragmentResult(PROGRESS_KEY, pair = "progress1" to progress)
+        setFragmentResult(REQUEST_KEY_PROGRESS, pair = Progress1.name to progress)
     }
 
     private fun checkBoxConfirmState(isConfirmChecked: Boolean) {

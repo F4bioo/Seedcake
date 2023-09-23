@@ -8,6 +8,8 @@ apply from: "$rootDir/plugins/android-build.gradle"
 android {
     namespace "${Config.applicationId}.features.preferences"
 
+    resourcePrefix "preferences"
+
     buildFeatures {
         viewBinding true
     }
