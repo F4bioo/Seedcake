@@ -1,5 +1,5 @@
 #!/bin/sh
-source menuselect.sh
+source ./menuselect.sh
 
 # Jump to repository root
 cd "$(git rev-parse --show-toplevel)"
