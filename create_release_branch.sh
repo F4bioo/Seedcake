@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Global variables
+declare new_prefix
+declare current_date
+declare versionCode
+
 # Constants
 CONFIG_FILE="buildSrc/src/main/java/Config.kt"
 
@@ -50,7 +55,7 @@ commit_and_push() {
   git commit -m "$commit_message"
 
   # Create new release branch
-  new_branch="release/$new_prefix.$current_date_$versionCode"
+  new_branch="release/${new_prefix}.${current_date}_${versionCode}"
   git checkout -b $new_branch
 
   # Ask if user wants to push immediately
