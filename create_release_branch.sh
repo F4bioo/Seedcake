@@ -20,6 +20,11 @@ if [[ -z "$versionCode" || -z "$versionName" ]]; then
 fi
 
 # Gerar novo versionCode e versionName
+if ! [[ "$versionCode" =~ ^[0-9]+$ ]]; then
+    echo "O versionCode não é um número válido."
+    exit 1
+fi
+
 newVersionCode=$((versionCode + 1))
 current_date=$(date +"%Y.%m.%d")
 newVersionName="$current_date"
