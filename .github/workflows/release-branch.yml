@@ -39,12 +39,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.MY_GH_TOKEN }}    
+          token: ${{ secrets.MY_GH_TOKEN }}
+
+      - name: Setup Git Config
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
 
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: '3.x'
+
+      - name: Merge develop into staging
+        run: |
+          git checkout staging
+          git fetch origin develop
+          git merge origin/develop
+          git push origin staging
 
       - name: Generate version details
         run: python scripts/version-bump.py
@@ -63,8 +75,6 @@ jobs:
         run: |
           git checkout staging
           git checkout -b ${{ env.BUMP_BRANCH }}
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
           git add buildSrc/src/main/java/Config.kt
           git commit -m "Changed: Bump app version v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}"
           git push origin ${{ env.BUMP_BRANCH }}
@@ -96,13 +106,11 @@ jobs:
           git push origin --delete ${{ env.BUMP_BRANCH }}
 
       - name: Create Release Branch
-        run: |            
-            git checkout staging
-            git pull --rebase
-            git checkout -b ${{ env.RELEASE_BRANCH }}
-            git config --local user.email "action@github.com"
-            git config --local user.name "GitHub Action"
-            git push origin ${{ env.RELEASE_BRANCH }}
+        run: |
+          git checkout staging
+          git pull --rebase
+          git checkout -b ${{ env.RELEASE_BRANCH }}
+          git push origin ${{ env.RELEASE_BRANCH }}
 
       - name: Open Release Branch PR
         env:
