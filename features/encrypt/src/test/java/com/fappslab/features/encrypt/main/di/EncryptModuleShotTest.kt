@@ -7,7 +7,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-internal class EncryptModuleShotTest : KoinModuleTest(EncryptModuleShot) {
+internal class EncryptModuleShotTest : KoinModuleTest(EncryptModuleShot()) {
 
     @get:Rule
     override val coroutineTestRule = CoroutineTestRule()

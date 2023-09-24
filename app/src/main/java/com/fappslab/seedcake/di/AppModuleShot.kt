@@ -5,7 +5,7 @@ import com.fappslab.seedcake.libraries.arch.koin.koinshot.KoinShot
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-object AppModuleShot : KoinShot() {
+internal class AppModuleShot : KoinShot() {
 
     override val domainModule: Module = module {
         factory { GetScreenShieldStateUseCase(repository = get()) }
