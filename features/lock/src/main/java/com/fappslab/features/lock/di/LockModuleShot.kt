@@ -6,7 +6,7 @@ import com.fappslab.seedcake.libraries.arch.koin.koinshot.KoinShot
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-internal object LockModuleShot : KoinShot() {
+internal class LockModuleShot : KoinShot() {
 
     override val additionalModule: Module = module {
         factory<LockNavigation> { LockNavigationImpl() }

@@ -10,7 +10,7 @@ import org.junit.Test
 import org.koin.dsl.module
 
 @ExperimentalCoroutinesApi
-class AppModuleShotTest : KoinModuleTest(AppModuleShot) {
+class AppModuleShotTest : KoinModuleTest(AppModuleShot()) {
 
     @get:Rule
     override val coroutineTestRule = CoroutineTestRule()

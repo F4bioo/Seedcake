@@ -11,7 +11,7 @@ import org.junit.Test
 import org.koin.dsl.module
 
 @ExperimentalCoroutinesApi
-internal class SecurityModuleShotTest : KoinModuleTest(SecurityModuleShot) {
+internal class SecurityModuleShotTest : KoinModuleTest(SecurityModuleShot()) {
 
     @get:Rule
     override val coroutineTestRule = CoroutineTestRule()
