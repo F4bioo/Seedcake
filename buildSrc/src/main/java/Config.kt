@@ -5,6 +5,6 @@ object Config {
     const val applicationId: String = packageName
     const val minSdk: Int = 28
     const val targetSdk: Int = 33
-    const val versionCode: Int = 309240204
+    const val versionCode: Int = 309240228
     const val versionName: String = "1.2023.09.24"
 }
