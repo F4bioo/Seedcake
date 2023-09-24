@@ -84,6 +84,10 @@ jobs:
         run: |
           echo "${{ secrets.PGP_PASSPHRASE }}" | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 --armor --detach-sign app/build/outputs/apk/release/app-release.apk
 
+      - name: Sign AAB with PGP
+        run: |
+          echo "${{ secrets.PGP_PASSPHRASE }}" | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 --armor --detach-sign app/build/outputs/bundle/release/app-release.aab
+
       - name: Rename APK and PGP Signature
         run: |
           mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/Seedcake-v${{ env.VERSION_NAME }}-release.apk
@@ -134,7 +138,7 @@ jobs:
           asset_name: Seedcake-v${{ env.VERSION_NAME }}-release.aab
           asset_content_type: application/vnd.android.package-archive
 
-      - name: Upload PGP Signature Release Asset
+      - name: Upload PGP Signature Release Asset for APK
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -142,6 +146,16 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: app/build/outputs/apk/release/Seedcake-v${{ env.VERSION_NAME }}-release.apk.asc
           asset_name: Seedcake-v${{ env.VERSION_NAME }}-release.apk.asc
+          asset_content_type: application/pgp-signature
+
+      - name: Upload PGP Signature Release Asset for AAB
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: app/build/outputs/bundle/release/Seedcake-v${{ env.VERSION_NAME }}-release.aab.asc
+          asset_name: Seedcake-v${{ env.VERSION_NAME }}-release.aab.asc
           asset_content_type: application/pgp-signature
 
       - name: Upload SHA256SUM Release Asset
