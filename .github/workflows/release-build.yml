@@ -62,7 +62,7 @@ jobs:
 
       - name: Create Release Tag Name
         run: |
-          echo "RELEASE_TAG=v${{ env.VERSION_NAME }}-b${{ env.VERSION_CODE }}" >> $GITHUB_ENV
+          echo "RELEASE_TAG=v${{ env.VERSION_NAME }}(b${{ env.VERSION_CODE }})" >> $GITHUB_ENV
 
       - name: Decode Keystore File
         run: |
