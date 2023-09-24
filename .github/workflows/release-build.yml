@@ -73,6 +73,10 @@ jobs:
         run: |
           ./gradlew assembleRelease -PkeyAlias="${{ secrets.KEY_ALIAS }}" -PkeyPassword="${{ secrets.KEY_PASSWORD }}" -PstoreFile=./keystore/seedcake_app_key_store.jks -PstorePassword="${{ secrets.STORE_PASSWORD }}"
 
+      - name: Build AAB
+        run: |
+          ./gradlew bundleRelease -PkeyAlias="${{ secrets.KEY_ALIAS }}" -PkeyPassword="${{ secrets.KEY_PASSWORD }}" -PstoreFile=./keystore/seedcake_app_key_store.jks -PstorePassword="${{ secrets.STORE_PASSWORD }}"
+
       - name: Import PGP Key
         run: echo "${{ secrets.PGP_PRIVATE_KEY }}" | gpg --batch --import
 
@@ -85,10 +89,15 @@ jobs:
           mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/Seedcake-v${{ env.VERSION_NAME }}-release.apk
           mv app/build/outputs/apk/release/app-release.apk.asc app/build/outputs/apk/release/Seedcake-v${{ env.VERSION_NAME }}-release.apk.asc
 
+      - name: Rename AAB and PGP Signature
+        run: |
+          mv app/build/outputs/bundle/release/app-release.aab app/build/outputs/bundle/release/Seedcake-v${{ env.VERSION_NAME }}-release.aab
+          mv app/build/outputs/bundle/release/app-release.aab.asc app/build/outputs/bundle/release/Seedcake-v${{ env.VERSION_NAME }}-release.aab.asc
+
       - name: Execute SHA256SUM Script
         run: |
           chmod +x scripts/sha256-sum.sh
-          PGP_PASSPHRASE="${{ secrets.PGP_PASSPHRASE }}" scripts/sha256-sum.sh app/build/outputs/apk/release/Seedcake-v${{ env.VERSION_NAME }}-release.apk
+          PGP_PASSPHRASE="${{ secrets.PGP_PASSPHRASE }}" VERSION_NAME="${{ env.VERSION_NAME }}" scripts/sha256-sum.sh app/build/outputs/apk/release/Seedcake-v${{ env.VERSION_NAME }}-release.apk app/build/outputs/bundle/release/Seedcake-v${{ env.VERSION_NAME }}-release.aab
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
           VERSION_NAME: ${{ env.VERSION_NAME }}
@@ -113,6 +122,16 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: app/build/outputs/apk/release/Seedcake-v${{ env.VERSION_NAME }}-release.apk
           asset_name: Seedcake-v${{ env.VERSION_NAME }}-release.apk
+          asset_content_type: application/vnd.android.package-archive
+
+      - name: Upload AAB Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: app/build/outputs/bundle/release/Seedcake-v${{ env.VERSION_NAME }}-release.aab
+          asset_name: Seedcake-v${{ env.VERSION_NAME }}-release.aab
           asset_content_type: application/vnd.android.package-archive
 
       - name: Upload PGP Signature Release Asset

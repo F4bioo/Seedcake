@@ -36,3 +36,8 @@ google-services.json
 # Temp checksum files
 temp_checksum
 temp_checksum_modified
+
+# Exclude app bundle
+app/debug/
+app/release/
+app/staging/
