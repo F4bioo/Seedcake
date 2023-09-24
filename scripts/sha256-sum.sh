@@ -9,15 +9,8 @@ rm -f $temp_checksum $output_file
 # Loop to generate SHA256 for each file path provided as an argument
 for full_path in "$@"
 do
-    # Generate the SHA256 checksum
-    checksum_output=$(sha256sum $full_path)
-
-    # Extract the checksum and filename
-    checksum=$(echo $checksum_output | awk '{print $1}')
-    filename=$(basename $full_path)
-
-    # Append the formatted checksum and filename to the temporary file
-    echo "$checksum    $filename" >> $temp_checksum
+    # Generate the SHA256 checksum and append it to the temporary file
+    sha256sum $full_path >> $temp_checksum
 done
 
 # Generate the PGP signature for the checksum file
