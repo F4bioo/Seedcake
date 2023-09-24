@@ -1,4 +1,4 @@
-name: Title Checker
+name: Check Title
 
 on:
   pull_request:

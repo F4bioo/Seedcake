@@ -1,4 +1,4 @@
-name: Create Release Branch
+name: Release Branch
 
 on:
   workflow_dispatch:
@@ -50,7 +50,7 @@ jobs:
       - name: Generate version details
         run: python scripts/version-bump.py
 
-      - name: Read Bumped File
+      - name: Read Config File
         id: version_details
         run: |
           echo "VERSION_CODE=$(grep 'const val versionCode' buildSrc/src/main/java/Config.kt | awk -F '=' '{print $2}' | tr -d ' ')" >> $GITHUB_ENV

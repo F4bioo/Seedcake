@@ -22,7 +22,7 @@ import org.koin.dsl.module
 object SecurePrefsQualifier : KoinQualifier
 object SimplePrefsQualifier : KoinQualifier
 
-internal object LocalModuleShot : KoinShot() {
+internal class LocalModuleShot : KoinShot() {
 
     override val dataModule: Module = module {
         single<SeedcakeDao> {
