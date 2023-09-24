@@ -7,6 +7,8 @@
 Welcome to <strong>Seedcake</strong> 🌱🍰, a secure and open-source solution for storing your Bitcoin seed phrases based on Bip-39. This project was born out of the need for a flexible yet secure alternative in scenarios where conventional physical storage methods like crypto steel 🤘, paper 🧻 etc... are impractical or risky.
 <br clear="left"/>
 
+<a href='https://play.google.com/store/apps/details?id=com.fappslab.seedcake'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width='200'/></a>
+
 ## The Sacred Place of Self-Custody 🛡️
 
 There's no doubt that self-custody is more than just a buzzword in the world of cryptocurrencies; it's a philosophy and, for many, a way of life. The security that comes with the physical storage of your seed phrases is unmatched. The cold touch of crypto steel can represent more than just material; it is the tangibility of your financial autonomy.
