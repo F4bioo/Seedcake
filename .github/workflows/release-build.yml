@@ -113,6 +113,17 @@ jobs:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
           VERSION_NAME: ${{ env.VERSION_NAME }}
 
+      - name: Create Temp Debug Artifacts Folder
+        run: mkdir -p temp_debug_artifacts
+
+      - name: Create Versioned Mapping
+        run: |
+          mv app/build/outputs/mapping/release/mapping.txt 'temp_debug_artifacts/mapping-v${{ env.RELEASE_TAG }}.txt'
+
+      - name: Create Zip Native Libraries
+        run: |
+          zip -r 'temp_debug_artifacts/libs-v${{ env.RELEASE_TAG }}.zip' app/build/intermediates/merged_native_libs/release/out/lib/*
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -174,17 +185,6 @@ jobs:
           asset_path: app/build/outputs/apk/release/SHA256SUM-v${{ env.VERSION_NAME }}.asc
           asset_name: SHA256SUM-v${{ env.VERSION_NAME }}.asc
           asset_content_type: application/pgp-signature
-
-      - name: Create Temp Debug Artifacts Folder
-        run: mkdir -p temp_debug_artifacts
-
-      - name: Create Versioned Mapping
-        run: |
-          mv app/build/outputs/mapping/release/mapping.txt 'temp_debug_artifacts/mapping-v${{ env.RELEASE_TAG }}.txt'
-
-      - name: Create Zip Native Libraries
-        run: |
-          zip -r temp_debug_artifacts/libs-v${{ env.RELEASE_TAG }}.zip app/build/intermediates/merged_native_libs/release/out/lib/*
 
       - name: Upload Debug Artifacts to Google Play
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
