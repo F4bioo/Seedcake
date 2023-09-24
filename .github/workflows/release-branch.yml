@@ -50,12 +50,15 @@ jobs:
       - name: Generate version details
         run: python scripts/version-bump.py
 
-      - name: Read New Version Details From File
+      - name: Read Bumped File
         id: version_details
         run: |
           echo "VERSION_CODE=$(grep 'const val versionCode' buildSrc/src/main/java/Config.kt | awk -F '=' '{print $2}' | tr -d ' ')" >> $GITHUB_ENV
           echo "VERSION_NAME=$(grep 'const val versionName' buildSrc/src/main/java/Config.kt | awk -F '=' '{print $2}' | tr -d ' \"')" >> $GITHUB_ENV
-          echo "RELEASE_BRANCH=release/${VERSION_NAME}_${VERSION_CODE}" >> $GITHUB_ENV
+
+      - name: Create Release Branch Name
+        run: |
+          echo "RELEASE_BRANCH=release/${{ env.VERSION_NAME }}_${{ env.VERSION_CODE }}" >> $GITHUB_ENV
 
       - name: Setup Git Local Configs
         run: |
