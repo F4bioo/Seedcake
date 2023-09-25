@@ -93,10 +93,10 @@ fun View.invisible() {
     isInvisible = true
 }
 
-fun Context.gotoPlayStore(appId: String? = null) {
+fun Context.gotoPlayStore(appId: String = "com.fappslab.seedcake") {
     val intent = Intent(Intent.ACTION_VIEW)
     try {
-        intent.data = Uri.parse("market://details?id=${appId ?: packageName}")
+        intent.data = Uri.parse("market://details?id=${appId}")
         startActivity(intent)
     } catch (_: ActivityNotFoundException) {
         intent.data = Uri.parse("https://play.google.com/store/apps/details?id=$appId")
