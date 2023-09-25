@@ -2,7 +2,6 @@ package com.fappslab.features.encrypt.main.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.fappslab.features.common.domain.usecase.EncryptSeedUseCase
-import com.fappslab.features.common.domain.usecase.IsValidPassphraseUseCase
 import com.fappslab.features.encrypt.main.presentation.extension.formValidation
 import com.fappslab.features.encrypt.main.presentation.model.EncryptParams
 import com.fappslab.features.encrypt.result.presentation.model.ResultArgs
@@ -11,11 +10,11 @@ import com.fappslab.seedcake.libraries.arch.exceptions.InvalidEntropyLengthExcep
 import com.fappslab.seedcake.libraries.arch.exceptions.InvalidMnemonicSeedException
 import com.fappslab.seedcake.libraries.arch.viewmodel.ViewModel
 import com.fappslab.seedcake.libraries.extension.isNull
+import com.fappslab.seedcake.libraries.extension.isValidPassphrase
 import kotlinx.coroutines.launch
 
 internal class EncryptViewModel(
     private val encryptSeedUseCase: EncryptSeedUseCase,
-    private val isValidPassphraseUseCase: IsValidPassphraseUseCase
 ) : ViewModel<EncryptViewState, EncryptViewAction>(EncryptViewState()) {
 
     fun onAfterChangeAlias() {
@@ -24,14 +23,14 @@ internal class EncryptViewModel(
 
     fun onAfterChangePassphrase1(passphrase: String) {
         val errorRes = passphrase.takeUnless { it.isEmpty() }
-            ?.takeIf { isValidPassphraseUseCase(it).not() }
+            ?.takeIf { it.isValidPassphrase().not() }
             ?.let { R.string.encrypt_passphrase_strength_requirements }
         onState { it.copy(passphrase1ErrorRes = errorRes) }
     }
 
     fun onAfterChangePassphrase2(passphrase: String) {
         val errorRes = passphrase.takeUnless { it.isEmpty() }
-            ?.takeIf { isValidPassphraseUseCase(it).not() }
+            ?.takeIf { it.isValidPassphrase().not() }
             ?.let { R.string.encrypt_passphrase_strength_requirements }
         onState { it.copy(passphrase2ErrorRes = errorRes) }
     }

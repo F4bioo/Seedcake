@@ -10,6 +10,7 @@ import com.fappslab.seedcake.libraries.arch.exceptions.InvalidEncryptedSeedExcep
 import com.fappslab.seedcake.libraries.arch.exceptions.InvalidEntropyLengthException
 import com.fappslab.seedcake.libraries.arch.exceptions.InvalidMnemonicSeedException
 import com.fappslab.seedcake.libraries.arch.exceptions.InvalidPassphraseException
+import com.fappslab.seedcake.libraries.extension.isValidPassphrase
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withTimeout
 import java.security.SecureRandom
@@ -21,8 +22,6 @@ import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
 
-private const val SECURE_PASSPHRASE_REGEX =
-    "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"
 private const val CIPHER_TRANSFORMATION = "AES/CBC/PKCS5Padding"
 private const val KEY_DERIVATION_ALGORITHM = "PBKDF2WithHmacSHA256"
 private const val SECRET_KEY_ALGORITHM = "AES"
@@ -66,7 +65,7 @@ class CryptoManagerImpl(private val wordList: List<String>) : CryptoManager {
 
         return runCatching {
             withTimeout(TIMEOUT_DURATION) {
-                val iv = encryptedData.sliceArray(0 until IV_BYTE_ARRAY_SIZE)
+                val iv = encryptedData.sliceArray(indices = 0 until IV_BYTE_ARRAY_SIZE)
                 val data = encryptedData.sliceArray(IV_BYTE_ARRAY_SIZE until encryptedData.size)
                 val secretKey = generateSecretKey(passphrase)
                 val cipher = createCipher(Cipher.DECRYPT_MODE, secretKey, iv)
@@ -98,10 +97,6 @@ class CryptoManagerImpl(private val wordList: List<String>) : CryptoManager {
         return Cipher.getInstance(CIPHER_TRANSFORMATION).apply {
             init(mode, secretKey, IvParameterSpec(iv))
         }
-    }
-
-    private fun String.isValidPassphrase(): Boolean {
-        return SECURE_PASSPHRASE_REGEX.toRegex().matches(this)
     }
 
     private fun String.toCommonValidation() {
