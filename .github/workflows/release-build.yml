@@ -116,12 +116,12 @@ jobs:
           VERSION_NAME: ${{ env.VERSION_NAME }}
 
       - name: Create Temp Artifacts Folder
-        run: mkdir -p temp_artifacts
+        run: mkdir -p $GITHUB_WORKSPACE/temp_artifacts
 
       - name: Create Zip Native Libraries
         run: |
-          ARTIFACTS_PATH="temp_artifacts/libs-v${{ env.RELEASE_TAG }}.zip"
           cd app/build/intermediates/merged_native_libs/release/out/lib
+          ARTIFACTS_PATH="$GITHUB_WORKSPACE/temp_artifacts/libs-v${{ env.RELEASE_TAG }}.zip"
           zip -r $ARTIFACTS_PATH .
           cd -
 
