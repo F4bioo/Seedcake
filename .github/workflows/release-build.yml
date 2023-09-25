@@ -64,7 +64,7 @@ jobs:
 
       - name: Create Release Tag Name
         run: |
-          echo "RELEASE_TAG=${{ env.VERSION_NAME }}\(b${{ env.VERSION_CODE }}\)" >> $GITHUB_ENV
+          echo "RELEASE_TAG=${{ env.VERSION_NAME }}(b${{ env.VERSION_CODE }})" >> $GITHUB_ENV
 
       - name: Decode Keystore File
         run: |
@@ -120,7 +120,7 @@ jobs:
 
       - name: Create Zip Native Libraries
         run: |
-          ARTIFACTS_PATH=temp_artifacts/libs-v${{ env.RELEASE_TAG }}.zip
+          ARTIFACTS_PATH="temp_artifacts/libs-v${{ env.RELEASE_TAG }}.zip"
           cd app/build/intermediates/merged_native_libs/release/out/lib
           zip -r $ARTIFACTS_PATH .
           cd -
