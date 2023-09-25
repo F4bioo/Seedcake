@@ -80,4 +80,4 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh pr create --base master --head ${{ env.RELEASE_BRANCH }} --title "Added: Create release candidate v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --body "This PR includes the latest version for release v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --reviewer "F4bioo"
+          gh pr create --base master --head ${{ env.RELEASE_BRANCH }} --title "Deploy: Merge final release v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --body "This PR includes the latest version for release v${{ env.VERSION_NAME }} build ${{ env.VERSION_CODE }}" --reviewer "F4bioo"
