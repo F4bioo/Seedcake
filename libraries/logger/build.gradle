@@ -21,4 +21,7 @@ android {
 dependencies {
     // Libs
     implementation(libs.timber)
+
+    // Modules
+    implementation project(Modules.extension)
 }
