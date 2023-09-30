@@ -8,7 +8,7 @@ plugins {
 apply from: "$rootDir/plugins/android-build.gradle"
 apply from: "$rootDir/config/detekt/detekt-build.gradle"
 
-def keystorePropertiesFile = rootProject.file("$rootDir/keystore/keystore.properties")
+def keystorePropertiesFile = rootProject.file("$rootDir/keystore-artifacts/keystore.properties")
 
 android {
     namespace Config.namespace
