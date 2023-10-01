@@ -66,9 +66,9 @@ The seed phrase should consist of a specific number of words: 12 or 24, which ar
 ### Encryption Example 🔒
 
 A seed like:  
-`abandon banana captain dancer eagle fabric galaxy habitat ice jacket kangaroo lantern`
+`abandon banana captain dance eagle fabric galaxy habit ice jacket kangaroo language`
 
-Would have this type of encrypted seed `ctRNV3s5qm7v1D4LM2otDKcgpwemLSJJrRye5thXfymgxjQ6RHEoW8XNpAzXrZDKIb49NqP+5ZcgjujuoFxRNPh/WsCACU91zC1+3VI6L8tt9qPZgKm8omiazyI5XuXe`
+Would have this type of encrypted seed `UpJznEz6pF3eci4UCxwCOROTp4vXd9MWnRyBTQ0uIK7qohfWDeufTJsBFtRE0S9tUH7vaid2+cKDZxI8sLVrVTctLjr3diijjouZCfaAigpPuEWrX2NwW9T8OZAtPU4m84CmfAfAXiOrg4rf3vCs3w==`
 
 ### Decryption Features 🛠️
 
@@ -79,12 +79,12 @@ When you need to recover your seed, Seedcake not only decrypts the seed phrase b
 This feature was written in Kotlin based on the project repository [BIP39 Colors](https://github.com/enteropositivo/bip39colors) created by [@EnteroPositivo](https://twitter.com/EnteroPositivo) under the [CC By](https://github.com/EnteroPositivo/bip39Colors/blob/main/LICENSE.md) license, which assigns a unique color palette to your seed phrase, providing a less secure, alternative method to store or even memorize your seed.
 
 A seed like:  
-`abandon banana captain dancer eagle fabric galaxy habitat ice jacket kangaroo lantern`
+`abandon banana captain dance eagle fabric galaxy habit ice jacket kangaroo language`
 
 Would have this kind of colored seed  
-`#7B3A20 #B88F4D #9DCA22 #637F4C #3DB4E5 #242ACE #000065 #E0C6F1`
+`#B88F4D #9DCA22 #3DB611 #63A65C #258A72 #000065 #7B3AE8 #E0C6F8`
 
-<img src="sources/colored-seed.jpg" width="400" />
+<img src="sources/colored-seed.png" width="400" />
 
 ### Light and Dark Theme App Screenshots 🎨
 
