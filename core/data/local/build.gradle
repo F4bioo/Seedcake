@@ -1,7 +1,7 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.kotlinKapt)
 }
 apply from: "$rootDir/plugins/android-build.gradle"
 
@@ -24,12 +24,6 @@ android {
     }
     buildFeatures {
         buildConfig true
-    }
-    lint {
-        abortOnError false
-        checkReleaseBuilds false
-        disable 'MissingTranslation', 'ExtraTranslation'
-        xmlReport true
     }
 }
 

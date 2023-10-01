@@ -10,6 +10,7 @@ import android.provider.MediaStore.Images
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.core.content.FileProvider
+import com.fappslab.seedcake.libraries.extension.orFalse
 import java.io.File
 import java.io.FileOutputStream
 
@@ -55,7 +56,10 @@ fun View.saveToGallery(
 
         val uri = contentResolver.insert(Images.Media.EXTERNAL_CONTENT_URI, imageDetails)
         val outputStream = uri?.let(contentResolver::openOutputStream)
-        val result = bitmap.compress(format, COMPRESSION, outputStream)
+        val result = outputStream?.let { stream ->
+            bitmap.compress(format, COMPRESSION, stream)
+        }.orFalse()
+
         outputStream?.flush()
         outputStream?.close()
 

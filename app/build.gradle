@@ -1,9 +1,9 @@
 import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
-    id 'androidx.navigation.safeargs.kotlin'
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.navigationSafeArgsKotlin)
 }
 apply from: "$rootDir/plugins/android-build.gradle"
 apply from: "$rootDir/config/detekt/detekt-build.gradle"

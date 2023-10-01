@@ -1,6 +1,7 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.kotlinParcelize)
 }
 apply from: "$rootDir/plugins/android-build.gradle"
 
@@ -9,12 +10,6 @@ android {
 
     buildFeatures {
         viewBinding true
-    }
-    lint {
-        abortOnError false
-        checkReleaseBuilds false
-        disable 'MissingTranslation', 'ExtraTranslation'
-        xmlReport true
     }
 }
 
