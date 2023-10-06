@@ -29,11 +29,9 @@ internal class DecryptViewModel(
     fun onDecryptSeed(passphrase: String) {
         val encryptedSeed = state.value.encryptedSeed.orEmpty()
         viewModelScope.launch {
-            onState { it.copy(shouldShowProgressDialog = true) }.runCatching {
-                decryptSeedUseCase(
-                    encryptedSeed, passphrase
-                )
-            }.onFailure { unlockSeedFailure(cause = it) }
+            onState { it.copy(shouldShowProgressDialog = true) }
+                .runCatching { decryptSeedUseCase(encryptedSeed, passphrase) }
+                .onFailure { unlockSeedFailure(cause = it) }
                 .onSuccess { onAction { DecryptViewAction.UnlockedSeed(readableSeed = it) } }
                 .also { onState { it.copy(shouldShowProgressDialog = false) } }
         }
@@ -114,9 +112,15 @@ internal class DecryptViewModel(
 
     fun onUnlockSeed() {
         when (pageType) {
-            PageType.EncryptedSeed -> onAction { DecryptViewAction.Validation }
+            PageType.EncryptedSeed -> decryptSeedOrNotify()
             PageType.ColoredSeed -> decodeSeedColor()
         }
+    }
+
+    private fun decryptSeedOrNotify() = state.value.run {
+        if (encryptedSeed.isNullOrEmpty()) {
+            onState { it.copy(inputSeedErrorRes = R.string.blank_encrypted_seed_error) }
+        } else onAction { DecryptViewAction.Validation }
     }
 
     fun onOpenAppSettings() {

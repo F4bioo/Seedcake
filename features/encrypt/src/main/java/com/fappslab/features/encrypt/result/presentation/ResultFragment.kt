@@ -10,6 +10,7 @@ import com.fappslab.features.encrypt.main.presentation.REQUEST_KEY_PROGRESS
 import com.fappslab.features.encrypt.main.presentation.model.ProgressType.Progress3
 import com.fappslab.features.encrypt.result.di.ResultModuleLoad
 import com.fappslab.features.encrypt.result.presentation.extension.showFullEncryptedSeedModal
+import com.fappslab.features.encrypt.result.presentation.extension.showWhatSeeingDialog
 import com.fappslab.features.encrypt.result.presentation.viewmodel.ResultViewAction
 import com.fappslab.features.encrypt.result.presentation.viewmodel.ResultViewModel
 import com.fappslab.features.encrypt.result.presentation.viewmodel.ResultViewState
@@ -67,6 +68,7 @@ internal class ResultFragment : Fragment(R.layout.encrypt_fragment_result), Koin
         onViewAction(viewModel) { action ->
             when (action) {
                 ResultViewAction.FinishView -> activity?.finish()
+                ResultViewAction.WhatSeeing -> showWhatSeeingDialog()
                 is ResultViewAction.Copy -> activity?.copyToClipboard(data = action.encryptedSeed)
             }
         }
@@ -103,7 +105,8 @@ internal class ResultFragment : Fragment(R.layout.encrypt_fragment_result), Koin
             shouldShowFullEncryptedSeedModal,
             args.encryptedSeed,
             viewModel::onFullEncryptedSeedVisibility,
-            viewModel::onCopy
+            viewModel::onCopy,
+            viewModel::onWhatSeeing
         )
     }
 

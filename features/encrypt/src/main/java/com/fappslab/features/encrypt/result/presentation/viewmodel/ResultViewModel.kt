@@ -49,6 +49,10 @@ internal class ResultViewModel(
         onAction { ResultViewAction.Copy(args.encryptedSeed) }
     }
 
+    fun onWhatSeeing() {
+        onAction { ResultViewAction.WhatSeeing }
+    }
+
     fun onClose() {
         onAction { ResultViewAction.FinishView }
     }

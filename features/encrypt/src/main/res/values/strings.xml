@@ -6,7 +6,7 @@
     <string name="encrypt_passphrase_mismatch_message">The entered passphrases do not match. Please ensure you enter the same passphrase in both fields.</string>
     <string name="encrypt_passphrase">Passphrase</string>
     <string name="encrypt_seed_bip_39">Mnemonic seed (BIP-39)</string>
-    <string name="encrypt_seeds_example">Eg: abandon baby cabbage dad eager fabric gadget habit ice jacket kangaroo lab…</string>
+    <string name="encrypt_seeds_example">Eg: abandon banana captain dance eagle fabric galaxy habit ice jacket kangaroo language…</string>
     <string name="encrypt">Encrypt</string>
 
     <!--Disclaimer-->

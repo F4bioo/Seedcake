@@ -1,17 +1,11 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlinAndroid)
 }
 apply from: "$rootDir/plugins/android-build.gradle"
 
 android {
     namespace "${Config.applicationId}.libraries.test"
-    lint {
-        abortOnError false
-        checkReleaseBuilds false
-        disable 'MissingTranslation', 'ExtraTranslation'
-        xmlReport true
-    }
 }
 
 dependencies {

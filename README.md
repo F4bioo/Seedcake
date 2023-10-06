@@ -37,25 +37,27 @@ The true effectiveness in self-custody in an uncertain world isn't a matter of "
 
 Seedcake is designed with trust as its core. Being an open-source project, it allows for audits, ensuring that the code can be examined to confirm its safety and reliability, and is open for contributions for improvements.
 
-#### Encryption Algorithm: AES/CBC/PKCS5Padding
+### How It Works: A Simplified Overview
 
-The AES (Advanced Encryption Standard) algorithm is a standard choice for symmetric cipher operations and is recognized for its robustness and performance. In CBC mode (Cipher Block Chaining), each block of plaintext is XORed with the previous ciphertext block before being encrypted, enhancing security. PKCS5Padding is used to pad the blocks, ensuring the data fits perfectly into the block size.
+#### Encryption Algorithm
 
-#### Key Derivation Algorithm: PBKDF2 with HmacSHA256
+We use a secure, standard encryption method (AES/GCM) to keep your data safe. It's like a secure lockbox for your information.
 
-PBKDF2 (Password-Based Key Derivation Function 2) is a standard algorithm for deriving secure keys from a password. We use the SHA-256 hash algorithm in conjunction with HMAC to provide an additional layer of security. This approach makes brute-force or rainbow table attacks much more difficult.
+#### Key Derivation
 
-#### Key Size: 256 bits
+Your password goes through a process that makes it even stronger. This adds an extra layer of security, making it hard for anyone to break in.
 
-The symmetric key used for encryption and decryption is 256 bits in size. This is the maximum key size for AES and is considered secure for most current applications.
+#### Key Size
 
-#### Number of Key Derivation Iterations: 65,536
+We use a strong, 256-bit key for the encryption. Think of it like a really complicated key that's hard to duplicate.
 
-The entered password undergoes 65,536 iterations of the PBKDF2 key derivation algorithm. This is done to add a "computational cost" factor to the process, making brute-force attacks significantly more time-consuming and, therefore, impractical.
+#### Number of Iterations
 
-#### Initialization Vector (IV) Size: 16 bytes
+Your password is processed multiple times (200,000 iterations) to make it even more secure. This makes it time-consuming for anyone trying to guess your password.
 
-A 16-byte Initialization Vector (IV) is randomly generated for each new encryption operation. Using a different IV for each encryption is crucial to ensure that the same plaintext is not encrypted to the same ciphertext in different runs.
+#### IV and Salt Size
+
+We also use random data to make the encryption unique every time. This ensures that even if you encrypt the same data twice, it will look different each time.
 
 ### Requirements for Seed Phrase and Passphrase
 
@@ -65,10 +67,21 @@ The seed phrase should consist of a specific number of words: 12 or 24, which ar
 
 ### Encryption Example 🔒
 
-A seed like:  
-`abandon banana captain dancer eagle fabric galaxy habitat ice jacket kangaroo lantern`
+A seed like:
+`abandon banana captain dance eagle fabric galaxy habit ice jacket kangaroo language`
 
-Would have this type of encrypted seed `ctRNV3s5qm7v1D4LM2otDKcgpwemLSJJrRye5thXfymgxjQ6RHEoW8XNpAzXrZDKIb49NqP+5ZcgjujuoFxRNPh/WsCACU91zC1+3VI6L8tt9qPZgKm8omiazyI5XuXe`
+Would have this type of encrypted seed:
+`a5qjuKiSIR49DL0WeD1caGA6jbIufP/G82hIYpV5b5Evtjj1QNZwsMKGRM6SRgzh8IYlYVHfDVyBAyuXvCsFsGKuksr8a/7bf9zPwikG7d51Ygtq/wb3L2OHq2mjznO7RTjTf+/aaG7Y/8xLegSwUnaWHRj+Ut9w1Pv/FaiN1A==:ENDeyJjcyI6IkdDTSIsImlzIjoxMiwia2EiOiJBRVMiLCJrYiI6MjU2LCJrZCI6IlBIUzUxMiIsImtpIjoyMDAwMDAsInNzIjoxNn0=`
+
+#### Breaking It Down
+
+- The first part (before `:END`) is your encrypted seed. It's the locked-up version of your seed phrase.  
+  `a5qjuKiSIR49DL0WeD1ca...Rj+Ut9w1Pv/FaiN1A==`
+
+- The second part (after `:END`) is what we call metadata. It's like the instruction manual for unlocking the seed, but it's not actually part of the seed itself.  
+  `:ENDeyJjcyI6IkdDTSIs...MDAwMDAsInNzIjoxNn0=`
+
+The second part appears less visible to indicate that it's not the seed, but it's essential for decrypting it.
 
 ### Decryption Features 🛠️
 
@@ -78,13 +91,13 @@ When you need to recover your seed, Seedcake not only decrypts the seed phrase b
 
 This feature was written in Kotlin based on the project repository [BIP39 Colors](https://github.com/enteropositivo/bip39colors) created by [@EnteroPositivo](https://twitter.com/EnteroPositivo) under the [CC By](https://github.com/EnteroPositivo/bip39Colors/blob/main/LICENSE.md) license, which assigns a unique color palette to your seed phrase, providing a less secure, alternative method to store or even memorize your seed.
 
-A seed like:  
-`abandon banana captain dancer eagle fabric galaxy habitat ice jacket kangaroo lantern`
+A seed like:
+`abandon banana captain dance eagle fabric galaxy habit ice jacket kangaroo language`
 
-Would have this kind of colored seed  
-`#7B3A20 #B88F4D #9DCA22 #637F4C #3DB4E5 #242ACE #000065 #E0C6F1`
+Would have this kind of colored seed:
+`#B88F4D #9DCA22 #3DB611 #63A65C #258A72 #000065 #7B3AE8 #E0C6F8`
 
-<img src="sources/colored-seed.jpg" width="400" />
+<img src="sources/colored-seed.png" width="400" />
 
 ### Light and Dark Theme App Screenshots 🎨
 

@@ -37,7 +37,6 @@ jobs:
           echo "Extracted DESCRIPTION: $DESCRIPTION"
 
           ERROR_MESSAGE=""
-
           if [[ ! "$TAG" =~ ^(Added|Changed|Fixed)$ ]]; then
             ERROR_MESSAGE=$(cat .github/markdown/check-title-error-message-tag.md)
           elif [[ ! "$PR_TITLE" =~ ^(Added|Changed|Fixed):\  ]]; then

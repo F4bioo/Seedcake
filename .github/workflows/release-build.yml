@@ -18,7 +18,6 @@ jobs:
           fi
 
   check_job_flag:
-    needs: check-actor
     name: Check Job Flag
     runs-on: ubuntu-latest
     steps:
@@ -26,16 +25,81 @@ jobs:
         run: |
           echo "Current Job Flag value is: ${{ vars.SHOULD_CREATE_RELEASE }}"
 
-  build:
-    needs: check_job_flag
+  app-version:
+    needs: check-actor
     if: ${{ vars.SHOULD_CREATE_RELEASE == 'true' }}
+    name: App Version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Read Config File
+        run: |
+          echo "VERSION_CODE=$(grep 'const val versionCode' buildSrc/src/main/java/Config.kt | awk -F '=' '{print $2}' | tr -d ' ')" >> $GITHUB_ENV
+          echo "VERSION_NAME=$(grep 'const val versionName' buildSrc/src/main/java/Config.kt | awk -F '=' '{print $2}' | tr -d ' \"')" >> $GITHUB_ENV
+
+      - name: Create Release Tag
+        run: echo "RELEASE_TAG=${{ env.VERSION_NAME }}(b${{ env.VERSION_CODE }})" >> $GITHUB_ENV
+
+      - name: Create Version Artifacts Folder
+        run: mkdir -p version-artifacts
+
+      - name: Create Version Code File
+        run: echo "${{ env.VERSION_CODE }}" > $GITHUB_WORKSPACE/version-artifacts/version_code.txt
+
+      - name: Create Version Name File
+        run: echo "${{ env.VERSION_NAME }}" > $GITHUB_WORKSPACE/version-artifacts/version_name.txt
+
+      - name: Create Release Tag File
+        run: echo "${{ env.RELEASE_TAG }}" > $GITHUB_WORKSPACE/version-artifacts/release_tag.txt
+
+      - name: List Upload Version Artifacts
+        run: ls -l version-artifacts
+
+      - name: Upload Version Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          retention-days: 1
+          name: app-version
+          path: version-artifacts
+
+  keystore-decode:
+    needs: check-actor
+    if: ${{ vars.SHOULD_CREATE_RELEASE == 'true' }}
+    name: Keystore Decode
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Keystore Artifacts Folder
+        run: mkdir -p keystore-artifacts
+
+      - name: Decode Keystore File
+        run: echo "${{ secrets.STORE_FILE_BASE64 }}" | base64 --decode > keystore-artifacts/seedcake_app_key_store.jks
+
+      - name: Create Keystore Properties
+        run: |
+          echo "STORE_FILE = keystore/seedcake_app_key_store.jks" >> keystore-artifacts/keystore.properties
+          echo "STORE_PASSWORD = ${{ secrets.STORE_PASSWORD }}" >> keystore-artifacts/keystore.properties
+          echo "KEY_PASSWORD = ${{ secrets.KEY_PASSWORD }}" >> keystore-artifacts/keystore.properties
+          echo "KEY_ALIAS = ${{ secrets.KEY_ALIAS }}" >> keystore-artifacts/keystore.properties
+
+      - name: List Upload Keystore Artifacts
+        run: ls -l keystore-artifacts
+
+      - name: Upload Keystore Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          retention-days: 1
+          name: keystore-decode
+          path: keystore-artifacts
+
+  app-build:
+    needs: [ app-version, keystore-decode ]
     name: App Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: Cache Gradle dependencies
         uses: actions/cache@v2
@@ -44,8 +108,7 @@ jobs:
             ~/.gradle/caches
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+          restore-keys: ${{ runner.os }}-gradle-
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -53,84 +116,191 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      - name: Grant execute permission for gradlew
+      - name: Grant Gradlew Permission
         run: chmod +x gradlew
 
-      - name: Read Config File
-        id: version_details
-        run: |
-          echo "VERSION_CODE=$(grep 'const val versionCode' buildSrc/src/main/java/Config.kt | awk -F '=' '{print $2}' | tr -d ' ')" >> $GITHUB_ENV
-          echo "VERSION_NAME=$(grep 'const val versionName' buildSrc/src/main/java/Config.kt | awk -F '=' '{print $2}' | tr -d ' \"')" >> $GITHUB_ENV
+      - name: Download App Version Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: app-version
+          path: version-artifacts
 
-      - name: Create Release Tag Name
-        run: |
-          echo "RELEASE_TAG=${{ env.VERSION_NAME }}(b${{ env.VERSION_CODE }})" >> $GITHUB_ENV
+      - name: Download Keystore Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: keystore-decode
+          path: keystore-artifacts
 
-      - name: Decode Keystore File
-        run: |
-          mkdir -p keystore
-          echo "${{ secrets.STORE_FILE_BASE64 }}" | base64 --decode > keystore/seedcake_app_key_store.jks
+      - name: List Download App Version Artifacts
+        run: ls -l version-artifacts
 
-      - name: Create Keystore Properties
-        run: |
-          echo "STORE_FILE=./keystore/seedcake_app_key_store.jks" >> keystore/keystore.properties
-          echo "STORE_PASSWORD=${{ secrets.STORE_PASSWORD }}" >> keystore/keystore.properties
-          echo "KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}" >> keystore/keystore.properties
-          echo "KEY_ALIAS=${{ secrets.KEY_ALIAS }}" >> keystore/keystore.properties
+      - name: List Download Keystore Artifacts
+        run: ls -l keystore-artifacts
+
+      - name: Create Keystore Folder
+        run: mkdir -p keystore
+
+      - name: Move Keystore Artifacts Files
+        run: mv keystore-artifacts/* keystore/
+
+      - name: List Keystore Files
+        run: ls -l keystore
 
       - name: Build APK
-        run: |
-          ./gradlew assembleRelease -PkeyAlias="${{ secrets.KEY_ALIAS }}" -PkeyPassword="${{ secrets.KEY_PASSWORD }}" -PstoreFile=./keystore/seedcake_app_key_store.jks -PstorePassword="${{ secrets.STORE_PASSWORD }}"
+        run: ./gradlew assembleRelease
 
       - name: Build AAB
+        run: ./gradlew bundleRelease
+
+      - name: Read Version Name File
+        run: echo "VERSION_NAME=$(cat version-artifacts/version_name.txt)" >> $GITHUB_ENV
+
+      - name: Create App Build Artifacts Folder
+        run: mkdir -p build-artifacts
+
+      - name: Move Builds Files to build-artifacts
         run: |
-          ./gradlew bundleRelease -PkeyAlias="${{ secrets.KEY_ALIAS }}" -PkeyPassword="${{ secrets.KEY_PASSWORD }}" -PstoreFile=./keystore/seedcake_app_key_store.jks -PstorePassword="${{ secrets.STORE_PASSWORD }}"
+          mv app/build/outputs/apk/release/app-release.apk build-artifacts/Seedcake-v${{ env.VERSION_NAME }}-release.apk
+          mv app/build/outputs/bundle/release/app-release.aab build-artifacts/Seedcake-v${{ env.VERSION_NAME }}-release.aab      
+
+      - name: Read Release Tag File
+        run: echo "RELEASE_TAG=$(cat version-artifacts/release_tag.txt)" >> $GITHUB_ENV
+
+      - name: Create Server Artifacts Folder
+        run: mkdir -p server_artifacts
+
+      - name: Create Native Debug Symbols Zip File
+        run: |
+          cd app/build/intermediates/merged_native_libs/release/out/lib
+          NATIVE_SYMBOLS_PATH="$GITHUB_WORKSPACE/server_artifacts/libs-v${{ env.RELEASE_TAG }}.zip"
+          zip -r $NATIVE_SYMBOLS_PATH .
+          cd -
+
+      - name: List Upload App Build Artifacts
+        run: ls -l build-artifacts
+
+      - name: List Upload Native Debug Symbols Artifacts
+        run: ls -l server_artifacts
+
+      - name: Upload App Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          retention-days: 1
+          name: app-build
+          path: |
+            build-artifacts
+            server_artifacts
+
+  sign-pgp:
+    needs: [ app-build, app-version ]
+    name: Sign PGP
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download App Version Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: app-version
+          path: version-artifacts
+
+      - name: Download App Build Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: app-build
+
+      - name: List Download App Version Artifacts
+        run: ls -l version-artifacts
+
+      - name: List Download App Build Artifacts
+        run: ls -l build-artifacts
+
+      - name: Read Version Name File
+        run: echo "VERSION_NAME=$(cat version-artifacts/version_name.txt)" >> $GITHUB_ENV
 
       - name: Import PGP Key
         run: echo "${{ secrets.PGP_PRIVATE_KEY }}" | gpg --batch --import
 
       - name: Sign APK with PGP
-        run: |
-          echo "${{ secrets.PGP_PASSPHRASE }}" | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 --armor --detach-sign app/build/outputs/apk/release/app-release.apk
+        run: echo "${{ secrets.PGP_PASSPHRASE }}" | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 --armor --detach-sign build-artifacts/Seedcake-v${{ env.VERSION_NAME }}-release.apk
 
       - name: Sign AAB with PGP
-        run: |
-          echo "${{ secrets.PGP_PASSPHRASE }}" | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 --armor --detach-sign app/build/outputs/bundle/release/app-release.aab
+        run: echo "${{ secrets.PGP_PASSPHRASE }}" | gpg --batch --yes --pinentry-mode loopback --passphrase-fd 0 --armor --detach-sign build-artifacts/Seedcake-v${{ env.VERSION_NAME }}-release.aab
 
-      - name: Rename APK and PGP Signature
-        run: |
-          mv app/build/outputs/apk/release/app-release.apk app/build/outputs/apk/release/Seedcake-v${{ env.VERSION_NAME }}-release.apk
-          mv app/build/outputs/apk/release/app-release.apk.asc app/build/outputs/apk/release/Seedcake-v${{ env.VERSION_NAME }}-release.apk.asc
-
-      - name: Rename AAB and PGP Signature
-        run: |
-          mv app/build/outputs/bundle/release/app-release.aab app/build/outputs/bundle/release/Seedcake-v${{ env.VERSION_NAME }}-release.aab
-          mv app/build/outputs/bundle/release/app-release.aab.asc app/build/outputs/bundle/release/Seedcake-v${{ env.VERSION_NAME }}-release.aab.asc
+      - name: Grant Script Permission
+        run: chmod +x scripts/sha256-sum.sh
 
       - name: Execute SHA256SUM Script
-        run: |
-          chmod +x scripts/sha256-sum.sh
-          PGP_PASSPHRASE="${{ secrets.PGP_PASSPHRASE }}" VERSION_NAME="${{ env.VERSION_NAME }}" scripts/sha256-sum.sh app/build/outputs/apk/release/Seedcake-v${{ env.VERSION_NAME }}-release.apk app/build/outputs/bundle/release/Seedcake-v${{ env.VERSION_NAME }}-release.aab
+        run: PGP_PASSPHRASE="${{ secrets.PGP_PASSPHRASE }}" VERSION_NAME="${{ env.VERSION_NAME }}" scripts/sha256-sum.sh build-artifacts/Seedcake-v${{ env.VERSION_NAME }}-release.apk build-artifacts/Seedcake-v${{ env.VERSION_NAME }}-release.aab
         env:
           PGP_PASSPHRASE: ${{ secrets.PGP_PASSPHRASE }}
           VERSION_NAME: ${{ env.VERSION_NAME }}
 
-      - name: Create Temp Artifacts Folder
-        run: mkdir -p $GITHUB_WORKSPACE/temp_artifacts
+      - name: List Upload PGP Sign Artifacts
+        run: ls -l build-artifacts
 
-      - name: Create Zip Native Libraries
-        run: |
-          cd app/build/intermediates/merged_native_libs/release/out/lib
-          ARTIFACTS_PATH="$GITHUB_WORKSPACE/temp_artifacts/libs-v${{ env.RELEASE_TAG }}.zip"
-          zip -r $ARTIFACTS_PATH .
-          cd -
+      - name: Upload PGP Sign Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          retention-days: 1
+          name: sign-pgp
+          path: |
+            build-artifacts
+            server_artifacts
+
+  app-deploy:
+    needs: sign-pgp
+    name: App Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Download App Version Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: app-version
+          path: version-artifacts
+
+      - name: Download Sign PGP Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: sign-pgp
+
+      - name: List Download App Version Artifacts
+        run: ls -l version-artifacts
+
+      - name: List Download App Build Artifact
+        run: ls -l build-artifacts
+
+      - name: List Download Server Artifacts
+        run: ls -l server_artifacts
+
+      - name: Read Version Code File
+        run: echo "VERSION_CODE=$(cat version-artifacts/version_code.txt)" >> $GITHUB_ENV
+
+      - name: Read Version Name File
+        run: echo "VERSION_NAME=$(cat version-artifacts/version_name.txt)" >> $GITHUB_ENV
+
+      - name: Read Release Tag File
+        run: echo "RELEASE_TAG=$(cat version-artifacts/release_tag.txt)" >> $GITHUB_ENV
 
       - name: Create Release Notes
         run: |
-          git log $(git describe --tags --abbrev=0)..HEAD --pretty=format:"- %s %b" --abbrev-commit | grep -v -E "^- Deploy:" > TEMP_RELEASE_NOTES.md
-          RELEASE_NOTES=$(cat TEMP_RELEASE_NOTES.md)
+          set -e
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null) || true
+          IGNORED_SUFFIXES=$(awk 'NF { $1=$1; print }' .github/markdown/release-build-ignore-suffixes.md | awk 'BEGIN { ORS = "|" } { print }' | sed 's/|$//')
+          if [ -z "$LAST_TAG" ]; then
+            RELEASE_NOTES="- Initial Release: We're Live! 🎈"
+          else
+            git log ${LAST_TAG}..HEAD --pretty=format:"- %s %b" --abbrev-commit | grep -v -E "^- (${IGNORED_SUFFIXES}):" > TEMP_RELEASE_NOTES.md
+            RELEASE_NOTES=$(cat TEMP_RELEASE_NOTES.md)
+          fi
           export RELEASE_NOTES
-          envsubst < .github/markdown/build-release-message.md > FINAL_RELEASE_NOTES.md
+          envsubst < .github/markdown/release-build-message.md > FINAL_RELEASE_NOTES.md
 
       - name: Create Release
         id: create_release
@@ -150,7 +320,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: app/build/outputs/apk/release/Seedcake-v${{ env.VERSION_NAME }}-release.apk
+          asset_path: build-artifacts/Seedcake-v${{ env.VERSION_NAME }}-release.apk
           asset_name: Seedcake-v${{ env.VERSION_NAME }}-release.apk
           asset_content_type: application/vnd.android.package-archive
 
@@ -160,7 +330,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: app/build/outputs/bundle/release/Seedcake-v${{ env.VERSION_NAME }}-release.aab
+          asset_path: build-artifacts/Seedcake-v${{ env.VERSION_NAME }}-release.aab
           asset_name: Seedcake-v${{ env.VERSION_NAME }}-release.aab
           asset_content_type: application/vnd.android.package-archive
 
@@ -170,7 +340,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: app/build/outputs/apk/release/Seedcake-v${{ env.VERSION_NAME }}-release.apk.asc
+          asset_path: build-artifacts/Seedcake-v${{ env.VERSION_NAME }}-release.apk.asc
           asset_name: Seedcake-v${{ env.VERSION_NAME }}-release.apk.asc
           asset_content_type: application/pgp-signature
 
@@ -180,7 +350,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: app/build/outputs/bundle/release/Seedcake-v${{ env.VERSION_NAME }}-release.aab.asc
+          asset_path: build-artifacts/Seedcake-v${{ env.VERSION_NAME }}-release.aab.asc
           asset_name: Seedcake-v${{ env.VERSION_NAME }}-release.aab.asc
           asset_content_type: application/pgp-signature
 
@@ -190,15 +360,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: app/build/outputs/apk/release/SHA256SUM-v${{ env.VERSION_NAME }}.asc
+          asset_path: build-artifacts/SHA256SUM-v${{ env.VERSION_NAME }}.asc
           asset_name: SHA256SUM-v${{ env.VERSION_NAME }}.asc
           asset_content_type: application/pgp-signature
 
-      - name: Upload Debug Artifacts for Google Play
+      - name: Upload Server Artifacts
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
           server-dir: ${{ secrets.FTP_SERVER_DIR }}
-          local-dir: "temp_artifacts/"
+          local-dir: "server_artifacts/"
