@@ -20,14 +20,14 @@ import kotlin.test.assertTrue
 internal object SeedcakeRepositoryImplFixtures {
 
     const val SEED =
-        "advance above add acoustic almost ability action adjust across alert absurd abandon"
+        "abandon banana captain dance eagle fabric galaxy habit ice jacket kangaroo language"
 
     const val ENCRYPTED =
-        "ugJSPh2YxlUMSeTJn8n1ubXCEhSkf88ya1RxJAn4GmYVEss05x/jwCoanmHwF+43AesOsgiYrmVw9z7hOwptHwMEr6Al+7w9rQ7rFaGDSkUBrmGwxYDBSxyUYxSfIJzrAOdI1JMVuok7g+161399aA=="
+        "a5qjuKiSIR49DL0WeD1caGA6jbIufP/G82hIYpV5b5Evtjj1QNZwsMKGRM6SRgzh8IYlYVHfDVyBAyuXvCsFsGKuksr8a/7bf9zPwikG7d51Ygtq/wb3L2OHq2mjznO7RTjTf+/aaG7Y/8xLegSwUnaWHRj+Ut9w1Pv/FaiN1A==:ENDeyJjcyI6IkdDTSIsImlzIjoxMiwia2EiOiJBRVMiLCJrYiI6MjU2LCJrZCI6IlBIUzUxMiIsImtpIjoyMDAwMDAsInNzIjoxNn0="
 
     const val PALETTE =
-        "(#D6FF11, #000000), (#63F1F2, #000000), (#1F47EA, #FFFFFF), (#000C80, #FFFFFF), (#3D0FA4, #FFFFFF), (#B72E88, #FFFFFF), (#9D0363, #FFFFFF), (#7A1A34, #FFFFFF)"
-    const val COLORED = "#D6FF11 #63F1F2 #1F47EA #000C80 #3D0FA4 #B72E88 #9D0363 #7A1A34"
+        "(#B88F4D, #000000), (#9DCA22, #000000), (#3DB611, #FFFFFF), (#63A65C, #000000), (#258A72, #FFFFFF), (#000065, #FFFFFF), (#7B3AE8, #FFFFFF), (#E0C6F8, #000000)"
+    const val COLORED = "#B88F4D #9DCA22 #3DB611 #63A65C #258A72 #000065 #7B3AE8 #E0C6F8"
 
     const val PASSPHRASE = "Seedc@k3"
 
@@ -63,7 +63,7 @@ internal object SeedcakeRepositoryImplFixtures {
             id = 1,
             alias = "Trezor wallet",
             date = "10-Aug-2023, 02:15 PM",
-            encryptedSeed = "UMDJ3sMCSF9q42IGeFmkSrUhpckbUiVPZR06eBGEApI6uvYKFdADW6i…"
+            encryptedSeed = "a5qjuKiSIR49DL0WeD1caGA6jbIufP/G82hIYpV5b5Evtjj1QNZwsMKGRM6SRgzh…"
         )
 
     fun String.toColorPairs(): List<Pair<String, String>> {

@@ -16,16 +16,20 @@ import com.fappslab.seedcake.libraries.arch.simplepermission.extension.permissio
 import com.fappslab.seedcake.libraries.arch.simplepermission.launcher.PermissionLauncher
 import com.fappslab.seedcake.libraries.arch.simplepermission.model.PermissionStatus
 import com.fappslab.seedcake.libraries.design.pluto.activity.qrcode.creator.PlutoQrcodeCreator
+import com.fappslab.seedcake.libraries.design.pluto.fragment.dialog.GravityType
+import com.fappslab.seedcake.libraries.design.pluto.fragment.dialog.build
+import com.fappslab.seedcake.libraries.design.pluto.fragment.dialog.plutoFeedbackDialog
 import com.fappslab.seedcake.libraries.design.pluto.fragment.modal.build
 import com.fappslab.seedcake.libraries.design.pluto.fragment.modal.plutoFeedbackModal
 import com.fappslab.seedcake.libraries.design.pluto.fragment.progress.build
 import com.fappslab.seedcake.libraries.design.pluto.fragment.progress.plutoProgressDialog
 import com.fappslab.seedcake.libraries.extension.image.saveToGallery
 import com.fappslab.seedcake.libraries.extension.isNull
-import com.fappslab.seedcake.libraries.extension.toHighlightFirstFive
+import com.fappslab.seedcake.libraries.extension.toHighlightBothEndsBeforeMetadata
 
 private const val FILE_NAME = "color_palette"
 private const val TAG_FULL_ENCRYPTED_SEED_MODAL = "showFullEncryptedSeedModal"
+private const val TAG_WHAT_SEEING_DIALOG = "showWhatSeeingDialog"
 private const val TAG_INFO_MODAL = "showInfoModal"
 private const val TAG_DELETE_SEED_MODAL = "showDeleteSeedModal"
 private const val TAG_EDIT_ALIAS_MODAL = "showEditAliasModal"
@@ -37,17 +41,36 @@ internal fun Fragment.showFullEncryptedSeedModal(
     shouldShow: Boolean,
     encryptedSeed: String,
     closeBlock: (Boolean) -> Unit,
-    primaryBlock: () -> Unit
+    primaryBlock: () -> Unit,
+    secondaryBlock: () -> Unit,
 ) {
+
+    val message = context?.toHighlightBothEndsBeforeMetadata(encryptedSeed)
+
     plutoFeedbackModal {
         titleRes = R.string.encrypted_seed
-        messageSpanned = encryptedSeed.toHighlightFirstFive()
+        messageSpanned = message
         closeButton = { closeBlock(false) }
         primaryButton = {
             buttonTextRes = R.string.common_copy
             buttonAction = primaryBlock
         }
+        tertiaryButton = {
+            buttonTextRes = R.string.common_what_seeing
+            buttonAction = secondaryBlock
+        }
     }.build(shouldShow, childFragmentManager, TAG_FULL_ENCRYPTED_SEED_MODAL)
+}
+
+internal fun Fragment.showWhatSeeingDialog() {
+    plutoFeedbackDialog {
+        gravityDialog = GravityType.Center
+        titleRes = R.string.common_what_seeing
+        messageRes = R.string.common_encrypted_seed_explanation
+        primaryButton = {
+            buttonAction = { dismissAllowingStateLoss() }
+        }
+    }.build(manager = childFragmentManager, tag = TAG_WHAT_SEEING_DIALOG)
 }
 
 internal fun Fragment.showInfoModal(

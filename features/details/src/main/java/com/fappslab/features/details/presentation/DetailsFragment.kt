@@ -18,6 +18,7 @@ import com.fappslab.features.details.presentation.extensions.showFullEncryptedSe
 import com.fappslab.features.details.presentation.extensions.showInfoModal
 import com.fappslab.features.details.presentation.extensions.showLoadingDialog
 import com.fappslab.features.details.presentation.extensions.showUnlockSeedErrorModal
+import com.fappslab.features.details.presentation.extensions.showWhatSeeingDialog
 import com.fappslab.features.details.presentation.viewmodel.DecryptParams
 import com.fappslab.features.details.presentation.viewmodel.DetailsViewAction
 import com.fappslab.features.details.presentation.viewmodel.DetailsViewModel
@@ -84,6 +85,7 @@ internal class DetailsFragment : Fragment(R.layout.details_fragment), KoinLazy {
                 DetailsViewAction.Validation -> showValidationDialogAction()
                 DetailsViewAction.RequestPermission -> requestPermissionAction()
                 DetailsViewAction.GrantedPermission -> saveToGalleryAction()
+                DetailsViewAction.WhatSeeing -> showWhatSeeingDialog()
                 DetailsViewAction.OpenAppSettings -> context?.openApplicationSettings()
                 is DetailsViewAction.Decrypted -> decryptedAction(action.params)
                 is DetailsViewAction.Copy -> activity?.copyToClipboard(data = action.encryptedSeed)
@@ -140,7 +142,8 @@ internal class DetailsFragment : Fragment(R.layout.details_fragment), KoinLazy {
             shouldShowFullEncryptedSeedModal,
             args.encryptedSeed,
             viewModel::onFullEncryptedSeedVisibility,
-            viewModel::onCopy
+            viewModel::onCopy,
+            viewModel::onWhatSeeing
         )
     }
 

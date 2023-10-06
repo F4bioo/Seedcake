@@ -1,5 +1,7 @@
 package com.fappslab.libraries.security.cryptography
 
+import com.fappslab.libraries.security.cryptography.model.MetadataPreset
+import com.fappslab.libraries.security.cryptography.model.StrongGCM
 import com.fappslab.seedcake.libraries.arch.exceptions.BlankEncryptedSeedException
 import com.fappslab.seedcake.libraries.arch.exceptions.BlankPassphraseException
 import com.fappslab.seedcake.libraries.arch.exceptions.BlankSeedException
@@ -10,6 +12,7 @@ import com.fappslab.seedcake.libraries.arch.exceptions.InvalidEncryptedSeedExcep
 import com.fappslab.seedcake.libraries.arch.exceptions.InvalidEntropyLengthException
 import com.fappslab.seedcake.libraries.arch.exceptions.InvalidMnemonicSeedException
 import com.fappslab.seedcake.libraries.arch.exceptions.InvalidPassphraseException
+import com.fappslab.seedcake.libraries.extension.METADATA_TAG
 import com.fappslab.seedcake.libraries.extension.isValidPassphrase
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.withTimeout
@@ -18,21 +21,17 @@ import java.util.Base64
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
 import javax.crypto.SecretKeyFactory
-import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.PBEKeySpec
 import javax.crypto.spec.SecretKeySpec
 
-private const val CIPHER_TRANSFORMATION = "AES/CBC/PKCS5Padding"
-private const val KEY_DERIVATION_ALGORITHM = "PBKDF2WithHmacSHA256"
-private const val SECRET_KEY_ALGORITHM = "AES"
-private const val KEY_DERIVATION_ITERATION_COUNT = 65536
-private const val SECRET_KEY_BIT_LENGTH = 256
-private const val IV_BYTE_ARRAY_SIZE = 16
 private const val TIMEOUT_DURATION = 10_000L
 private const val MIN_ENTROPY_LENGTH = 12
 private const val MAX_ENTROPY_LENGTH = 24
 
-class CryptoManagerImpl(private val wordList: List<String>) : CryptoManager {
+class CryptoManagerImpl(
+    private val wordList: List<String>,
+    private val metadata: MetadataPreset = StrongGCM()
+) : CryptoManager {
 
     override suspend fun encrypt(seed: List<String>, passphrase: String): String {
         if (seed.isEmpty()) throw BlankSeedException()
@@ -42,15 +41,18 @@ class CryptoManagerImpl(private val wordList: List<String>) : CryptoManager {
         passphrase.toCommonValidation()
 
         return runCatching {
-            val seedString = seed.joinToString(separator = " ")
-            val secretKey = generateSecretKey(passphrase)
-            val iv = ByteArray(IV_BYTE_ARRAY_SIZE)
-            SecureRandom().nextBytes(iv)
-            val cipher = createCipher(Cipher.ENCRYPT_MODE, secretKey, iv)
+            val salt = generateRandomBytes(metadata.saltSize)
+            val iv = generateRandomBytes(metadata.ivSize)
+            val seedString = seed.joinToString(" ")
+            val secretKey = generateSecretKey(passphrase, salt, metadata)
+
+            val cipher = createCipher(metadata, Cipher.ENCRYPT_MODE, secretKey, iv)
             val encryptedData = cipher.doFinal(seedString.toByteArray())
 
-            val encryptedSeed = iv + encryptedData
-            Base64.getEncoder().encodeToString(encryptedSeed)
+            val source = metadata.toJson().toByteArray()
+            val metadataBase64 = "$METADATA_TAG${Base64.getEncoder().encodeToString(source)}"
+
+            "${Base64.getEncoder().encodeToString(salt + iv + encryptedData)}$metadataBase64"
         }.getOrElse { throw EncryptionFailedException() }
     }
 
@@ -58,18 +60,22 @@ class CryptoManagerImpl(private val wordList: List<String>) : CryptoManager {
         if (encryptedSeed.isEmpty()) throw BlankEncryptedSeedException()
         passphrase.toCommonValidation()
 
-        val encryptedData = runCatching { Base64.getDecoder().decode(encryptedSeed) }
-            .getOrElse { throw InvalidEncryptedSeedException() }
+        val (encryptedData64, metadataBase64) = encryptedSeed.split(METADATA_TAG)
+        val encryptedData = Base64.getDecoder().decode(encryptedData64)
+        val metadataJson = String(Base64.getDecoder().decode(metadataBase64))
 
-        if (encryptedData.size < IV_BYTE_ARRAY_SIZE) throw InvalidEncryptedSeedException()
+        val metadata = metadata.fromJson(metadataJson, metadata::class.java)
+        val salt = slicedSalt(encryptedData, metadata)
+        val iv = slicedIV(encryptedData, metadata)
+
+        if (encryptedData.size < metadata.saltSize + metadata.ivSize)
+            throw InvalidEncryptedSeedException()
 
         return runCatching {
             withTimeout(TIMEOUT_DURATION) {
-                val iv = encryptedData.sliceArray(indices = 0 until IV_BYTE_ARRAY_SIZE)
-                val data = encryptedData.sliceArray(IV_BYTE_ARRAY_SIZE until encryptedData.size)
-                val secretKey = generateSecretKey(passphrase)
-                val cipher = createCipher(Cipher.DECRYPT_MODE, secretKey, iv)
-                val decryptedData = cipher.doFinal(data)
+                val secretKey = generateSecretKey(passphrase, salt, metadata)
+                val cipher = createCipher(metadata, Cipher.DECRYPT_MODE, secretKey, iv)
+                val decryptedData = cipher.doFinal(slicedData(encryptedData, metadata))
 
                 String(decryptedData)
             }
@@ -80,27 +86,57 @@ class CryptoManagerImpl(private val wordList: List<String>) : CryptoManager {
         }
     }
 
-    private fun generateSecretKey(passphrase: String): SecretKey {
-        val factory = SecretKeyFactory.getInstance(KEY_DERIVATION_ALGORITHM)
+    private fun generateSecretKey(
+        passphrase: String,
+        salt: ByteArray,
+        metadata: MetadataPreset
+    ): SecretKey {
         val spec = PBEKeySpec(
             passphrase.toCharArray(),
-            passphrase.toByteArray(),
-            KEY_DERIVATION_ITERATION_COUNT,
-            SECRET_KEY_BIT_LENGTH
+            salt,
+            metadata.keyIterations,
+            metadata.keyBits
         )
+        val factory = SecretKeyFactory.getInstance(metadata.keyDerivation.type)
         val tmp = factory.generateSecret(spec)
 
-        return SecretKeySpec(tmp.encoded, SECRET_KEY_ALGORITHM)
+        return SecretKeySpec(tmp.encoded, metadata.keyAlgorithm)
     }
 
-    private fun createCipher(mode: Int, secretKey: SecretKey, iv: ByteArray): Cipher {
-        return Cipher.getInstance(CIPHER_TRANSFORMATION).apply {
-            init(mode, secretKey, IvParameterSpec(iv))
-        }
+    private fun createCipher(
+        metadata: MetadataPreset,
+        mode: Int,
+        secretKey: SecretKey,
+        iv: ByteArray
+    ): Cipher {
+        return Cipher.getInstance(metadata.cipherSpec.type)
+            .apply { init(mode, secretKey, metadata.createCipherSpec(iv, metadata.cipherSpec)) }
     }
 
     private fun String.toCommonValidation() {
         if (isBlank()) throw BlankPassphraseException()
         if (!isValidPassphrase()) throw InvalidPassphraseException()
+    }
+
+    private fun generateRandomBytes(size: Int): ByteArray {
+        val bytes = ByteArray(size)
+        SecureRandom().nextBytes(bytes)
+        return bytes
+    }
+
+    private fun slicedSalt(encryptedData: ByteArray, metadata: MetadataPreset): ByteArray {
+        return encryptedData.sliceArray(0 until metadata.saltSize)
+    }
+
+    private fun slicedIV(encryptedData: ByteArray, metadata: MetadataPreset): ByteArray {
+        return encryptedData.sliceArray(
+            metadata.saltSize until metadata.saltSize + metadata.ivSize
+        )
+    }
+
+    private fun slicedData(encryptedData: ByteArray, metadata: MetadataPreset): ByteArray {
+        return encryptedData.sliceArray(
+            metadata.saltSize + metadata.ivSize until encryptedData.size
+        )
     }
 }

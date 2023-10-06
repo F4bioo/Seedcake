@@ -13,6 +13,9 @@ android {
 }
 
 dependencies {
+    // Libs
+    implementation(libs.gson)
+
     // Modules
     implementation project(Modules.arch)
     implementation project(Modules.test)
