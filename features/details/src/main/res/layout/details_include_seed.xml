@@ -57,7 +57,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="advance above add acoustic almost ability action adjust across alert absurd abandon advance above add acoustic almost ability action adjust across alert absurd abandon" />
+                tools:text="abandon banana captain dance eagle fabric galaxy habit ice jacket kangaroo language" />
 
             <View
                 android:id="@+id/divider"

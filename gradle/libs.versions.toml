@@ -7,6 +7,7 @@ appcompat = "1.6.1"
 material = "1.9.0"
 constraintlayout = "2.1.4"
 kotlin = "1.8.21"
+gson = "2.9.0"
 # Custom
 koin = "3.4.1"
 lifecycle = "2.6.2"
@@ -75,6 +76,7 @@ cameraLifecycle = { group = "androidx.camera", name = "camera-lifecycle", versio
 cameraView = { group = "androidx.camera", name = "camera-view", version.ref = "camera" }
 guava = { group = "com.google.guava", name = "guava", version.ref = "guava" }
 flexbox = { group = "com.google.android.flexbox", name = "flexbox", version.ref = "flexbox" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 r8Compiler = { group = "com.android.tools", name = "r8", version.ref = "r8Compiler" }
 detektFormatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 # Default tests

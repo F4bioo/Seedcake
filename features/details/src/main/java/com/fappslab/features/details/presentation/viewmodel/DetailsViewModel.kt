@@ -135,6 +135,10 @@ internal class DetailsViewModel(
         onAction { DetailsViewAction.Copy(args.encryptedSeed) }
     }
 
+    fun onWhatSeeing() {
+        onAction { DetailsViewAction.WhatSeeing }
+    }
+
     fun onEye(isChecked: Boolean) {
         val childPosition = if (isChecked) {
             CHILD_SEED

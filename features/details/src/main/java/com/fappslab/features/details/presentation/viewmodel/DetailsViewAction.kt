@@ -6,6 +6,7 @@ internal sealed class DetailsViewAction {
     object RequestPermission : DetailsViewAction()
     object GrantedPermission : DetailsViewAction()
     object OpenAppSettings : DetailsViewAction()
+    object WhatSeeing : DetailsViewAction()
     data class Copy(val encryptedSeed: String) : DetailsViewAction()
     data class SaveToGalleryResult(val message: Int) : DetailsViewAction()
     data class Decrypted(val params: DecryptParams) : DetailsViewAction()

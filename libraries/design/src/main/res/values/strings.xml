@@ -28,6 +28,8 @@
     <string name="common_proceed">Proceed</string>
     <string name="common_error_title">Something went wrong!</string>
     <string name="common_cleanup_title">Clipboard cleared</string>
+    <string name="common_what_seeing">What am I seeing?</string>
+    <string name="common_encrypted_seed_explanation">The less visible portion consists of metadata, essential for seed decryption but not part of the seed itself.</string>
     <string name="common_cleanup_success_message">Your clipboard has been cleared for security reasons.</string>
     <string name="common_cleanup_failure_message">Failed to clear your clipboard automatically. For your security, please clear your clipboard manually or tap \'Try Again\'.</string>
     <string name="common_storage_permission_denied_title">Storage access permission denied</string>
