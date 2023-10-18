@@ -42,11 +42,6 @@ jobs:
         run: |
           git pull --rebase origin develop
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
       - name: Generate version details
         run: python scripts/version-bump.py
 

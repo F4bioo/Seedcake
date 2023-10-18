@@ -20,6 +20,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Generate Error Details
+        run: python scripts/check-title.py
+
       - name: Check and Comment PR Title
         id: check-and-comment
         env:
@@ -36,11 +39,14 @@ jobs:
           echo "Extracted TAG: $TAG"
           echo "Extracted DESCRIPTION: $DESCRIPTION"
 
+          ACCEPTED_SUFFIXES=$(awk 'NF && $0 !~ /^ *$/ { $1=$1; print }' .github/markdown/check-title-accepted-suffixes.md | awk 'BEGIN { ORS = "|" } { print }' | sed 's/| $//')
+          echo "Accepted Suffixes: $ACCEPTED_SUFFIXES"
+
           ERROR_MESSAGE=""
-          if [[ ! "$TAG" =~ ^(Added|Changed|Fixed)$ ]]; then
-            ERROR_MESSAGE=$(cat .github/markdown/check-title-error-message-tag.md)
-          elif [[ ! "$PR_TITLE" =~ ^(Added|Changed|Fixed):\  ]]; then
-            ERROR_MESSAGE=$(cat .github/markdown/check-title-error-message-space.md)
+          if [[ ! "$TAG" =~ ^(${ACCEPTED_SUFFIXES})$ ]]; then
+            ERROR_MESSAGE=$(envsubst < .github/markdown/formatted-check-title-error-message-tag.md)
+          elif [[ ! "$PR_TITLE" =~ ^(${ACCEPTED_SUFFIXES}):\  ]]; then
+            ERROR_MESSAGE=$(envsubst < .github/markdown/check-title-error-message-space.md)
           elif [ ${#DESCRIPTION} -lt 10 ]; then
             ERROR_MESSAGE=$(envsubst < .github/markdown/check-title-error-message-length.md)
           fi
