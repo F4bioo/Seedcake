@@ -4,7 +4,6 @@ import re
 from datetime import datetime
 
 FIRST_RELEASE_YEAR = 2023
-FIRST_RELEASE_VERSION = "1"
 VERSION_CODE = "const val versionCode"
 VERSION_NAME = "const val versionName"
 file_path = "buildSrc/src/main/java/Config.kt"
@@ -21,6 +20,9 @@ except FileNotFoundError:
 current_date = datetime.now().strftime("%Y.%m.%d")
 current_year = int(datetime.now().strftime("%Y"))
 
+# Calculate the difference in years from the first release
+year_difference = current_year - FIRST_RELEASE_YEAR
+
 # Generate versionCode based on the current year, month, day, hour, and minute
 # Take the current year, subtract 2020, then multiply by 100,000,000 (shifts 8 digits)
 # Add month * 1,000,000 (shifts 6 digits), day * 10,000 (shifts 4 digits),
@@ -33,16 +35,8 @@ minute = int(datetime.now().strftime("%M"))
 
 versionCode_new = year_offset + month * 1000000 + day * 10000 + hour * 100 + minute
 
-# Find the current version prefix
-current_prefix = FIRST_RELEASE_VERSION
-for line in lines:
-    if VERSION_NAME in line:
-        match = re.search(r'"(.*?)"', line)
-        if match:
-            current_prefix = match.group(1).split('.')[0].strip()
-
-# Update version prefix if necessary
-new_prefix = str(int(current_prefix) + 1) if current_year > FIRST_RELEASE_YEAR else current_prefix
+# Find the current version prefix and update if necessary
+new_prefix = str(year_difference + 1)
 
 # Update lines in the configuration file
 updated_lines = []
