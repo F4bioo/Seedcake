@@ -6,9 +6,14 @@
     <string name="common_try_again_title">Oops! Try again</string>
     <string name="common_try_again">Try again</string>
     <string name="common_cancel">Cancel</string>
+    <string name="common_use">Use</string>
+    <string name="common_add">Add</string>
     <string name="common_enter">Enter</string>
     <string name="common_next">Next</string>
     <string name="common_save">Save</string>
+    <string name="common_go_home">Go home</string>
+    <string name="common_security">Security</string>
+    <string name="common_details">Details</string>
     <string name="common_validate">Validate</string>
     <string name="common_unlock">Unlock</string>
     <string name="common_close">Close</string>
@@ -66,7 +71,11 @@
     <string name="colored_seed">Colored seed</string>
     <string name="decrypted_seed">Decrypted seed</string>
     <string name="field_required">Field must be filled.</string>
-    <string name="alias_example">Eg: Primary wallet, Trezor wallet…</string>
+    <string name="alias_example">Eg: My wallet, Trezor wallet…</string>
+    <string name="alias_default">My wallet</string>
     <string name="alias">Alias</string>
+
+    <string name="warning_copy_title">Copy to Clipboard?</string>
+    <string name="warning_copy_message">Would you like to copy this information? Once copied, other applications may access it.</string>
 
 </resources>

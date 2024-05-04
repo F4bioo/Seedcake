@@ -135,6 +135,19 @@ internal class StorageRepositoryImplIntegrationTest {
     }
 
     @Test
+    fun getShufflePinCheckBoxState_Should_ReturnTrue_When_CheckBoxIsChecked() = runTest {
+        // Given
+        val expectedResult = true
+        simplePreferences.simplePreferencesWithItem(BuildConfig.SIMPLE_PREFS_SHUFFLE_PIN)
+
+        // When
+        val result = subject.getShufflePinCheckBoxState()
+
+        // Then
+        assertEquals(expectedResult, result)
+    }
+
+    @Test
     fun getFingerprintCheckBoxState_Should_ReturnTrue_When_CheckBoxIsChecked() = runTest {
         // Given
         val expectedResult = true

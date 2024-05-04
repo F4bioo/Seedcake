@@ -1,6 +1,8 @@
 package com.fappslab.features.data.local.repository
 
 import com.fappslab.features.common.domain.repository.ObfuscationRepository
+import com.fappslab.features.common.domain.usecase.DecryptParams
+import com.fappslab.features.common.domain.usecase.EncryptParams
 import com.fappslab.features.data.local.source.SeedcakeDataSource
 
 internal class ObfuscationRepositoryImpl(
@@ -10,15 +12,15 @@ internal class ObfuscationRepositoryImpl(
     override suspend fun getWordList(): List<String> =
         dataSource.getWordList()
 
-    override suspend fun encrypt(seed: List<String>, passphrase: String): String =
-        dataSource.encrypt(seed, passphrase)
+    override suspend fun encrypt(params: EncryptParams): String =
+        dataSource.encrypt(params)
 
-    override suspend fun decrypt(encryptedSeed: String, passphrase: String): String =
-        dataSource.decrypt(encryptedSeed, passphrase)
+    override suspend fun decrypt(params: DecryptParams): String =
+        dataSource.decrypt(params)
 
-    override suspend fun encodeSeedColor(readableSeed: String): List<Pair<String, String>> =
-        dataSource.encodeSeedColor(readableSeed)
+    override suspend fun encodeColor(readableSeedPhrase: String): List<Pair<String, String>> =
+        dataSource.encodeColor(readableSeedPhrase)
 
-    override suspend fun decodeSeedColor(coloredSeed: String): String =
-        dataSource.decodeSeedColor(coloredSeed)
+    override suspend fun decodeColor(colorfulSeedPhrase: String): String =
+        dataSource.decodeColor(colorfulSeedPhrase)
 }

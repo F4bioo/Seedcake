@@ -4,5 +4,5 @@ data class Seed(
     val id: Int = 0,
     val alias: String,
     val date: String,
-    val encryptedSeed: String
+    val unreadableSeedPhrase: String
 )

@@ -8,6 +8,4 @@ import com.fappslab.seedcake.libraries.arch.adapter.OnBaseItemClicked
 
 internal class ItemAdapter(
     onClicked: OnBaseItemClicked<OnItem>
-) : BaseAdapter<Item, OnItem, ItemHolder>(onClicked, BaseDiffCallback(), { parent, clicked ->
-    ItemHolder.create(parent, clicked)
-})
+) : BaseAdapter<Item, OnItem, ItemHolder>(onClicked, BaseDiffCallback(), ItemHolder::create)

@@ -16,6 +16,7 @@ interface StorageRepository {
 
     // Shared preferences
     fun getPinCheckBoxState(): Boolean
+    fun getShufflePinCheckBoxState(): Boolean
     fun getFingerprintCheckBoxState(): Boolean
     fun getScreenShieldCheckBoxState(): Boolean
 }

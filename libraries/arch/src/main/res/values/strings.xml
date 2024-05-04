@@ -5,7 +5,7 @@
     <string name="blank_passphrase_error">Passphrase cannot be empty. Please enter a passphrase.</string>
     <string name="invalid_passphrase_error">Invalid passphrase. Passphrase must contain at least 8 characters, 1 lowercase letter, 1 uppercase letter and 1 special character.</string>
 
-    <string name="invalid_mnemonic_seed_error">The provided seed is not a valid BIP39 English mnemonic seed.</string>
+    <string name="invalid_mnemonic_seed_error">The provided seed is not a valid BIP-39 English mnemonic seed.</string>
 
     <string name="blank_colored_seed_error">Colored seed cannot be empty. Please enter the colors in valid hex format: #ABCDEF.</string>
     <string name="invalid_encrypted_seed_error">The provided encrypted seed is corrupted. Please try again with valid data.</string>
@@ -13,8 +13,8 @@
     <string name="decryption_failed_error">Failed to decrypt the seed. Please ensure you are using the correct passphrase.</string>
     <string name="decryption_timeout_error">Decryption took too long to complete. Please try again.</string>
     <string name="unexpected_crypto_error">An unexpected error has occurred. Please try again.</string>
-    <string name="invalid_entropy_length_error">Invalid mnemonic. Ensure that the seed consists of 12 or 24 words selected from the BIP39 English word list.</string>
-    <string name="invalid_word_bip39_error">Some of the words do not belong to the BIP39 word list</string>
+    <string name="invalid_entropy_length_error">Invalid mnemonic. Ensure that the seed consists of 12 or 24 words selected from the BIP-39 English word list.</string>
+    <string name="invalid_word_bip39_error">Some of the words do not belong to the BIP-39 word list</string>
     <string name="invalid_color_format_error">Enter 8 or 16 colors in hex format: #ABCDEF</string>
-    <string name="invalid_bip39_colors_error">Colors provided are not valid BIP39 colors</string>
+    <string name="invalid_bip39_colors_error">Colors provided are not valid BIP-39 colors</string>
 </resources>

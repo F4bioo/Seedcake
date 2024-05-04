@@ -32,6 +32,9 @@ internal class StorageRepositoryImpl(
     override fun getPinCheckBoxState(): Boolean =
         dataSource.getPinCheckBoxState()
 
+    override fun getShufflePinCheckBoxState(): Boolean =
+        dataSource.getShufflePinCheckBoxState()
+
     override fun getFingerprintCheckBoxState(): Boolean =
         dataSource.getFingerprintCheckBoxState()
 

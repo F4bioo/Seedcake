@@ -1,5 +1,6 @@
 package com.fappslab.seedcake.libraries.design.extension
 
+import androidx.annotation.IdRes
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.NavOptions
@@ -24,4 +25,21 @@ fun NavController.navigateWithAnimations(
     animation: NavOptions = animations
 ) {
     navigate(directions, animation)
+}
+
+fun NavController.safeNavigate(
+    @IdRes resId: Int,
+    block: (Throwable) -> Unit = {}
+) {
+    runCatching { navigateWithAnimations(resId) }
+        .onFailure { block(it) }
+}
+
+
+fun NavController.safeNavigate(
+    directions: NavDirections,
+    block: (Throwable) -> Unit = {}
+) {
+    runCatching { navigateWithAnimations(directions) }
+        .onFailure { block(it) }
 }

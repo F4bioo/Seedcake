@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="EncryptSafeInputLabel">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">0.2</item>
+        <item name="android:gravity">center_vertical|end</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="EncryptSafeInput">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">32dp</item>
+        <item name="android:layout_weight">0.8</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingHorizontal">8dp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@drawable/encrypt_input_field_selector</item>
+    </style>
+
+</resources>

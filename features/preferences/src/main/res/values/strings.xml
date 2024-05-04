@@ -1,4 +1,20 @@
 <resources>
     <string name="preferences_pin_lock">PIN Lock</string>
     <string name="preferences_pin_lock_warning"><b>\u2022 Choose a PIN you\'ll remember:</b> If forgotten, there\'s no recovery. You\'ll have to uninstall the app, losing all stored information.</string>
+
+    <string name="preferences_pin_lock_title">PIN Lock Protection</string>
+    <string name="preferences_pin_lock_summary_off">PIN lock is disabled. Tap to enable PIN protection for your app.</string>
+    <string name="preferences_pin_lock_summary_on">PIN lock is enabled. Tap to disable PIN protection for your app.</string>
+
+    <string name="preferences_shuffle_pin_title">Shuffle PIN Keypad</string>
+    <string name="preferences_shuffle_pin_summary_off">Shuffle PIN is disabled. Tap to enhance PIN security by randomizing the keypad.</string>
+    <string name="preferences_shuffle_pin_summary_on">Shuffle PIN is enabled. The keypad is randomized for enhanced PIN security.</string>
+
+    <string name="preferences_fingerprint_title">Fingerprint Authentication</string>
+    <string name="preferences_fingerprint_summary_off">Fingerprint lock is disabled. Tap to enable biometric authentication for your app.</string>
+    <string name="preferences_fingerprint_summary_on">Fingerprint lock is enabled. Biometric authentication is active for your app.</string>
+
+    <string name="preferences_screen_shield_title">Screen Shield Protection</string>
+    <string name="preferences_screen_shield_summary_off">Screen Shield is disabled. Tap to protect your app content from screen capture and recording.</string>
+    <string name="preferences_screen_shield_summary_on">Screen Shield is enabled. Your app content is protected from screen capture and recording.</string>
 </resources>

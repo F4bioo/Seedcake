@@ -35,17 +35,20 @@ private void setupAndroidCodeCoverage(Project proj) {
                 "${proj.projectDir}/src/debug/kotlin"
         ]
         def javaTree = fileTree(
-                dir: "${proj.buildDir}/intermediates/javac/debug/classes",
+                dir: "${proj.layout.buildDirectory.get().dir("intermediates/javac/debug/classes")}",
                 excludes: excludes
         )
         def kotlinTree = fileTree(
-                dir: "${proj.buildDir}/tmp/kotlin-classes/debug",
+                dir: "${proj.layout.buildDirectory.get().dir("tmp/kotlin-classes/debug")}",
                 excludes: excludes
         )
 
         sourceDirectories.from = files(sourceDirs)
         classDirectories.from = files([javaTree, kotlinTree])
-        executionData.from = fileTree(dir: proj.buildDir, includes: ['**/*.exec'])
+        executionData.from = fileTree(
+                dir: proj.layout.buildDirectory.get().asFile,
+                includes: ['**/*.exec']
+        )
     }
 }
 

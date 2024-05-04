@@ -1,6 +1,8 @@
 package com.fappslab.features.preferences.di
 
 import com.fappslab.features.common.domain.repository.StorageRepository
+import com.fappslab.features.common.domain.usecase.GetPinStateUseCase
+import com.fappslab.features.common.domain.usecase.GetShufflePinStateUseCase
 import com.fappslab.libraries.test.koin.KoinModuleTest
 import com.fappslab.libraries.test.rules.CoroutineTestRule
 import io.mockk.mockk
@@ -17,6 +19,8 @@ internal class PreferencesModuleLoadTest : KoinModuleTest(PreferencesModuleLoad)
 
     override val mockedModules = module {
         factory<StorageRepository> { mockk(relaxed = true) }
+        factory<GetPinStateUseCase> { mockk(relaxed = true) }
+        factory<GetShufflePinStateUseCase> { mockk(relaxed = true) }
     }
 
     @Test

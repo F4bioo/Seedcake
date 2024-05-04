@@ -9,7 +9,6 @@ const val EXTRA_LOCK_RESULT = "EXTRA_LOCK_RESULT"
 
 interface LockNavigation {
     fun createLockIntent(context: Context, args: ScreenTypeArgs): Intent
-    fun createServiceIntent(context: Context): Intent
 }
 
 @Parcelize

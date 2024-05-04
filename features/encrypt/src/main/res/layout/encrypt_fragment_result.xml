@@ -91,11 +91,10 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/topic_container"
+                style="@style/PlutoBubbleTip"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/plu_size_02"
-                android:background="@drawable/plu_bg_rounded_corners_solid"
-                android:padding="@dimen/plu_size_04"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -139,6 +138,13 @@
 
     </androidx.core.widget.NestedScrollView>
 
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        style="@style/PlutoDivider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scroll_container" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_save"
         style="@style/PlutoPrimaryButton"
@@ -157,7 +163,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/plu_size_04"
         android:elevation="@dimen/plu_size_none"
-        android:text="@string/common_close"
+        android:text="@string/common_go_home"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

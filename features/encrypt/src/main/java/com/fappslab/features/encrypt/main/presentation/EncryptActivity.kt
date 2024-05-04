@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.fappslab.features.encrypt.main.presentation.model.ProgressType.Progress1
 import com.fappslab.features.encrypt.main.presentation.model.ProgressType.Progress2
 import com.fappslab.features.encrypt.main.presentation.model.ProgressType.Progress3
+import com.fappslab.features.encrypt.main.presentation.model.ProgressType.Progress4
 import com.fappslab.seedcake.features.encrypt.R
 import com.fappslab.seedcake.features.encrypt.databinding.EncryptActivityBinding
 import com.fappslab.seedcake.libraries.design.viewbinding.viewBinding
@@ -26,6 +27,7 @@ class EncryptActivity : AppCompatActivity(R.layout.encrypt_activity) {
     private fun setupObservables() {
         onFragmentResult(REQUEST_KEY_PROGRESS) {
             val progress = when {
+                containsKey(Progress4.name) -> Progress4.ordinal
                 containsKey(Progress3.name) -> Progress3.ordinal
                 containsKey(Progress2.name) -> Progress2.ordinal
                 else -> Progress1.ordinal

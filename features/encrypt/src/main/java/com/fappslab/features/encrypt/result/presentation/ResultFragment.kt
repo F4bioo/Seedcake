@@ -2,14 +2,16 @@ package com.fappslab.features.encrypt.result.presentation
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fappslab.features.encrypt.main.presentation.REQUEST_KEY_PROGRESS
-import com.fappslab.features.encrypt.main.presentation.model.ProgressType.Progress3
+import com.fappslab.features.encrypt.main.presentation.model.ProgressType.Progress4
 import com.fappslab.features.encrypt.result.di.ResultModuleLoad
 import com.fappslab.features.encrypt.result.presentation.extension.showFullEncryptedSeedModal
+import com.fappslab.features.encrypt.result.presentation.extension.showSaveErrorModal
+import com.fappslab.features.encrypt.result.presentation.extension.showSaveToast
 import com.fappslab.features.encrypt.result.presentation.extension.showWhatSeeingDialog
 import com.fappslab.features.encrypt.result.presentation.viewmodel.ResultViewAction
 import com.fappslab.features.encrypt.result.presentation.viewmodel.ResultViewModel
@@ -22,6 +24,7 @@ import com.fappslab.seedcake.libraries.arch.koin.koinload.KoinLoad
 import com.fappslab.seedcake.libraries.arch.viewmodel.onViewAction
 import com.fappslab.seedcake.libraries.arch.viewmodel.onViewState
 import com.fappslab.seedcake.libraries.design.viewbinding.viewBinding
+import com.fappslab.seedcake.libraries.extension.addBackPressedCallback
 import com.fappslab.seedcake.libraries.extension.copyToClipboard
 import com.fappslab.seedcake.libraries.extension.isNotNull
 import com.fappslab.seedcake.libraries.extension.setFragmentResult
@@ -35,10 +38,6 @@ internal class ResultFragment : Fragment(R.layout.encrypt_fragment_result), Koin
     private val binding: EncryptFragmentResultBinding by viewBinding()
     private val viewModel: ResultViewModel by viewModel { parametersOf(args.result) }
     private val args: ResultFragmentArgs by navArgs()
-    private val backCallback = object : OnBackPressedCallback(false) {
-        override fun handleOnBackPressed() {} // ISP :thinking:
-    }
-
     override val scope: Scope by fragmentScope()
 
     override val koinLoad: KoinLoad by subModules(ResultModuleLoad)
@@ -51,25 +50,22 @@ internal class ResultFragment : Fragment(R.layout.encrypt_fragment_result), Koin
         setupView()
     }
 
-    private fun setupBackPressed() {
-        activity?.onBackPressedDispatcher
-            ?.addCallback(viewLifecycleOwner, backCallback)
-    }
-
     private fun setupObservables() {
         onViewState(viewModel) { state ->
-            backPressedState(state.shouldDisableBackButton)
             saveButtonState(state.shouldEnableSaveButton)
             progressStepState(state.progress)
             imageQrcodeState(state)
+            showSaveErrorModalState(state)
             state.showFullEncryptedSeedModalState()
         }
 
         onViewAction(viewModel) { action ->
             when (action) {
                 ResultViewAction.FinishView -> activity?.finish()
+                ResultViewAction.BackPressed -> backPressedAction()
                 ResultViewAction.WhatSeeing -> showWhatSeeingDialog()
-                is ResultViewAction.Copy -> activity?.copyToClipboard(data = action.encryptedSeed)
+                ResultViewAction.SaveSuccess -> context?.showSaveToast()
+                is ResultViewAction.Copy -> context?.copyToClipboard(data = action.encryptedSeed)
             }
         }
     }
@@ -79,7 +75,13 @@ internal class ResultFragment : Fragment(R.layout.encrypt_fragment_result), Koin
         textEncryptedSeed.setOnClickListener { viewModel.onCopy() }
         buttonShow.setOnClickListener { viewModel.onFullEncryptedSeedVisibility() }
         buttonSave.setOnClickListener { viewModel.onSave() }
-        buttonClose.setOnClickListener { viewModel.onClose() }
+        buttonClose.setOnClickListener { viewModel.onFinishView() }
+    }
+
+    private fun setupBackPressed() {
+        addBackPressedCallback {
+            viewModel.onBackPressed()
+        }
     }
 
     private fun setupView() = binding.run {
@@ -88,7 +90,7 @@ internal class ResultFragment : Fragment(R.layout.encrypt_fragment_result), Koin
     }
 
     private fun progressStepState(progress: Int) {
-        setFragmentResult(REQUEST_KEY_PROGRESS, pair = Progress3.name to progress)
+        setFragmentResult(REQUEST_KEY_PROGRESS, pair = Progress4.name to progress)
     }
 
     private fun saveButtonState(isEnabled: Boolean) {
@@ -110,7 +112,16 @@ internal class ResultFragment : Fragment(R.layout.encrypt_fragment_result), Koin
         )
     }
 
-    private fun backPressedState(isEnabled: Boolean) {
-        backCallback.isEnabled = isEnabled
+    private fun showSaveErrorModalState(state: ResultViewState) {
+        showSaveErrorModal(
+            state.shouldShowSaveErrorModal,
+            viewModel::onSaveErrorVisibilityModal,
+            viewModel::onTryAgain,
+            viewModel::onFinishView
+        )
+    }
+
+    private fun backPressedAction() {
+        findNavController().popBackStack(R.id.disclaimerFragment, false)
     }
 }

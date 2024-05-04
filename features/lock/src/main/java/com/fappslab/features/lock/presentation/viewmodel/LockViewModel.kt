@@ -1,20 +1,14 @@
 package com.fappslab.features.lock.presentation.viewmodel
 
-import com.fappslab.features.common.domain.usecase.DeletePinUseCase
-import com.fappslab.features.common.domain.usecase.GetFingerprintStateUseCase
-import com.fappslab.features.common.domain.usecase.GetPinUseCase
-import com.fappslab.features.common.domain.usecase.SetPinUseCase
 import com.fappslab.features.common.navigation.ScreenTypeArgs
+import com.fappslab.features.lock.domain.provider.LockProvider
 import com.fappslab.seedcake.libraries.arch.viewmodel.ViewModel
 import com.fappslab.seedcake.libraries.design.pluto.customview.plutopinview.PinResult
 import com.fappslab.seedcake.libraries.design.pluto.customview.plutopinview.ScreenType
 
 internal class LockViewModel(
     private val args: ScreenTypeArgs,
-    private val getPinUseCase: GetPinUseCase,
-    private val setPinUseCase: SetPinUseCase,
-    private val deletePinUseCase: DeletePinUseCase,
-    private val getFingerprintStateUseCase: GetFingerprintStateUseCase
+    private val provider: LockProvider
 ) : ViewModel<LockViewState, LockViewAction>(LockViewState(args)) {
 
     init {
@@ -22,7 +16,7 @@ internal class LockViewModel(
     }
 
     private fun getSecurityCheckBoxPreference() {
-        val isCheckBoxFingerprintChecked = getFingerprintStateUseCase()
+        val isCheckBoxFingerprintChecked = provider.getFingerprintStateUseCase()
         onState { it.copy(shouldShowFingerPrintButton = isCheckBoxFingerprintChecked) }
     }
 
@@ -31,7 +25,7 @@ internal class LockViewModel(
             ScreenTypeArgs.LockScreen -> LockViewAction.FinishView
             ScreenTypeArgs.PreferencesRegister -> LockViewAction.Preferences(result)
             ScreenTypeArgs.PreferencesValidate -> {
-                deletePinUseCase()
+                provider.deletePinUseCase()
                 LockViewAction.Preferences(result)
             }
         }
@@ -39,7 +33,7 @@ internal class LockViewModel(
     }
 
 
-    fun onShowLockScreen() {
+    fun onShowLockScreen() = provider.run {
         val validateType = getPinUseCase()?.let(ScreenType::Validate)
         val screenType = when (args) {
             ScreenTypeArgs.PreferencesValidate -> {
@@ -47,10 +41,26 @@ internal class LockViewModel(
                 validateType
             }
 
-            ScreenTypeArgs.LockScreen -> validateType
-            ScreenTypeArgs.PreferencesRegister -> ScreenType.Register
+            ScreenTypeArgs.LockScreen -> {
+                validateType
+            }
+
+            ScreenTypeArgs.PreferencesRegister -> {
+                ScreenType.Register
+            }
         }
-        onState { it.showLockScreen(screenType = screenType) }
+
+        onState { it.showLockScreen(screenType, shouldShufflePin()) }
+    }
+
+    private fun shouldShufflePin(): Boolean {
+        val isPinLockEnabled = provider.getPinStateUseCase()
+        val isShufflePinEnabled = provider.getShufflePinStateUseCase()
+        return isPinLockEnabled && isShufflePinEnabled
+    }
+
+    fun onWrongPin() {
+        if (shouldShufflePin()) onAction { LockViewAction.ErrorPin }
     }
 
     fun onShowBiometric() {
@@ -58,7 +68,7 @@ internal class LockViewModel(
     }
 
     fun onSuccessPinValidation(result: PinResult) {
-        if (result is PinResult.Register) setPinUseCase(result.pin)
+        if (result is PinResult.Register) provider.setPinUseCase(result.pin)
         performActionBasedOnArgs(result)
     }
 

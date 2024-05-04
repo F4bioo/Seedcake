@@ -1,11 +1,10 @@
 package com.fappslab.seedcake.presentation
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.ui.setupWithNavController
 import com.fappslab.features.common.navigation.AboutNavigation
-import com.fappslab.features.common.navigation.LockNavigation
-import com.fappslab.features.common.navigation.ScreenTypeArgs
 import com.fappslab.seedcake.R
 import com.fappslab.seedcake.databinding.ActivityMainBinding
 import com.fappslab.seedcake.di.AppModuleLoad
@@ -25,13 +24,11 @@ import org.koin.core.scope.Scope
 
 class MainActivity : AppCompatActivity(R.layout.activity_main), KoinLazy {
 
-    private val binding: ActivityMainBinding by viewBinding(R.id.main_root)
+    private val binding: ActivityMainBinding by viewBinding(R.id.app_root)
     private val viewModel: MainViewModel by viewModel()
-    private val lockNavigation: LockNavigation by inject()
     private val aboutNavigation: AboutNavigation by inject()
-    private val backCallback = addBackPressedCallback { isHomeFragment ->
-        viewModel.onBackPressed(isHomeFragment)
-    }
+    private val backCallback: OnBackPressedCallback =
+        addBackPressedCallback(::onBackPressed)
 
     override val scope: Scope by activityScope()
 
@@ -49,7 +46,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), KoinLazy {
         onViewAction(viewModel) { action ->
             when (action) {
                 MainViewAction.FinishView -> finish()
-                MainViewAction.Protected -> protectedAction()
                 MainViewAction.BackPressed -> backPressedAction()
                 MainViewAction.About -> showAboutDialogAction()
             }
@@ -74,9 +70,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main), KoinLazy {
         }
     }
 
-    private fun protectedAction() {
-        lockNavigation.createLockIntent(context = this, ScreenTypeArgs.LockScreen)
-            .also(::startActivity)
+    private fun onBackPressed(isHomeFragment: Boolean) {
+        viewModel.onBackPressed(isHomeFragment)
     }
 
     private fun backPressedAction() {

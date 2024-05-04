@@ -1,6 +1,8 @@
 package com.fappslab.features.data.local.source
 
 import com.fappslab.features.common.domain.model.Seed
+import com.fappslab.features.common.domain.usecase.DecryptParams
+import com.fappslab.features.common.domain.usecase.EncryptParams
 import com.fappslab.features.data.local.model.SourceProvider
 import com.fappslab.features.data.local.model.extension.toSeedEntity
 import com.fappslab.features.data.local.model.extension.toSeeds
@@ -23,24 +25,24 @@ internal class SeedcakeDataSourceImpl(
                 .getOrElse { emptyList() }
         }
 
-    override suspend fun encrypt(seed: List<String>, passphrase: String): String =
+    override suspend fun encrypt(params: EncryptParams): String =
         withContext(dispatcher) {
-            provider.cryptoManager.encrypt(seed, passphrase)
+            provider.cryptoManager.encrypt(params)
         }
 
-    override suspend fun decrypt(encryptedSeed: String, passphrase: String): String =
+    override suspend fun decrypt(params: DecryptParams): String =
         withContext(dispatcher) {
-            provider.cryptoManager.decrypt(encryptedSeed, passphrase)
+            provider.cryptoManager.decrypt(params)
         }
 
-    override suspend fun encodeSeedColor(readableSeed: String): List<Pair<String, String>> =
+    override suspend fun encodeColor(readableSeedPhrase: String): List<Pair<String, String>> =
         withContext(dispatcher) {
-            provider.bIP39Colors.encodeSeedColor(readableSeed)
+            provider.bIP39Colors.encodeSeedColor(readableSeedPhrase)
         }
 
-    override suspend fun decodeSeedColor(coloredSeed: String): String =
+    override suspend fun decodeColor(colorfulSeedPhrase: String): String =
         withContext(dispatcher) {
-            provider.bIP39Colors.decodeSeedColor(coloredSeed)
+            provider.bIP39Colors.decodeSeedColor(colorfulSeedPhrase)
         }
 
     override suspend fun setSeedPhrase(seed: Seed) =
@@ -77,6 +79,10 @@ internal class SeedcakeDataSourceImpl(
     override fun getPinCheckBoxState(): Boolean =
         provider.simplePreferences
             .getBoolean(BuildConfig.SIMPLE_PREFS_PIN_KEY, false)
+
+    override fun getShufflePinCheckBoxState(): Boolean =
+        provider.simplePreferences
+            .getBoolean(BuildConfig.SIMPLE_PREFS_SHUFFLE_PIN, true)
 
     override fun getFingerprintCheckBoxState(): Boolean =
         provider.simplePreferences

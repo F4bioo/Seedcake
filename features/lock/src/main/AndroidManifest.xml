@@ -17,9 +17,6 @@
             android:exported="false"
             android:theme="@style/Pluto.FullScreen"
             android:windowSoftInputMode="adjustResize" />
-        <service
-            android:name="com.fappslab.features.lock.presentation.LockService"
-            android:exported="false" />
     </application>
 
 </manifest>

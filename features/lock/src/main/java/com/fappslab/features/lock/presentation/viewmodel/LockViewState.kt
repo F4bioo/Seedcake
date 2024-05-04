@@ -7,15 +7,17 @@ internal data class LockViewState(
     val args: ScreenTypeArgs,
     val screenType: ScreenType? = null,
     val isPinValidated: Boolean = false,
+    val shouldShufflePin: Boolean = true,
     val shouldShowPinLockWarning: Boolean = true,
     val shouldShowFingerPrintButton: Boolean = false
 ) {
 
-    fun showLockScreen(screenType: ScreenType?) = copy(
+    fun showLockScreen(screenType: ScreenType?, shouldShufflePin: Boolean) = copy(
         shouldShowPinLockWarning = screenType.toPinLockWarningVisibility(),
+        shouldShufflePin = shouldShufflePin,
         screenType = screenType
     )
 
     private fun ScreenType?.toPinLockWarningVisibility(): Boolean =
-        this is ScreenType.Register && args == ScreenTypeArgs.PreferencesRegister
+        (this is ScreenType.Register) && (args == ScreenTypeArgs.PreferencesRegister)
 }

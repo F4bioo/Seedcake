@@ -34,6 +34,7 @@ internal class PreferencesFragment : PreferenceFragmentCompat(), KoinLazy {
     private val viewModel: PreferencesViewModel by viewModel()
     private val lockNavigation: LockNavigation by inject()
     private var checkBoxPin: CheckBoxPreference? = null
+    private var checkBoxShufflePin: CheckBoxPreference? = null
     private var checkBoxFingerprint: CheckBoxPreference? = null
     private var checkBoxScreenShield: CheckBoxPreference? = null
     private val prompt by lazy { context?.createBiometricDialog() }
@@ -56,6 +57,7 @@ internal class PreferencesFragment : PreferenceFragmentCompat(), KoinLazy {
         checkBoxPin = findPreference(BuildConfig.SIMPLE_PREFS_PIN_KEY)
         checkBoxFingerprint = findPreference(BuildConfig.SIMPLE_PREFS_FINGERPRINT_KEY)
         checkBoxScreenShield = findPreference(BuildConfig.SIMPLE_PREFS_SCREEN_SHIELD)
+        checkBoxShufflePin = findPreference(BuildConfig.SIMPLE_PREFS_SHUFFLE_PIN)
         setupCheckBiometricAvailability()
         setupObservables()
         setupListeners()
@@ -72,10 +74,13 @@ internal class PreferencesFragment : PreferenceFragmentCompat(), KoinLazy {
             checkBoxFingerprint?.isEnabled = state.isCheckBoxPinChecked
             checkBoxFingerprint?.isVisible = state.shouldShowCheckBoxFingerprint
             checkBoxFingerprint?.isChecked = state.isCheckBoxFingerprintChecked
+            checkBoxShufflePin?.isChecked = state.isCheckBoxShufflePinChecked
+            checkBoxShufflePin?.isEnabled = state.isCheckBoxPinChecked
         }
 
         onViewAction(viewModel) { action ->
             when (action) {
+                PreferencesViewAction.BiometricPrompt -> prompt?.let(biometricPrompt::authenticate)
                 is PreferencesViewAction.ScreenShield -> screenShieldAction(action.isChecked)
                 is PreferencesViewAction.ShowLockScreen -> showLockScreenAction(action.args)
             }
@@ -87,9 +92,12 @@ internal class PreferencesFragment : PreferenceFragmentCompat(), KoinLazy {
             viewModel.onShowLockScreen()
             false
         }
-
+        checkBoxShufflePin?.setOnPreferenceChangeListener { _, newValue ->
+            viewModel.onShufflePin((newValue as? Boolean).orFalse())
+            false
+        }
         checkBoxFingerprint?.setOnPreferenceChangeListener { _, _ ->
-            prompt?.let(biometricPrompt::authenticate)
+            viewModel.onBiometricPrompt()
             false
         }
         checkBoxScreenShield?.setOnPreferenceChangeListener { _, newValue ->

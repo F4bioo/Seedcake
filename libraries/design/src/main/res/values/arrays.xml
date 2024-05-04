@@ -9,6 +9,7 @@
         <item>@drawable/plu_ic_one</item>
         <item>@drawable/plu_ic_two</item>
         <item>@drawable/plu_ic_three</item>
+        <item>@drawable/plu_ic_four</item>
     </array>
 
 </resources>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/plu_size_02">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/PlutoTextMin"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ellipsize="start"
+        android:gravity="center_vertical|end"
+        android:maxLines="1"
+        android:paddingHorizontal="@dimen/plu_size_02"
+        android:text="@string/encrypt_seed_length"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/type_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/type_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/plu_radius_ti"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="@dimen/plu_size_none">
+
+        <RadioGroup
+            android:id="@+id/group_type"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/plu_size_06"
+            android:checkedButton="@id/radio_twenty_four"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radio_twelve"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/encrypt_radio_button_selector"
+                android:button="@null"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="12"
+                android:textColor="@color/encrypt_radio_button_text_selector"
+                tools:ignore="HardcodedText" />
+
+            <RadioButton
+                android:id="@+id/radio_twenty_four"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/encrypt_radio_button_selector"
+                android:button="@null"
+                android:enabled="false"
+                android:gravity="center"
+                android:text="24"
+                android:textColor="@color/encrypt_radio_button_text_selector"
+                tools:ignore="HardcodedText" />
+
+        </RadioGroup>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

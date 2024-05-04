@@ -33,6 +33,7 @@ class PlutoFeedbackModal : BottomSheetDialogFragment() {
     var customView: View? = null
     var closeButton: (() -> Unit)? = null
     var onDismiss: (() -> Unit)? = null
+    var shouldShowCloseButton: Boolean = true
     var shouldBlock: Boolean = true
 
     @DrawableRes
@@ -79,7 +80,8 @@ class PlutoFeedbackModal : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = PlutoFeedbackModalBinding.inflate(inflater, container, false)
+        _binding = PlutoFeedbackModalBinding
+            .inflate(inflater, container, false)
         return binding.root
     }
 
@@ -128,8 +130,9 @@ class PlutoFeedbackModal : BottomSheetDialogFragment() {
         binding.dragLine.isInvisible = shouldBlock
     }
 
-    private fun setupCloseButton() {
-        binding.buttonClose.setOnClickListener {
+    private fun setupCloseButton() = binding.run {
+        buttonClose.isVisible = shouldShowCloseButton
+        buttonClose.setOnClickListener {
             closeButton?.invoke()
             dismissAllowingStateLoss()
         }

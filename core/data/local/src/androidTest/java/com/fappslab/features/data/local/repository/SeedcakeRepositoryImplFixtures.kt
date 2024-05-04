@@ -20,14 +20,14 @@ import kotlin.test.assertTrue
 internal object SeedcakeRepositoryImplFixtures {
 
     const val SEED =
-        "abandon banana captain dance eagle fabric galaxy habit ice jacket kangaroo language"
+        "gesture grow leaf among exclude man spirit bar other column early flavor"
 
     const val ENCRYPTED =
-        "a5qjuKiSIR49DL0WeD1caGA6jbIufP/G82hIYpV5b5Evtjj1QNZwsMKGRM6SRgzh8IYlYVHfDVyBAyuXvCsFsGKuksr8a/7bf9zPwikG7d51Ygtq/wb3L2OHq2mjznO7RTjTf+/aaG7Y/8xLegSwUnaWHRj+Ut9w1Pv/FaiN1A==:ENDeyJjcyI6IkdDTSIsImlzIjoxMiwia2EiOiJBRVMiLCJrYiI6MjU2LCJrZCI6IlBIUzUxMiIsImtpIjoyMDAwMDAsInNzIjoxNn0="
+        "BaqFq2Z9ab4VHC1EDEBH53TZiGIbqIh0TsFsUUhqTr38aF4o50+RnowhXqBO6A8YWovLwfi4uzXTXy0maEnytAqEBw5cqGhun2SanzVIgnH1iFU44oUBJnnvxnbP9StNNLiU3yz1ySw58V9IZxGm4UPiXdo=:ENDeyJjcyI6IkdDTSIsImlzIjoxMiwia2EiOiJBRVMiLCJrYiI6MjU2LCJrZCI6IlBIUzUxMiIsImtpIjoyMDAwMDAsInNzIjoxNn0="
 
     const val PALETTE =
-        "(#B88F4D, #000000), (#9DCA22, #000000), (#3DB611, #FFFFFF), (#63A65C, #000000), (#258A72, #FFFFFF), (#000065, #FFFFFF), (#7B3AE8, #FFFFFF), (#E0C6F8, #000000)"
-    const val COLORED = "#B88F4D #9DCA22 #3DB611 #63A65C #258A72 #000065 #7B3AE8 #E0C6F8"
+        "(#3D2206, #FFFFFF), (#B7AA61, #000000), (#DDDFA6, #000000), (#9FEE69, #000000), (#225906, #FFFFFF), (#7CA2A5, #000000), (#0130B8, #FFFFFF), (#6073B7, #FFFFFF)"
+    const val COLORED = "#3D2206 #B7AA61 #DDDFA6 #9FEE69 #225906 #7CA2A5 #0130B8 #6073B7"
 
     const val PASSPHRASE = "Seedc@k3"
 
@@ -63,7 +63,7 @@ internal object SeedcakeRepositoryImplFixtures {
             id = 1,
             alias = "Trezor wallet",
             date = "10-Aug-2023, 02:15 PM",
-            encryptedSeed = "a5qjuKiSIR49DL0WeD1caGA6jbIufP/G82hIYpV5b5Evtjj1QNZwsMKGRM6SRgzh…"
+            unreadableSeedPhrase = "a5qjuKiSIR49DL0WeD1caGA6jbIufP/G82hIYpV5b5Evtjj1QNZwsMKGRM6SRgzh…"
         )
 
     fun String.toColorPairs(): List<Pair<String, String>> {
