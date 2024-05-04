@@ -559,12 +559,25 @@ style:
     ignoreOverridableFunction: true
     ignoreActualFunction: true
     excludedFunctions: []
+    excludes: [
+      '**/com/fappslab/seedcake/libraries/extension/**'
+    ]
   LoopWithTooManyJumpStatements:
     active: true
     maxJumpCount: 1
   MagicNumber:
     active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**', '**/*.kts']
+    excludes: [
+      '**/com/fappslab/seedcake/libraries/extension/**',
+      '**/com/fappslab/libraries/security/**',
+      '**/test/**',
+      '**/androidTest/**',
+      '**/commonTest/**',
+      '**/jvmTest/**',
+      '**/jsTest/**',
+      '**/iosTest/**',
+      '**/*.kts'
+    ]
     ignoreNumbers:
       - '-1'
       - '0'
@@ -594,7 +607,12 @@ style:
     excludeImportStatements: true
     excludeCommentStatements: false
     excludeRawStrings: true
-    excludes: ['**/test/**', '**/androidTest/**']
+    excludes: [
+      '**/com/fappslab/seedcake/libraries/extension/**',
+      '**/com/fappslab/libraries/security/**',
+      '**/test/**',
+      '**/androidTest/**'
+    ]
   MayBeConst:
     active: true
   ModifierOrder:
@@ -648,6 +666,9 @@ style:
     active: true
     max: 2
     excludeGuardClauses: false
+    excludes: [
+      '**/com/fappslab/libraries/security/**'
+    ]
   TrailingWhitespace:
     active: false
   TrimMultilineRawString:

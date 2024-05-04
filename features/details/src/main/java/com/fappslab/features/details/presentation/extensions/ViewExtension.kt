@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.os.Build
 import android.view.ContextThemeWrapper
 import android.view.View
-import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import com.fappslab.seedcake.features.details.R
@@ -17,23 +16,24 @@ import com.fappslab.seedcake.libraries.arch.simplepermission.launcher.Permission
 import com.fappslab.seedcake.libraries.arch.simplepermission.model.PermissionStatus
 import com.fappslab.seedcake.libraries.design.pluto.activity.qrcode.creator.PlutoQrcodeCreator
 import com.fappslab.seedcake.libraries.design.pluto.fragment.dialog.GravityType
-import com.fappslab.seedcake.libraries.design.pluto.fragment.dialog.build
 import com.fappslab.seedcake.libraries.design.pluto.fragment.dialog.plutoFeedbackDialog
-import com.fappslab.seedcake.libraries.design.pluto.fragment.modal.build
+import com.fappslab.seedcake.libraries.design.pluto.fragment.extension.build
 import com.fappslab.seedcake.libraries.design.pluto.fragment.modal.plutoFeedbackModal
-import com.fappslab.seedcake.libraries.design.pluto.fragment.progress.build
 import com.fappslab.seedcake.libraries.design.pluto.fragment.progress.plutoProgressDialog
+import com.fappslab.seedcake.libraries.extension.getTextOrHint
 import com.fappslab.seedcake.libraries.extension.image.saveToGallery
 import com.fappslab.seedcake.libraries.extension.isNull
+import com.fappslab.seedcake.libraries.extension.showNumberedSeed
 import com.fappslab.seedcake.libraries.extension.toHighlightBothEndsBeforeMetadata
 
+private const val DELIMITERS = " "
 private const val FILE_NAME = "color_palette"
 private const val TAG_FULL_ENCRYPTED_SEED_MODAL = "showFullEncryptedSeedModal"
 private const val TAG_WHAT_SEEING_DIALOG = "showWhatSeeingDialog"
 private const val TAG_INFO_MODAL = "showInfoModal"
 private const val TAG_DELETE_SEED_MODAL = "showDeleteSeedModal"
 private const val TAG_EDIT_ALIAS_MODAL = "showEditAliasModal"
-private const val TAG_DECRYPT_ERROR_MODAL = "showDecryptErrorModal"
+private const val TAG_DECRYPT_ERROR_DIALOG = "showUnlockSeedErrorDialog"
 private const val TAG_LOADING_DIALOG = "showLoadingDialog"
 private const val TAG_DENIED_STORAGE_PERMISSION_MODAL = "showDeniedStoragePermissionModal"
 
@@ -86,7 +86,7 @@ internal fun Fragment.showInfoModal(
         primaryButton = {
             buttonTextRes = R.string.details_colored_seed_security_save
             buttonAction = {
-                primaryBlock.invoke()
+                primaryBlock()
                 dismissAllowingStateLoss()
             }
         }
@@ -121,27 +121,27 @@ internal fun Fragment.showEditAliasModal(
         primaryButton = {
             buttonTextRes = R.string.common_save
             buttonAction = {
-                val text = binding.inputAlias.text
-                primaryBlock(text.toString().trim())
+                primaryBlock(binding.inputLayoutAlias.getTextOrHint())
             }
         }
     }.build(shouldShow, childFragmentManager, TAG_EDIT_ALIAS_MODAL)
 }
 
-internal fun Fragment.showUnlockSeedErrorModal(
-    @StringRes errorMessageRes: Int?,
+internal fun Fragment.showUnlockSeedErrorDialog(
+    dialogErrorPair: Pair<Int, String?>,
     shouldShow: Boolean,
-    closeBlock: (Boolean) -> Unit
+    primaryBlock: (Boolean) -> Unit
 ) {
-    plutoFeedbackModal {
+    val (messageRes, placeholder) = dialogErrorPair
+    val message = getString(messageRes, placeholder)
+    plutoFeedbackDialog {
+        gravityDialog = GravityType.Center
         titleRes = R.string.common_error_title
-        messageRes = errorMessageRes
-        closeButton = { closeBlock(false) }
+        messageText = message
         primaryButton = {
-            buttonTextRes = R.string.common_try_again
-            buttonAction = { closeBlock(false) }
+            buttonAction = { primaryBlock(false) }
         }
-    }.build(shouldShow, childFragmentManager, TAG_DECRYPT_ERROR_MODAL)
+    }.build(shouldShow, childFragmentManager, TAG_DECRYPT_ERROR_DIALOG)
 }
 
 internal fun Fragment.showLoadingDialog(shouldShow: Boolean) {
@@ -165,7 +165,7 @@ internal fun View.saveToGalleryAction(resultBlock: (Boolean) -> Unit) {
 }
 
 internal fun DetailsIncludeSeedBinding.setPalletColors(coloredSeed: List<Pair<String, String>>) {
-    val hexColors = coloredSeed.joinToString(separator = " ") { it.first }
+    val hexColors = coloredSeed.joinToString(DELIMITERS) { it.first }
     val bitmap = PlutoQrcodeCreator.create(hexColors)
     imageQrcode.setImageBitmap(bitmap)
 
@@ -201,7 +201,7 @@ internal fun Fragment.showDeniedStoragePermissionModal(
     }.build(shouldShow, childFragmentManager, TAG_DENIED_STORAGE_PERMISSION_MODAL)
 }
 
-fun Fragment.permissionLauncher(
+internal fun Fragment.permissionLauncher(
     permissionBlock: (status: PermissionStatus) -> Unit
 ): PermissionLauncher? = if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
     permissionLauncher(
@@ -210,3 +210,7 @@ fun Fragment.permissionLauncher(
         resultBLock = permissionBlock
     )
 } else null
+
+internal fun AppCompatTextView.numberedSeed(seed: String) {
+    showNumberedSeed(seed, R.color.plu_light_mist_gray)
+}

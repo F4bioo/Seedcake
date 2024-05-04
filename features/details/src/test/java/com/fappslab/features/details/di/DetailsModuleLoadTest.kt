@@ -34,6 +34,6 @@ internal class DetailsModuleLoadTest : KoinModuleTest(DetailsModuleLoad) {
             id = 0,
             alias = "Trezor wallet",
             date = "10-Aug-2023, 02:15 PM",
-            encryptedSeed = "UMDJ3sMCSF9q42IGeFmkSrUhpckbUiVPZR06eBGEApI6uvYKFdADW6i…"
+            unreadableSeedPhrase = "UMDJ3sMCSF9q42IGeFmkSrUhpckbUiVPZR06eBGEApI6uvYKFdADW6i…"
         )
 }

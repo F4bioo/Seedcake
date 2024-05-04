@@ -10,24 +10,21 @@
 
 package com.fappslab.libraries.security.bip39colors
 
-import com.fappslab.seedcake.libraries.arch.exceptions.BlankColoredSeedException
-import com.fappslab.seedcake.libraries.arch.exceptions.BlankSeedException
-import com.fappslab.seedcake.libraries.arch.exceptions.InvalidColorException
-import com.fappslab.seedcake.libraries.arch.exceptions.InvalidColorFormatException
-import com.fappslab.seedcake.libraries.arch.exceptions.InvalidEntropyLengthException
-import com.fappslab.seedcake.libraries.arch.exceptions.InvalidMnemonicSeedException
-import com.fappslab.seedcake.libraries.arch.exceptions.InvalidWordException
+import com.fappslab.libraries.security.model.ThrowableValidation
+import com.fappslab.libraries.security.model.ValidationType
+import com.fappslab.seedcake.libraries.extension.blankString
+import com.fappslab.seedcake.libraries.extension.emptyString
+import com.fappslab.seedcake.libraries.extension.splitToList
 
-private const val MIN_ENTROPY_LENGTH = 12
-private const val MAX_ENTROPY_LENGTH = 24
-
-@Suppress("MagicNumber", "ThrowsCount")
 class BIP39ColorsImpl(private val wordList: List<String>) : BIP39Colors {
 
-    override suspend fun encodeSeedColor(readableSeed: String): List<Pair<String, String>> {
-        if (readableSeed.isBlank()) throw BlankSeedException()
+    private val validator by lazy { BIP39ColorsValidator(wordList) }
 
-        val colors = mapSeedToColors(readableSeed)
+    override suspend fun encodeSeedColor(readableSeedPhrase: String): List<Pair<String, String>> {
+        val list = readableSeedPhrase.splitToList(blankString())
+        validator.encodeValidation(list)
+
+        val colors = mapSeedToColors(list)
         val rgbArr = colors.map { hexToRgb(it) }
         val colorHsv = rgbArr.map { mapOf("rgb" to it, "hsv" to rgbToHsv(it)) }
 
@@ -45,63 +42,40 @@ class BIP39ColorsImpl(private val wordList: List<String>) : BIP39Colors {
         }
     }
 
-    override suspend fun decodeSeedColor(coloredSeed: String): String {
-        if (coloredSeed.isBlank()) throw BlankColoredSeedException()
+    override suspend fun decodeSeedColor(colorfulSeedPhrase: String): String {
+        val list = colorfulSeedPhrase.splitToList(blankString())
+        validator.decodeValidation(list)
 
-        val inputColors = coloredSeed.trim().split(' ')
-
-        if (inputColors.size !in listOf(8, 16)) {
-            throw InvalidColorFormatException()
-        }
-
-        if (inputColors.any { isValidHexColor(it).not() }) {
-            throw InvalidColorFormatException()
-        }
-
-        val colors = inputColors.toMutableList()
-        val decArray = colors.map {
-            it.substring(1)
-                .toInt(16).toString()
-                .padStart(8, '0')
+        val colorsInDecimal = list.map {
+            it.substring(startIndex = 1).toInt(radix = 16).toString()
+                .padStart(length = 8, padChar = '0')
         }.sorted()
 
-        if (!isSequentialArray(decArray)) {
-            throw InvalidColorException()
-        }
+        if (!isSequentialArray(colorsInDecimal)) throw ThrowableValidation(
+            type = ValidationType.SEQUENTIAL_COLOR_EXCEPTION
+        )
 
-        val text = decArray.joinToString(separator = "") { it.takeLast(6) }
-        val bip39Positions = text.chunked(4)
-
-        if (bip39Positions.any { it.toIntOrNull() !in 1..2048 }) {
-            throw InvalidColorException()
-        }
-
-        val wordPositions = bip39Positions.map { it.toInt() }.toMutableList()
-        return wordPositions.joinToString(separator = " ") { wordList[it - 1] }
+        return convertDecimalColorsToWords(colorsInDecimal)
     }
 
-    private fun mapSeedToColors(decryptedSeed: String): List<String> {
-        val seed = decryptedSeed.trim().split(' ').map { it.lowercase() }
-
-        val validEntropyLengths = listOf(MIN_ENTROPY_LENGTH, MAX_ENTROPY_LENGTH)
-        if (seed.size !in validEntropyLengths) throw InvalidEntropyLengthException()
-        if (!seed.none { it !in wordList }) throw InvalidMnemonicSeedException()
-
+    private fun mapSeedToColors(readableSeedPhrase: List<String>): List<String> {
         val wordPositions = when {
-            seed.all { it.toIntOrNull() in 1..2048 } ->
-                seed.map { it.toInt() }.toMutableList()
+            readableSeedPhrase.all { it.toIntOrNull() in 1..2048 } ->
+                readableSeedPhrase.map { it.toInt() }.toMutableList()
 
-            seed.all { it in wordList } ->
-                seed.map { wordList.indexOf(it) + 1 }.toMutableList()
+            readableSeedPhrase.all { it in wordList } ->
+                readableSeedPhrase.map { wordList.indexOf(it).inc() }.toMutableList()
 
-            else -> throw InvalidWordException()
+            else -> throw ThrowableValidation(
+                type = ValidationType.READABLE_SEED_PHRASE_WORD_NOT_IN_LIST
+            )
         }
 
         return seedToColors(wordPositions)
     }
 
     private fun seedToColors(wordPositions: List<Int>): List<String> {
-        val positionsText = wordPositions.joinToString(separator = "") {
+        val positionsText = wordPositions.joinToString(emptyString()) {
             it.toString().padStart(length = 4, padChar = '0')
         }
         val positionPieces = positionsText.chunked(6)
@@ -122,9 +96,11 @@ class BIP39ColorsImpl(private val wordList: List<String>) : BIP39Colors {
         }
     }
 
-    private fun isValidHexColor(color: String): Boolean {
-        val isHex = color.substring(startIndex = 1).all { c -> c.isDigit() || c.isLetter() }
-        return color.length == 7 && color.startsWith(char = '#') && isHex
+    private fun convertDecimalColorsToWords(decArray: List<String>): String {
+        val text = decArray.joinToString(emptyString()) { it.takeLast(n = 6) }
+        val bip39Positions = text.chunked(size = 4)
+        return bip39Positions.map { it.toInt() }
+            .joinToString(blankString()) { wordList[it.dec()] }
     }
 
     private fun isSequentialArray(array: List<String>): Boolean {

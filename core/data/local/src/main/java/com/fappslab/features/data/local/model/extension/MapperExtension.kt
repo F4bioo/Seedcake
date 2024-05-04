@@ -8,7 +8,7 @@ internal fun SeedEntity.toSeed(): Seed =
         id = id,
         alias = alias,
         date = date,
-        encryptedSeed = encryptedSeed
+        unreadableSeedPhrase = encryptedSeed
     )
 
 internal fun Seed.toSeedEntity(): SeedEntity =
@@ -16,7 +16,7 @@ internal fun Seed.toSeedEntity(): SeedEntity =
         id = id,
         alias = alias,
         date = date,
-        encryptedSeed = encryptedSeed
+        encryptedSeed = unreadableSeedPhrase
     )
 
 internal fun List<SeedEntity>.toSeeds(): List<Seed> =

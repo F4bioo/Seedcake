@@ -14,6 +14,8 @@ import com.fappslab.seedcake.libraries.extension.isNull
 
 internal const val PIN_PATTERN = "^[0-9]{4}$"
 private const val PIN_LENGTH = 4
+private const val MIN_PIN_DIGIT = 0
+private const val MAX_PIN_DIGIT = 9
 
 class PlutoPinView @JvmOverloads constructor(
     context: Context,
@@ -21,6 +23,7 @@ class PlutoPinView @JvmOverloads constructor(
     defStyleAttr: Int = 0,
 ) : LinearLayout(ContextThemeWrapper(context, defStyleAttr), attrs, defStyleAttr) {
 
+    var onWrongPin: (() -> Unit)? = null
     var validation: ((result: PinResult) -> Unit)? = null
     private var buttonPrimary: AppCompatTextView? = null
     private var buttonReset: AppCompatImageView? = null
@@ -49,9 +52,10 @@ class PlutoPinView @JvmOverloads constructor(
         buttonReset = findViewById(R.id.button_reset)
         textError = findViewById(R.id.text_error)
 
-        buttonIds.forEachIndexed { index, buttonId ->
+        buttonIds.forEachIndexed { number, buttonId ->
             findViewById<AppCompatTextView>(buttonId).apply {
-                setOnClickListener { appendPin(index.toString()) }
+                text = number.toString()
+                setOnClickListener { appendPin(text.toString()) }
             }
         }
 
@@ -121,6 +125,7 @@ class PlutoPinView @JvmOverloads constructor(
                     if (!result.isValid) {
                         clearPin(); updatePinImages()
                         setErrorMessage(result.errorMessageRes)
+                        onWrongPin?.invoke()
                     }
                 }
             }
@@ -199,6 +204,15 @@ class PlutoPinView @JvmOverloads constructor(
         updateTitle(type)
     }
 
+    fun setupPinPad(shouldShuffle: Boolean) {
+        val numbers = getShuffledOrOrderedNumbers(shouldShuffle)
+        buttonIds.forEachIndexed { index, buttonId ->
+            val button = findViewById<AppCompatTextView>(buttonId)
+            val number = numbers[index]
+            button.text = number.toString()
+        }
+    }
+
     private fun handlePinValidation(validationBock: (ValidationResult) -> Unit) {
         val result = pinValidator.validatePin(getCurrentPin(), primaryPin, screenType)
         setErrorMessage(result.errorMessageRes)
@@ -207,5 +221,10 @@ class PlutoPinView @JvmOverloads constructor(
 
     private fun isValidPin(): Boolean {
         return currentPin.matches(PIN_PATTERN.toRegex())
+    }
+
+    private fun getShuffledOrOrderedNumbers(shouldShuffle: Boolean): List<Int> {
+        val range = MIN_PIN_DIGIT..MAX_PIN_DIGIT
+        return if (shouldShuffle) range.shuffled() else range.toList()
     }
 }

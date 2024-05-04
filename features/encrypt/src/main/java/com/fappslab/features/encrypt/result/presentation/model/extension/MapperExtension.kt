@@ -10,6 +10,6 @@ internal fun ResultArgs.toSeed(): Seed {
     return Seed(
         alias = alias,
         date = now.toRawDateTime(),
-        encryptedSeed = encryptedSeed
+        unreadableSeedPhrase = encryptedSeed
     )
 }

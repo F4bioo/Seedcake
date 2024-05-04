@@ -1,4 +1,7 @@
-Greetings! 😅 Your PR title could use some more detail.  
-A minimum of 25 characters would be great. The expected pattern for the tag is:
+Hello! 😅 It seems like your PR title could use a bit more detail.  
+We recommend having a description of at least 10 characters.
 
-$TAG: `$DESCRIPTION` (A minimum of 10 characters is needed for this part!)
+Here's the expected format:
+**$TAG:**$DESCRIPTION <-- `(At least 10 characters for the description)`
+
+Thank you! 🙌

@@ -10,26 +10,34 @@
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="check_box_pin"
-            android:summaryOff="PIN lock is disabled. Tap to enable."
-            android:summaryOn="PIN lock is enabled. Tap to disable."
-            android:title="PIN Lock" />
+            android:summaryOff="@string/preferences_pin_lock_summary_off"
+            android:summaryOn="@string/preferences_pin_lock_summary_on"
+            android:title="@string/preferences_pin_lock_title" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:enabled="false"
+            android:key="check_box_shuffle_pin"
+            android:summaryOff="@string/preferences_shuffle_pin_summary_off"
+            android:summaryOn="@string/preferences_shuffle_pin_summary_on"
+            android:title="@string/preferences_shuffle_pin_title" />
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:enabled="false"
             android:key="check_box_fingerprint"
-            android:summaryOff="Fingerprint lock is disabled. Tap to enable."
-            android:summaryOn="Fingerprint lock is enabled. Tap to disable."
-            android:title="Unlock with fingerprint"
+            android:summaryOff="@string/preferences_fingerprint_summary_off"
+            android:summaryOn="@string/preferences_fingerprint_summary_on"
+            android:title="@string/preferences_fingerprint_title"
             app:isPreferenceVisible="false"
             tools:isPreferenceVisible="true" />
 
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="check_box_screen_shield"
-            android:summaryOff="Screen Shield is disabled. Tap to protect your app content from screen capture and recording."
-            android:summaryOn="Screen Shield is enabled. Your app content is protected from screen capture and recording."
-            android:title="Screen Shield Protection" />
+            android:summaryOff="@string/preferences_screen_shield_summary_off"
+            android:summaryOn="@string/preferences_screen_shield_summary_on"
+            android:title="@string/preferences_screen_shield_title" />
 
     </PreferenceCategory>
 

@@ -1,7 +1,6 @@
 package com.fappslab.features.decrypt.presentation.viewmodel
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import com.fappslab.features.decrypt.presentation.model.PageType
 import com.fappslab.seedcake.features.decrypt.R
 
@@ -10,31 +9,31 @@ internal const val CHILD_LINE = 0
 internal const val CHILD_SEED = 1
 
 internal data class DecryptViewState(
-    val encryptedSeed: String? = null,
+    val unreadableSeedPhrase: String? = null,
     val coloredSeed: String? = null,
+    val isEyeChecked: Boolean = false,
     val childPosition: Int = CHILD_LINE,
     val pagePosition: Int = FIRST_PAGE,
     val shouldShowDeniedPermissionModal: Boolean = false,
     val shouldShowUnlockSeedErrorModal: Boolean = false,
     val shouldShowProgressDialog: Boolean = false,
-    val isEyeChecked: Boolean = false,
-    @DrawableRes val endIconRes: Int = R.drawable.plu_ic_qrcode,
-    @StringRes val inputSeedErrorRes: Int? = null,
-    @StringRes val inputPassErrorRes: Int? = null,
+    val inputErrorPair: Pair<Int, String?>? = null,
+    val dialogErrorPair: Pair<Int, String?> = Pair(R.string.unknown_error, null),
+    @DrawableRes val endIconRes: Int = R.drawable.plu_ic_qrcode
 ) {
 
-    fun modalError(@StringRes inputSeedErrorRes: Int) = copy(
-        inputSeedErrorRes = inputSeedErrorRes,
-        shouldShowUnlockSeedErrorModal = true
+    fun dialogError(dialogErrorPair: Pair<Int, String?>) = copy(
+        shouldShowUnlockSeedErrorModal = true,
+        dialogErrorPair = dialogErrorPair
     )
 
     fun textChangedUnreadableSeed(
         pageType: PageType,
         unreadableSeed: String
     ): DecryptViewState = when (pageType) {
-        PageType.EncryptedSeed -> copy(encryptedSeed = unreadableSeed)
+        PageType.EncryptedSeed -> copy(unreadableSeedPhrase = unreadableSeed)
         PageType.ColoredSeed -> copy(coloredSeed = unreadableSeed)
-    }.copy(inputSeedErrorRes = null, endIconRes = unreadableSeed.toEndIcon())
+    }.copy(inputErrorPair = null, endIconRes = unreadableSeed.toEndIcon(), isEyeChecked = false)
 
     private fun String.toEndIcon(): Int =
         if (isBlank()) {

@@ -1,8 +1,8 @@
 plugins {
     id 'java-library'
-    id 'org.jetbrains.kotlin.jvm'
+    alias(libs.plugins.kotlinJvm)
 }
-apply from: "$rootDir/plugins/kotlin-module-build.gradle"
+apply from: "$rootDir/plugins/kotlin-build.gradle"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
@@ -11,6 +11,5 @@ java {
 
 dependencies {
     // Libs
-    implementation(libs.coroutinesAndroid)
     implementation(libs.coroutinesCore)
 }

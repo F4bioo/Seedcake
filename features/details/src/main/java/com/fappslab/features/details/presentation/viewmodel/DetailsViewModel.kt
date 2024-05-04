@@ -2,19 +2,16 @@ package com.fappslab.features.details.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.fappslab.features.common.domain.model.Seed
-import com.fappslab.features.common.domain.usecase.DecryptSeedUseCase
-import com.fappslab.features.common.domain.usecase.DeleteSeedUseCase
-import com.fappslab.features.common.domain.usecase.EncodeSeedColorUseCase
-import com.fappslab.features.common.domain.usecase.SetSeedUseCase
+import com.fappslab.features.common.domain.usecase.DecryptParams
+import com.fappslab.features.common.domain.usecase.DecryptSeedPhraseUseCase
+import com.fappslab.features.common.domain.usecase.DeleteSeedPhraseUseCase
+import com.fappslab.features.common.domain.usecase.EncodeSeedPhraseColorUseCase
+import com.fappslab.features.common.domain.usecase.SetSeedPhraseUseCase
 import com.fappslab.features.common.navigation.DetailsArgs
-import com.fappslab.features.details.presentation.extensions.formValidation
 import com.fappslab.features.details.presentation.model.extension.toDetailsArgs
 import com.fappslab.features.details.presentation.model.extension.toSeed
+import com.fappslab.libraries.security.model.ThrowableValidation
 import com.fappslab.seedcake.features.details.R
-import com.fappslab.seedcake.libraries.arch.exceptions.BlankPassphraseException
-import com.fappslab.seedcake.libraries.arch.exceptions.DecryptionFailedException
-import com.fappslab.seedcake.libraries.arch.exceptions.DecryptionTimeoutException
-import com.fappslab.seedcake.libraries.arch.exceptions.InvalidPassphraseException
 import com.fappslab.seedcake.libraries.arch.simplepermission.model.PermissionStatus
 import com.fappslab.seedcake.libraries.arch.viewmodel.ViewModel
 import com.fappslab.seedcake.libraries.design.pluto.activity.qrcode.creator.PlutoQrcodeCreator
@@ -22,10 +19,10 @@ import kotlinx.coroutines.launch
 
 internal class DetailsViewModel(
     private val args: DetailsArgs,
-    private val setSeedUseCase: SetSeedUseCase,
-    private val deleteSeedUseCase: DeleteSeedUseCase,
-    private val decryptSeedUseCase: DecryptSeedUseCase,
-    private val encodeSeedColorUseCase: EncodeSeedColorUseCase
+    private val setSeedPhraseUseCase: SetSeedPhraseUseCase,
+    private val deleteSeedPhraseUseCase: DeleteSeedPhraseUseCase,
+    private val decryptSeedPhraseUseCase: DecryptSeedPhraseUseCase,
+    private val encodeSeedPhraseColorUseCase: EncodeSeedPhraseColorUseCase
 ) : ViewModel<DetailsViewState, DetailsViewAction>(DetailsViewState(args)) {
 
     init {
@@ -33,66 +30,54 @@ internal class DetailsViewModel(
     }
 
     private fun createQrcode() {
-        val qrcode = PlutoQrcodeCreator.create(args.encryptedSeed)
+        val qrcode = PlutoQrcodeCreator.create(args.unreadableSeedPhrase)
         onState { it.copy(encryptedSeedBitmap = qrcode) }
     }
 
     private fun editSeed(seed: Seed) {
         viewModelScope.launch {
             onState { it.copy(shouldShowEditAliasModal = false) }
-                .runCatching { setSeedUseCase(seed) }
+                .runCatching { setSeedPhraseUseCase(seed) }
                 .onFailure { }
                 .onSuccess { onState { it.copy(args = seed.toDetailsArgs()) } }
         }
     }
 
-    private fun DetailsViewState.isInputPopulated(alias: String): Boolean {
-        val aliasErrorRes = aliasErrorRes.formValidation(alias)
-        onState { it.copy(aliasErrorRes = aliasErrorRes) }
-
-        return alias.isNotBlank()
-    }
-
     fun onDeleteConfirmation() {
         viewModelScope.launch {
             onState { it.copy() }
-                .runCatching { deleteSeedUseCase(args.id) }
+                .runCatching { deleteSeedPhraseUseCase(args.id) }
                 .onFailure { }
                 .onSuccess { onAction { DetailsViewAction.FinishView } }
         }
     }
 
-    fun onDecryptSeed(passphrase: String) {
-        val encryptedSeed = args.encryptedSeed
+    fun onUnlockSeed(passphrase: String) {
+        val params = DecryptParams(args.unreadableSeedPhrase, passphrase)
         viewModelScope.launch {
             onState { it.copy(shouldShowProgressDialog = true) }
                 .runCatching {
-                    val decryptedSeed = decryptSeedUseCase(encryptedSeed, passphrase)
-                    val coloredSeed = encodeSeedColorUseCase(decryptedSeed)
-                    decryptedSeed to coloredSeed
+                    val readableSeedPhrase = decryptSeedPhraseUseCase(params)
+                    val colorfulSeedPhrase = encodeSeedPhraseColorUseCase(readableSeedPhrase)
+                    readableSeedPhrase to colorfulSeedPhrase
                 }
-                .onFailure { cryptoError(cause = it) }
-                .onSuccess { decryptSuccess(resultPair = it) }
+                .onFailure { unlockSeedFailure(cause = it) }
+                .onSuccess { unlockSeedSuccess(resultPair = it) }
                 .also { onState { it.copy(shouldShowProgressDialog = false) } }
         }
     }
 
-    private fun cryptoError(cause: Throwable) {
-        val decryptErrorRes = when (cause) {
-            // Encryptor
-            is BlankPassphraseException -> R.string.blank_passphrase_error
-            is InvalidPassphraseException -> R.string.invalid_passphrase_error
-            is DecryptionFailedException -> R.string.decryption_failed_error
-            is DecryptionTimeoutException -> R.string.decryption_timeout_error
-            // Others
-            else -> R.string.unexpected_crypto_error
-        }
-        onState { it.cryptoError(decryptErrorRes = decryptErrorRes) }
+    private fun unlockSeedFailure(cause: Throwable) {
+        val dialogErrorPair = when (cause) {
+            is ThrowableValidation -> cause.type.messageRes
+            else -> R.string.unknown_error
+        } to cause.message
+        onState { it.dialogError(dialogErrorPair = dialogErrorPair) }
     }
 
-    private fun decryptSuccess(resultPair: Pair<String, List<Pair<String, String>>>) {
-        val (decryptedSeed, coloredSeed) = resultPair
-        onAction { DetailsViewAction.Decrypted(DecryptParams(decryptedSeed, coloredSeed)) }
+    private fun unlockSeedSuccess(resultPair: Pair<String, List<Pair<String, String>>>) {
+        val (unlockedSeed, coloredSeed) = resultPair
+        onAction { DetailsViewAction.UnlockedSeed(UnlockParams(unlockedSeed, coloredSeed)) }
     }
 
     fun onDeleteVisibility(shouldShow: Boolean = true) {
@@ -108,7 +93,7 @@ internal class DetailsViewModel(
     }
 
     fun onEditAliasVisibility(shouldShow: Boolean = true) {
-        onState { it.copy(shouldShowEditAliasModal = shouldShow, aliasErrorRes = null) }
+        onState { it.copy(shouldShowEditAliasModal = shouldShow) }
     }
 
     fun onDecryptErrorVisibility(shouldShow: Boolean) {
@@ -132,29 +117,31 @@ internal class DetailsViewModel(
     }
 
     fun onCopy() {
-        onAction { DetailsViewAction.Copy(args.encryptedSeed) }
+        onAction { DetailsViewAction.Copy(args.unreadableSeedPhrase) }
     }
 
     fun onWhatSeeing() {
         onAction { DetailsViewAction.WhatSeeing }
     }
 
-    fun onEye(isChecked: Boolean) {
+    fun onEye(isChecked: Boolean = false) {
         val childPosition = if (isChecked) {
             CHILD_SEED
         } else CHILD_LINE
-        onState { it.copy(childPosition = childPosition) }
+        onState { it.copy(childPosition = childPosition, isEyeChecked = isChecked) }
     }
 
-    fun onClose() {
+    fun onCloseSeed() {
+        onAction { DetailsViewAction.CloseSeed }
+    }
+
+    fun onBack() {
         onAction { DetailsViewAction.FinishView }
     }
 
     fun onSave(alias: String) = state.value.run {
-        if (isInputPopulated(alias)) {
-            val args = args.copy(alias = alias)
-            editSeed(args.toSeed())
-        }
+        val args = args.copy(alias = alias)
+        editSeed(args.toSeed())
     }
 
     fun onPermission(result: PermissionStatus) {

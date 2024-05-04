@@ -90,7 +90,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="abandon banana captain dance eagle fabric galaxy habit ice jacket kangaroo language" />
+                    tools:text="1: abandon 2: banana 3: captain 4: dance 5: eagle 6: fabric 7: galaxy 8: habit 9: ice 10: jacket 11: kangaroo 12: language" />
 
             </ViewFlipper>
 

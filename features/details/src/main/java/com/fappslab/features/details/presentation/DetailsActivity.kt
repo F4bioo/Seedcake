@@ -10,7 +10,7 @@ import com.fappslab.seedcake.features.details.R
 import com.fappslab.seedcake.features.details.databinding.DetailsActivityBinding
 import com.fappslab.seedcake.libraries.design.viewbinding.viewBinding
 import com.fappslab.seedcake.libraries.extension.args.putArgs
-import com.fappslab.seedcake.libraries.extension.args.toIntent
+import com.fappslab.seedcake.libraries.extension.args.provideIntent
 import com.fappslab.seedcake.libraries.extension.args.viewArgs
 
 class DetailsActivity : AppCompatActivity(R.layout.details_activity) {
@@ -31,6 +31,6 @@ class DetailsActivity : AppCompatActivity(R.layout.details_activity) {
 
     companion object {
         fun createIntent(context: Context, args: DetailsArgs): Intent =
-            context.toIntent<DetailsActivity> { putArgs(args) }
+            context.provideIntent<DetailsActivity> { putArgs(args) }
     }
 }

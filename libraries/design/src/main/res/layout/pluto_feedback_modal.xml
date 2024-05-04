@@ -53,6 +53,7 @@
                 style="@style/PlutoImageAvatar"
                 android:layout_width="@dimen/plu_size_32"
                 android:layout_height="@dimen/plu_size_20"
+                android:layout_marginTop="@dimen/plu_size_04"
                 android:importantForAccessibility="no"
                 android:visibility="gone"
                 app:contentPadding="@dimen/plu_size_none"

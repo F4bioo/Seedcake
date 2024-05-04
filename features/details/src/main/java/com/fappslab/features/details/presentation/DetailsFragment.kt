@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.fappslab.features.common.navigation.DetailsArgs
 import com.fappslab.features.details.di.DetailsModuleLoad
+import com.fappslab.features.details.presentation.extensions.numberedSeed
 import com.fappslab.features.details.presentation.extensions.permissionLauncher
 import com.fappslab.features.details.presentation.extensions.saveToGalleryAction
 import com.fappslab.features.details.presentation.extensions.setPalletColors
@@ -17,12 +18,12 @@ import com.fappslab.features.details.presentation.extensions.showEditAliasModal
 import com.fappslab.features.details.presentation.extensions.showFullEncryptedSeedModal
 import com.fappslab.features.details.presentation.extensions.showInfoModal
 import com.fappslab.features.details.presentation.extensions.showLoadingDialog
-import com.fappslab.features.details.presentation.extensions.showUnlockSeedErrorModal
+import com.fappslab.features.details.presentation.extensions.showUnlockSeedErrorDialog
 import com.fappslab.features.details.presentation.extensions.showWhatSeeingDialog
-import com.fappslab.features.details.presentation.viewmodel.DecryptParams
 import com.fappslab.features.details.presentation.viewmodel.DetailsViewAction
 import com.fappslab.features.details.presentation.viewmodel.DetailsViewModel
 import com.fappslab.features.details.presentation.viewmodel.DetailsViewState
+import com.fappslab.features.details.presentation.viewmodel.UnlockParams
 import com.fappslab.seedcake.features.details.R
 import com.fappslab.seedcake.features.details.databinding.DetailsFragmentBinding
 import com.fappslab.seedcake.features.details.databinding.DetailsModalEditBinding
@@ -64,6 +65,11 @@ internal class DetailsFragment : Fragment(R.layout.details_fragment), KoinLazy {
         setupListeners()
     }
 
+    override fun onPause() {
+        viewModel.onEye()
+        super.onPause()
+    }
+
     private fun setupObservables() {
         onViewState(viewModel) { state ->
             imageQrcodeState(state)
@@ -71,24 +77,25 @@ internal class DetailsFragment : Fragment(R.layout.details_fragment), KoinLazy {
             showLoadingDialog(state.shouldShowProgressDialog)
             showDeleteSeedModalState(state.shouldShowDeleteSeedModal)
             showDeniedPermissionModalState(state.shouldShowDeniedPermissionModal)
+            binding.includeSeed.checkEye.isChecked = state.isEyeChecked
             showInfoModalState(state.shouldShowInfoModal)
             flipperChildState(state.childPosition)
-            errorInputAlisState(state.aliasErrorRes)
-            state.showDecryptErrorModalState()
+            state.showDecryptErrorDialogState()
             state.showFullEncryptedSeedModalState()
             state.showEditAliasModalState()
         }
 
         onViewAction(viewModel) { action ->
             when (action) {
+                DetailsViewAction.CloseSeed -> closeSeedAction()
                 DetailsViewAction.FinishView -> activity?.finish()
                 DetailsViewAction.Validation -> showValidationDialogAction()
                 DetailsViewAction.RequestPermission -> requestPermissionAction()
                 DetailsViewAction.GrantedPermission -> saveToGalleryAction()
                 DetailsViewAction.WhatSeeing -> showWhatSeeingDialog()
                 DetailsViewAction.OpenAppSettings -> context?.openApplicationSettings()
-                is DetailsViewAction.Decrypted -> decryptedAction(action.params)
-                is DetailsViewAction.Copy -> activity?.copyToClipboard(data = action.encryptedSeed)
+                is DetailsViewAction.UnlockedSeed -> unlockedSeedAction(action.params)
+                is DetailsViewAction.Copy -> context?.copyToClipboard(data = action.encryptedSeed)
                 is DetailsViewAction.SaveToGalleryResult -> saveToGalleryResultAction(action.message)
             }
         }
@@ -96,7 +103,7 @@ internal class DetailsFragment : Fragment(R.layout.details_fragment), KoinLazy {
 
     private fun setupToolbar() {
         binding.detailsToolbar.run {
-            setNavigationOnClickListener { viewModel.onClose() }
+            setNavigationOnClickListener { viewModel.onBack() }
             setOnMenuItemClickListener {
                 viewModel.onDeleteVisibility(shouldShow = true)
                 true
@@ -112,11 +119,12 @@ internal class DetailsFragment : Fragment(R.layout.details_fragment), KoinLazy {
         buttonShow.setOnClickListener { viewModel.onFullEncryptedSeedVisibility() }
         includeSeed.buttonInfo.setOnClickListener { viewModel.onInfoVisibility() }
         buttonEdit.setOnClickListener { viewModel.onEditAliasVisibility() }
+        buttonClose.setOnClickListener { viewModel.onCloseSeed() }
     }
 
     private fun setupViewState(args: DetailsArgs) = binding.run {
         textEncryptedDate.text = args.date.toDateFormatted()
-        textEncryptedSeed.text = args.encryptedSeed
+        textEncryptedSeed.text = args.unreadableSeedPhrase
         textAlias.text = args.alias
     }
 
@@ -126,7 +134,7 @@ internal class DetailsFragment : Fragment(R.layout.details_fragment), KoinLazy {
     }
 
     private fun showValidationDialogAction() {
-        context?.plutoValidationDialog(viewModel::onDecryptSeed)
+        context?.plutoValidationDialog(viewModel::onUnlockSeed)
     }
 
     private fun showDeleteSeedModalState(shouldShow: Boolean) {
@@ -140,7 +148,7 @@ internal class DetailsFragment : Fragment(R.layout.details_fragment), KoinLazy {
     private fun DetailsViewState.showFullEncryptedSeedModalState() {
         showFullEncryptedSeedModal(
             shouldShowFullEncryptedSeedModal,
-            args.encryptedSeed,
+            args.unreadableSeedPhrase,
             viewModel::onFullEncryptedSeedVisibility,
             viewModel::onCopy,
             viewModel::onWhatSeeing
@@ -155,9 +163,9 @@ internal class DetailsFragment : Fragment(R.layout.details_fragment), KoinLazy {
         )
     }
 
-    private fun DetailsViewState.showDecryptErrorModalState() {
-        showUnlockSeedErrorModal(
-            decryptErrorRes,
+    private fun DetailsViewState.showDecryptErrorDialogState() {
+        showUnlockSeedErrorDialog(
+            dialogErrorPair,
             shouldShowDecryptErrorModal,
             viewModel::onDecryptErrorVisibility
         )
@@ -177,11 +185,6 @@ internal class DetailsFragment : Fragment(R.layout.details_fragment), KoinLazy {
         includeSeed.flipperContainer.displayedChild = childPosition
     }
 
-    private fun errorInputAlisState(errorRes: Int?) {
-        modalEditBinding.inputLayoutAlias.error =
-            errorRes?.let(::getString)
-    }
-
     private fun showDeniedPermissionModalState(shouldShow: Boolean) {
         showDeniedStoragePermissionModal(
             shouldShow,
@@ -190,11 +193,19 @@ internal class DetailsFragment : Fragment(R.layout.details_fragment), KoinLazy {
         )
     }
 
-    private fun decryptedAction(params: DecryptParams) {
+    private fun closeSeedAction() {
         binding.run {
+            buttonClose.isVisible = false
+            includeSeed.seedContainer.isVisible = false
+        }
+    }
+
+    private fun unlockedSeedAction(params: UnlockParams) {
+        binding.run {
+            buttonClose.isVisible = true
             includeSeed.seedContainer.isVisible = true
-            includeSeed.textDecryptedSeed.text = params.decryptedSeed
             includeSeed.setPalletColors(params.coloredSeed)
+            includeSeed.textReadableSeed.numberedSeed(params.decryptedSeed)
         }
     }
 

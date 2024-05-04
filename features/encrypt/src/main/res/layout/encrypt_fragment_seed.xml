@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/text_title"
+        style="@style/PlutoTextHighlightLarge"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/plu_size_04"
+        android:text="@string/encrypt_seed_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/plu_size_02"
+        android:padding="@dimen/plu_size_02"
+        app:layout_constraintBottom_toTopOf="@id/button_encrypt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_title">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.fappslab.features.encrypt.seed.presentation.component.SafeInput
+                android:id="@+id/safe_input"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_algorithm_selection"
+                style="@style/PlutoTextMin"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="@dimen/plu_size_01"
+                android:autoSizeStepGranularity="@dimen/plu_size_02"
+                android:autoSizeTextType="uniform"
+                android:ellipsize="end"
+                android:gravity="end|center_vertical"
+                android:maxLines="1"
+                android:textColor="@color/plu_gray_medium"
+                app:layout_constraintBottom_toBottomOf="@id/button_algorithm_selection"
+                app:layout_constraintEnd_toStartOf="@id/button_algorithm_selection"
+                app:layout_constraintHorizontal_bias="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/button_algorithm_selection"
+                tools:text="Encryption mode: ChaCha20-Poly1305" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/button_algorithm_selection"
+                style="@style/PlutoImageIconButton"
+                android:layout_width="@dimen/plu_size_07"
+                android:layout_height="@dimen/plu_size_07"
+                android:layout_marginVertical="@dimen/plu_size_01"
+                android:layout_marginEnd="@dimen/plu_size_04"
+                android:src="@drawable/plu_ic_settings"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/safe_input"
+                app:tint="@color/plu_gray_medium" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_encrypt"
+        style="@style/PlutoPrimaryButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/plu_size_04"
+        android:text="@string/encrypt"
+        app:layout_constraintBottom_toTopOf="@id/suggestion_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/suggestion_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/plu_qwert_bg"
+        app:layout_constraintBottom_toTopOf="@id/safe_keyboard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <include
+            android:id="@+id/include_input_type"
+            layout="@layout/encrypt_include_input_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/suggestion_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_suggestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@color/plu_qwert_bg"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="0"
+            tools:listitem="@layout/encrypt_suggestion_item" />
+
+    </FrameLayout>
+
+    <com.fappslab.features.encrypt.seed.presentation.component.SafeKeyboard
+        android:id="@+id/safe_keyboard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/plu_qwert_bg"
+        android:paddingHorizontal="@dimen/plu_size_02"
+        android:paddingBottom="@dimen/plu_size_02"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,3 +1,6 @@
 Uh-oh! 😮 Please add a space after the colon.
 
-Example: `Added: Create a new awesome feature`
+Here's the expected format:
+**$TAG:** $DESCRIPTION
+
+Thank you! 🙌

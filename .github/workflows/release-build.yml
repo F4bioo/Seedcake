@@ -292,7 +292,7 @@ jobs:
         run: |
           set -e
           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null) || true
-          IGNORED_SUFFIXES=$(awk 'NF { $1=$1; print }' .github/markdown/release-build-ignore-suffixes.md | awk 'BEGIN { ORS = "|" } { print }' | sed 's/|$//')
+          IGNORED_SUFFIXES=$(awk 'NF && $0 !~ /^ *$/ { $1=$1; print }' .github/markdown/release-build-ignore-suffixes.md | awk 'BEGIN { ORS = "|" } { print }' | sed 's/|$//')
           if [ -z "$LAST_TAG" ]; then
             RELEASE_NOTES="- Initial Release: We're Live! 🎈"
           else

@@ -1,16 +1,4 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-        // R8 sealed classes support
-        maven { url = uri("https://storage.googleapis.com/r8-releases/raw") }
-    }
-    dependencies {
-        // R8 sealed classes support
-        classpath(libs.r8Compiler)
-    }
-}
-
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.kotlinAndroid) apply false

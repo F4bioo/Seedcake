@@ -49,7 +49,7 @@
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_decrypted_seed"
+                android:id="@+id/text_readable_seed"
                 style="@style/PlutoTextMedium"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -57,17 +57,15 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="abandon banana captain dance eagle fabric galaxy habit ice jacket kangaroo language" />
+                tools:text="1: abandon 2: banana 3: captain 4: dance 5: eagle 6: fabric 7: galaxy 8: habit 9: ice 10: jacket 11: kangaroo 12: language" />
 
-            <View
+            <com.google.android.material.divider.MaterialDivider
                 android:id="@+id/divider"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/plu_divider"
+                style="@style/PlutoDivider"
                 android:layout_marginTop="@dimen/plu_size_04"
-                android:background="@color/plu_divider"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_decrypted_seed" />
+                app:layout_constraintTop_toBottomOf="@id/text_readable_seed" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_colorful_seed_title"

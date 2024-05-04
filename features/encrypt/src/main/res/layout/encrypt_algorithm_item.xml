@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/plu_size_01"
+    android:animateLayoutChanges="true"
+    app:cardBackgroundColor="@color/plu_charcoal"
+    app:cardCornerRadius="@dimen/plu_radius_mi"
+    app:cardElevation="@dimen/plu_size_none"
+    app:contentPadding="@dimen/plu_size_03"
+    app:strokeWidth="@dimen/plu_size_none">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/image_avatar"
+            android:layout_width="@dimen/plu_size_09"
+            android:layout_height="@dimen/plu_size_09"
+            android:padding="@dimen/plu_size_01"
+            android:src="@drawable/plu_ic_encrypt"
+            app:contentPadding="@dimen/plu_size_01"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/PlutoImageCircle"
+            app:strokeColor="@color/plu_cyan"
+            app:strokeWidth="1dp"
+            app:tint="@color/plu_cyan" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_title"
+            style="@style/PlutoTextHighlightSmall"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/plu_size_02"
+            android:autoSizeMaxTextSize="@dimen/plu_text_size_15"
+            android:autoSizeMinTextSize="@dimen/plu_text_size_01"
+            android:autoSizeStepGranularity="@dimen/plu_size_01"
+            android:autoSizeTextType="uniform"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            app:layout_constraintBottom_toTopOf="@id/text_subtitle"
+            app:layout_constraintEnd_toStartOf="@id/button_use"
+            app:layout_constraintStart_toEndOf="@id/image_avatar"
+            app:layout_constraintTop_toTopOf="@id/button_use"
+            tools:text="@tools:sample/lorem" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_subtitle"
+            style="@style/PlutoTextMin"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:drawableEnd="@drawable/plu_ic_expand_more"
+            android:gravity="center_vertical"
+            android:text="@string/common_details"
+            app:layout_constraintBottom_toBottomOf="@id/button_use"
+            app:layout_constraintEnd_toEndOf="@id/text_title"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="@id/text_title"
+            app:layout_constraintTop_toBottomOf="@id/text_title" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_use"
+            style="@style/Widget.Material3.Button.ElevatedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/common_use"
+            app:layout_constraintBottom_toBottomOf="@id/image_avatar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/image_avatar" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/details_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/plu_size_04"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/image_avatar"
+            tools:visibility="visible">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_details_title"
+                style="@style/PlutoTextHighlightSmall"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/plu_size_01"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@tools:sample/lorem" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/text_details_content"
+                style="@style/PlutoTextMin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/plu_size_02"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/text_details_title"
+                app:layout_constraintStart_toStartOf="@id/text_details_title"
+                app:layout_constraintTop_toBottomOf="@id/text_details_title"
+                tools:text="@tools:sample/lorem" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -9,6 +9,8 @@ import androidx.annotation.StringRes
 import androidx.core.content.withStyledAttributes
 import androidx.core.widget.doAfterTextChanged
 import com.fappslab.seedcake.libraries.design.R
+import com.fappslab.seedcake.libraries.extension.blankString
+import com.fappslab.seedcake.libraries.extension.splitToList
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
@@ -81,7 +83,7 @@ class PlutoSuggestionInputView @JvmOverloads constructor(
         clearSuggestions()
 
         // We split the input into words and get the last word
-        val lastWord = input.split(" ").last()
+        val lastWord = input.splitToList(blankString()).last()
 
         // If the last word is less than 3 characters, we don't show any suggestions
         if (lastWord.length < MIN_WORD_LENGTH_FOR_SUGGESTIONS) {

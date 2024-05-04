@@ -15,8 +15,10 @@
         <activity
             android:name="com.fappslab.features.encrypt.main.presentation.EncryptActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/PlutoTheme"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
+            tools:ignore="DiscouragedApi" />
     </application>
 
 </manifest>

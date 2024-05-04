@@ -1,10 +1,13 @@
 package com.fappslab.features.preferences.presentation.viewmodel
 
+import com.fappslab.features.preferences.domain.model.CheckBoxPreference
+
 internal data class PreferencesViewState(
     val isPinValidated: Boolean = false,
     val isCheckBoxPinChecked: Boolean = false,
     val isCheckBoxFingerprintChecked: Boolean = false,
-    val shouldShowCheckBoxFingerprint: Boolean = false
+    val shouldShowCheckBoxFingerprint: Boolean = false,
+    val isCheckBoxShufflePinChecked: Boolean = true
 ) {
 
     fun pinValidationState(
@@ -17,12 +20,12 @@ internal data class PreferencesViewState(
     }
 
     fun securityCheckBoxState(
-        isCheckBoxPinChecked: Boolean,
-        isCheckBoxFingerprintChecked: Boolean
+        checkBoxPreference: CheckBoxPreference
     ): PreferencesViewState {
         return copy(
-            isCheckBoxPinChecked = isCheckBoxPinChecked,
-            isCheckBoxFingerprintChecked = isCheckBoxFingerprintChecked
+            isCheckBoxPinChecked = checkBoxPreference.isCheckBoxPinChecked,
+            isCheckBoxShufflePinChecked = checkBoxPreference.isCheckBoxShufflePinChecked,
+            isCheckBoxFingerprintChecked = checkBoxPreference.isCheckBoxFingerprintChecked
         )
     }
 }

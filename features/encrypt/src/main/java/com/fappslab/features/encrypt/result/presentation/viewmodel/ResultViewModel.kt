@@ -1,17 +1,16 @@
 package com.fappslab.features.encrypt.result.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.fappslab.features.common.domain.usecase.SetSeedUseCase
+import com.fappslab.features.common.domain.usecase.SetSeedPhraseUseCase
 import com.fappslab.features.encrypt.result.presentation.model.ResultArgs
 import com.fappslab.features.encrypt.result.presentation.model.extension.toSeed
-import com.fappslab.libraries.logger.Logger
 import com.fappslab.seedcake.libraries.arch.viewmodel.ViewModel
 import com.fappslab.seedcake.libraries.design.pluto.activity.qrcode.creator.PlutoQrcodeCreator
 import kotlinx.coroutines.launch
 
 internal class ResultViewModel(
     private val args: ResultArgs,
-    private val setSeedUseCase: SetSeedUseCase,
+    private val setSeedPhraseUseCase: SetSeedPhraseUseCase,
 ) : ViewModel<ResultViewState, ResultViewAction>(ResultViewState(args)) {
 
     init {
@@ -25,20 +24,19 @@ internal class ResultViewModel(
 
     fun onSave() {
         viewModelScope.launch {
-            onState { it.saveStart() }
-                .runCatching { setSeedUseCase(args.toSeed()) }
-                .onFailure { saveFailure(cause = it) }
+            onState { it.copy(shouldEnableSaveButton = false) }
+                .runCatching { setSeedPhraseUseCase(args.toSeed()) }
+                .onFailure { saveFailure() }
                 .onSuccess { saveSuccess() }
         }
     }
 
-    private fun saveFailure(cause: Throwable) {
-        Logger.log.e(cause.message)
+    private fun saveFailure() {
         onState { it.saveFailure() }
     }
 
     private fun saveSuccess() {
-        // TODO implement success action
+        onAction { ResultViewAction.SaveSuccess }
     }
 
     fun onFullEncryptedSeedVisibility(shouldShow: Boolean = true) {
@@ -53,7 +51,21 @@ internal class ResultViewModel(
         onAction { ResultViewAction.WhatSeeing }
     }
 
-    fun onClose() {
+    fun onFinishView() {
+        onSaveErrorVisibilityModal()
         onAction { ResultViewAction.FinishView }
+    }
+
+    fun onTryAgain() {
+        onSaveErrorVisibilityModal()
+        onSave()
+    }
+
+    fun onSaveErrorVisibilityModal(shouldShow: Boolean = false) {
+        onState { it.copy(shouldShowSaveErrorModal = shouldShow) }
+    }
+
+    fun onBackPressed() {
+        onAction { ResultViewAction.BackPressed }
     }
 }

@@ -13,18 +13,30 @@
         tools:layout="@layout/encrypt_fragment_disclaimer">
         <action
             android:id="@+id/navigate_to_encryptFragment"
-            app:destination="@id/encryptFragment" />
+            app:destination="@id/secretFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/encryptFragment"
-        android:name="com.fappslab.features.encrypt.main.presentation.EncryptFragment"
-        android:label="Encrypt"
-        tools:layout="@layout/encrypt_fragment">
+        android:id="@+id/secretFragment"
+        android:name="com.fappslab.features.encrypt.secret.presentation.SecretFragment"
+        android:label="Secret"
+        tools:layout="@layout/encrypt_fragment_secret">
+        <action
+            android:id="@+id/navigate_to_seedFragment"
+            app:destination="@id/seedFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/seedFragment"
+        android:name="com.fappslab.features.encrypt.seed.presentation.SeedFragment"
+        android:label="Seed"
+        tools:layout="@layout/encrypt_fragment_seed">
         <action
             android:id="@+id/navigate_to_resultFragment"
             app:destination="@id/resultFragment" />
+        <argument
+            android:name="secret"
+            app:argType="com.fappslab.features.encrypt.secret.presentation.model.SecretArgs" />
     </fragment>
 
     <fragment
@@ -32,7 +44,6 @@
         android:name="com.fappslab.features.encrypt.result.presentation.ResultFragment"
         android:label="Result"
         tools:layout="@layout/encrypt_fragment_result">
-
         <argument
             android:name="result"
             app:argType="com.fappslab.features.encrypt.result.presentation.model.ResultArgs" />

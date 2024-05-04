@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:layout_margin="@dimen/plu_size_04"
+            android:contentDescription="@string/common_add"
             android:src="@drawable/plu_ic_add_moderator"
             app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior" />
 

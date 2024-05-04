@@ -21,8 +21,9 @@
     <color name="plu_input_layout_box_selected">#E4E4E4</color>
 
     <color name="plu_gray_divider">#474747</color>
-    <color name="plu_charcoal">#46434D</color>
+    <color name="plu_charcoal">#2A2831</color>
 
+    <color name="plu_light_mist_gray">#80B2B2B2</color>
     <color name="plu_start_gray">#B2B2B2</color>
     <color name="plu_end_gray">@color/plu_charcoal</color>
     <color name="plu_bg_pluto_feedback_modal">#222222</color>
@@ -35,5 +36,22 @@
     <color name="plu_lock_page_background">#FF1C1B1F</color>
 
     <color name="plu_placeholder">#585858</color>
+
+    <!--Qwert Keyboard-->
+    <color name="plu_qwert_bg">@color/plu_charcoal</color>
+    <color name="plu_qwert_keys">#504E56</color>
+    <color name="plu_highlight_keys">#4A4458</color>
+    <color name="plu_qwert_keys_disabled">#4DDADADA</color>
+    <color name="plu_qwert_keys_enabled">#DADADA</color>
+
+    <!--Toggle seed length-->
+    <color name="plu_toggle_checked_button">#524A66</color>
+    <color name="plu_toggle_checked_text">#FFFFFF</color>
+    <color name="plu_toggle_unchecked_button">#36333E</color>
+    <color name="plu_toggle_unchecked_text">#98FFFFFF</color>
+    <color name="plu_toggle_checked_button_disabled">#4A4458</color>
+    <color name="plu_toggle_checked_text_disabled">#809E9E9E</color>
+    <color name="plu_toggle_unchecked_button_disabled">#504E56</color>
+    <color name="plu_toggle_unchecked_text_disabled">#80888888</color>
 
 </resources>

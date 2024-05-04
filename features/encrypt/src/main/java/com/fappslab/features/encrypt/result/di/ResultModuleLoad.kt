@@ -1,6 +1,6 @@
 package com.fappslab.features.encrypt.result.di
 
-import com.fappslab.features.common.domain.usecase.SetSeedUseCase
+import com.fappslab.features.common.domain.usecase.SetSeedPhraseUseCase
 import com.fappslab.features.encrypt.result.presentation.model.ResultArgs
 import com.fappslab.features.encrypt.result.presentation.viewmodel.ResultViewModel
 import com.fappslab.seedcake.libraries.arch.koin.koinload.KoinLoad
@@ -14,7 +14,7 @@ internal object ResultModuleLoad : KoinLoad() {
         viewModel { (args: ResultArgs) ->
             ResultViewModel(
                 args = args,
-                setSeedUseCase = SetSeedUseCase(repository = get())
+                setSeedPhraseUseCase = SetSeedPhraseUseCase(repository = get())
             )
         }
     }

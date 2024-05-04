@@ -19,6 +19,7 @@ android {
         // Shared preferences
         buildConfigField "String", "SIMPLE_PREFS_FILE_NAME", '"simple_preferences"'
         buildConfigField "String", "SIMPLE_PREFS_PIN_KEY", '"check_box_pin"'
+        buildConfigField "String", "SIMPLE_PREFS_SHUFFLE_PIN", '"check_box_shuffle_pin"'
         buildConfigField "String", "SIMPLE_PREFS_FINGERPRINT_KEY", '"check_box_fingerprint"'
         buildConfigField "String", "SIMPLE_PREFS_SCREEN_SHIELD", '"check_box_screen_shield"'
     }

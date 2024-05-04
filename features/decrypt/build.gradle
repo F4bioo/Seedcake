@@ -28,4 +28,5 @@ dependencies {
     implementation project(Modules.design)
     implementation project(Modules.extension)
     implementation project(Modules.navigation)
+    implementation project(Modules.security)
 }
