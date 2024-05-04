@@ -90,7 +90,7 @@ class PlutoStepProgressView @JvmOverloads constructor(
             val imageView = createStepImage(iconRes)
             addView(imageView)
             imageViews.add(imageView)
-            if (index != icons.size - 1) {
+            if (index != icons.size.dec()) {
                 val progressBar = createStepProgress()
                 addView(progressBar)
                 progressBars.add(progressBar)
@@ -108,13 +108,12 @@ class PlutoStepProgressView @JvmOverloads constructor(
             )
         }
         progressBars.forEachIndexed { index, progressStep ->
-            if (index < validProgress) {
-                progressStep.setIndicatorColor(primaryColor)
-                progressStep.setProgressCompat(PROGRESS, true)
-            } else {
-                progressStep.setIndicatorColor(secondaryColor)
-                progressStep.setProgressCompat(0, true)
-            }
+            val paramsPair = if (index < validProgress) {
+                primaryColor to PROGRESS
+            } else secondaryColor to 0
+            val (color, step) = paramsPair
+            progressStep.setIndicatorColor(color)
+            progressStep.setProgressCompat(step, true)
         }
     }
 
@@ -147,9 +146,9 @@ class PlutoStepProgressView @JvmOverloads constructor(
     }
 
     private fun Context.getThemeColor(@AttrRes attr: Int): Int {
-        return TypedValue().let {
-            theme.resolveAttribute(attr, it, true)
-            it.data
+        return TypedValue().let { outValue ->
+            theme.resolveAttribute(attr, outValue, true)
+            outValue.data
         }
     }
 }

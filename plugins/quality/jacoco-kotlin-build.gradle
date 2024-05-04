@@ -17,12 +17,15 @@ private void setupKotlinCodeCoverage(Project proj) {
                 "${proj.projectDir}/src/main/kotlin"
         ]
         def kotlinTree = fileTree(
-                dir: "$proj.buildDir/classes/kotlin/main",
+                dir: "${proj.layout.buildDirectory.get().dir("classes/kotlin/main")}",
                 excludes: excludes
         )
         sourceDirectories.from = files(sourceDirs)
         classDirectories.from = files(kotlinTree)
-        executionData.from = fileTree(dir: "${proj.buildDir}/jacoco", includes: ['**/*.exec'])
+        executionData.from = fileTree(
+                dir: "${proj.layout.buildDirectory.get().dir("jacoco")}",
+                includes: ['**/*.exec']
+        )
     }
 }
 

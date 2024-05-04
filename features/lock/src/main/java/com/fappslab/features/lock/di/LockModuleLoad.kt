@@ -3,9 +3,12 @@ package com.fappslab.features.lock.di
 import com.fappslab.features.common.domain.repository.StorageRepository
 import com.fappslab.features.common.domain.usecase.DeletePinUseCase
 import com.fappslab.features.common.domain.usecase.GetFingerprintStateUseCase
+import com.fappslab.features.common.domain.usecase.GetPinStateUseCase
 import com.fappslab.features.common.domain.usecase.GetPinUseCase
+import com.fappslab.features.common.domain.usecase.GetShufflePinStateUseCase
 import com.fappslab.features.common.domain.usecase.SetPinUseCase
 import com.fappslab.features.common.navigation.ScreenTypeArgs
+import com.fappslab.features.lock.domain.provider.LockProvider
 import com.fappslab.features.lock.presentation.viewmodel.LockViewModel
 import com.fappslab.seedcake.libraries.arch.koin.koinload.KoinLoad
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -19,10 +22,14 @@ internal object LockModuleLoad : KoinLoad() {
             val repository = get<StorageRepository>()
             LockViewModel(
                 args = args,
-                getPinUseCase = GetPinUseCase(repository),
-                setPinUseCase = SetPinUseCase(repository),
-                deletePinUseCase = DeletePinUseCase(repository),
-                getFingerprintStateUseCase = GetFingerprintStateUseCase(repository)
+                provider = LockProvider(
+                    getPinUseCase = GetPinUseCase(repository),
+                    setPinUseCase = SetPinUseCase(repository),
+                    deletePinUseCase = DeletePinUseCase(repository),
+                    getPinStateUseCase = GetPinStateUseCase(repository),
+                    getShufflePinStateUseCase = GetShufflePinStateUseCase(repository),
+                    getFingerprintStateUseCase = GetFingerprintStateUseCase(repository)
+                )
             )
         }
     }

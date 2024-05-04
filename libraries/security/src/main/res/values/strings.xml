@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Validation Error Type -->
+    <string name="seed_phrase_empty">The seed phrase cannot be empty.</string>
+    <string name="seed_phrase_invalid_length">The seed phrase length is invalid. It must be one of the following: %s.</string>
+    <string name="seed_phrase_word_not_in_list">Each word in the provided seed phrase must be from the BIP-39 list. Please check again to ensure a valid seed phrase.</string>
+    <string name="seed_phrase_invalid_format">Mnemonic phrase checksum doesn\'t match. Make sure all words are correct and in the appropriate sequence.</string>
+    <string name="passphrase_empty">The passphrase cannot be empty.</string>
+    <string name="passphrase_invalid">The provided passphrase does not meet the security requirements.</string>
+    <string name="encryption_phrase_empty">The encrypted seed phrase cannot be empty.</string>
+    <string name="decryption_timeout">Decryption process timed out. Please try again.</string>
+    <string name="encryption_failed">Encryption failed. Please verify the input and try again.
+        \n\n\u2022 Cause: %s.</string>
+    <string name="decryption_failed">Failed to decrypt the seed phrase. Please try again.
+        \n\n\u2022 Cause: %s.</string>
+    <string name="unknown_error">An unexpected error has occurred. Please try again.
+        \n\n\u2022 Cause: %s.</string>
+    <string name="blank_colored_seed_exception">The colored seed phrase cannot be empty.</string>
+    <string name="invalid_color_format_exception">The format of the colored seed phrase is invalid. It must contain either 8 or 16 colors.</string>
+    <string name="invalid_hex_color_exception">The colored seed phrase contains invalid hexadecimal color values.</string>
+    <string name="sequential_color_exception">The color sequence doesn\'t match the order of your seed phrase. Please check and ensure each color correctly represents the words of your seed phrase in sequence.</string>
+    <string name="error_verification_failed">Unable to proceed. Please check the passphrase or any other details provided, and try again.</string>
+</resources>

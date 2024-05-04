@@ -8,7 +8,7 @@ internal fun Seed.toDetailsArgs(): DetailsArgs =
         id = id,
         alias = alias,
         date = date,
-        encryptedSeed = encryptedSeed
+        unreadableSeedPhrase = unreadableSeedPhrase
     )
 
 internal fun DetailsArgs.toSeed(): Seed =
@@ -16,5 +16,5 @@ internal fun DetailsArgs.toSeed(): Seed =
         id = id,
         alias = alias,
         date = date,
-        encryptedSeed = encryptedSeed
+        unreadableSeedPhrase = unreadableSeedPhrase
     )

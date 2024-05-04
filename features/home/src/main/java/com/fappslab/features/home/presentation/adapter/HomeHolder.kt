@@ -16,7 +16,7 @@ internal class HomeHolder(
 
     fun bind(seed: Seed) = binding.run {
         textAlias.text = seed.alias
-        textEncryptedSeed.text = seed.encryptedSeed
+        textEncryptedSeed.text = seed.unreadableSeedPhrase
         textEncryptedDate.text = seed.date.toDateFormatted()
         cardItem.setOnClickListener { itemClicked(seed) }
     }

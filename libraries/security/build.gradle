@@ -14,10 +14,11 @@ android {
 
 dependencies {
     // Libs
-    implementation(libs.gson)
+    api(libs.gson)
 
     // Modules
     implementation project(Modules.arch)
     implementation project(Modules.test)
+    implementation project(Modules.domain)
     implementation project(Modules.extension)
 }

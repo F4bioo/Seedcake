@@ -17,7 +17,7 @@ import com.fappslab.seedcake.libraries.arch.koin.koinlazy.subModules
 import com.fappslab.seedcake.libraries.arch.koin.koinload.KoinLoad
 import com.fappslab.seedcake.libraries.arch.viewmodel.onViewAction
 import com.fappslab.seedcake.libraries.arch.viewmodel.onViewState
-import com.fappslab.seedcake.libraries.design.extension.navigateWithAnimations
+import com.fappslab.seedcake.libraries.design.extension.safeNavigate
 import com.fappslab.seedcake.libraries.design.viewbinding.viewBinding
 import com.fappslab.seedcake.libraries.extension.setFragmentResult
 import org.koin.androidx.scope.fragmentScope
@@ -73,6 +73,6 @@ internal class DisclaimerFragment : Fragment(R.layout.encrypt_fragment_disclaime
 
     private fun navigateToEncryptAction() {
         val directions = DisclaimerFragmentDirections.navigateToEncryptFragment()
-        findNavController().navigateWithAnimations(directions)
+        findNavController().safeNavigate(directions)
     }
 }

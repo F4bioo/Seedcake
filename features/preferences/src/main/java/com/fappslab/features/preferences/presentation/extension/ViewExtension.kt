@@ -6,7 +6,7 @@ import com.fappslab.features.preferences.presentation.PreferencesFragment
 import com.fappslab.seedcake.features.preferences.R
 import com.fappslab.seedcake.libraries.design.pluto.customview.plutopinview.PinResult
 import com.fappslab.seedcake.libraries.design.pluto.customview.plutopinview.ScreenType
-import com.fappslab.seedcake.libraries.design.pluto.fragment.lock.build
+import com.fappslab.seedcake.libraries.design.pluto.fragment.extension.build
 import com.fappslab.seedcake.libraries.design.pluto.fragment.lock.plutoLockPage
 import com.fappslab.seedcake.libraries.extension.BiometricParams
 import com.fappslab.seedcake.libraries.extension.createBiometricDialog

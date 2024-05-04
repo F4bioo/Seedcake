@@ -1,4 +1,3 @@
-
 android {
     compileSdk Config.compileSdk
 
@@ -39,6 +38,11 @@ android {
         disable 'MissingTranslation', 'ExtraTranslation'
         xmlReport true
     }
+    packagingOptions {
+        resources {
+            pickFirsts += ['META-INF/LICENSE.md', 'META-INF/LICENSE-notice.md']
+        }
+    }
 }
 
 def setupApplicationBuildTypes(buildTypes) {
@@ -64,6 +68,7 @@ dependencies {
     implementation(libs.koinAndroid)
     implementation(libs.lifecycleViewModel)
     implementation(libs.lifecycleRuntime)
+    implementation(libs.lifecycleProcess)
     implementation(libs.fragmentKtx)
     implementation(libs.coroutinesAndroid)
     implementation(libs.coroutinesCore)
@@ -79,9 +84,10 @@ dependencies {
     implementation(libs.testFragment)
     implementation(libs.testKotlinCoroutines)
     implementation(libs.testArcCore)
+    implementation(libs.annotation)
 
-    testImplementation(libs.testJUnit)
     testImplementation(libs.testKoin)
+    testImplementation(libs.testJunit)
     testImplementation(libs.testKoinJunit4)
     testImplementation(libs.testMockkUnit)
     testImplementation(libs.testKotlinCoroutines)
@@ -91,7 +97,7 @@ dependencies {
     testImplementation(libs.testKotlinJUnit)
     testImplementation(libs.testArcCore)
 
-    androidTestImplementation(libs.testExtJunit)
+    androidTestImplementation(libs.testAndroidxJunit)
     androidTestImplementation(libs.testEspressoCore)
     androidTestImplementation(libs.testEspressoContrib)
     androidTestImplementation(libs.testKoin)
@@ -99,6 +105,6 @@ dependencies {
     androidTestImplementation(libs.testMockkAndroid)
     androidTestImplementation(libs.testFragment)
     androidTestImplementation(libs.testArcCore)
-    androidTestImplementation(libs.testExtJunitKtx)
+    androidTestImplementation(libs.testAndroidxJunitKtx)
     androidTestImplementation(libs.testCoreKtx)
 }

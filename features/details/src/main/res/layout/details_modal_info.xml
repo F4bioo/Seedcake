@@ -28,11 +28,10 @@
         app:layout_constraintTop_toBottomOf="@id/text_title" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/PlutoBubbleTip"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/plu_size_04"
-        android:background="@drawable/plu_bg_rounded_corners_solid"
-        android:padding="@dimen/plu_size_04"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

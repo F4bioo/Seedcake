@@ -22,3 +22,15 @@ fun Context.plutoValidationDialog(primaryBlock: (String) -> Unit) {
         }.show()
 }
 
+fun Context.plutoFeedbackChoiceDialog(primaryBlock: () -> Unit) {
+    MaterialAlertDialogBuilder(this)
+        .setTitle(getString(R.string.warning_copy_title))
+        .setMessage(R.string.warning_copy_message)
+        .setCancelable(false)
+        .setNegativeButton(R.string.common_copy) { dialog, _ ->
+            primaryBlock()
+            dialog.dismiss()
+        }
+        .setPositiveButton(R.string.common_cancel, null)
+        .show()
+}

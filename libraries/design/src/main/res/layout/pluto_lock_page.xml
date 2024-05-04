@@ -20,12 +20,11 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text_pin_lock_warning"
+            style="@style/PlutoBubbleTip"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/plu_size_04"
             android:layout_weight="1"
-            android:background="@drawable/plu_bg_rounded_corners_solid"
-            android:padding="@dimen/plu_size_04"
             android:text="@string/pin_lock_warning"
             tools:visibility="visible" />
 

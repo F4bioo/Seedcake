@@ -1,6 +1,12 @@
 pluginManagement {
     repositories {
-        google()
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
         mavenCentral()
         gradlePluginPortal()
     }
@@ -15,7 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "Seedcake"
 
-// keep it in alphabetical order
+// keep the modules path in alphabetical order
 
 // App
 include ':app'

@@ -2,12 +2,18 @@
 
     <!--Encrypt-->
     <string name="encrypt_passphrase_strength_requirements">Passphrase must contain at least 8 characters, including an uppercase letter, a lowercase letter, a number, and a special character.</string>
+    <string name="encrypt_passphrase_mismatch_error">The entered passphrases do not match</string>
     <string name="encrypt_passphrase_mismatch_title">Passphrase Mismatch</string>
     <string name="encrypt_passphrase_mismatch_message">The entered passphrases do not match. Please ensure you enter the same passphrase in both fields.</string>
     <string name="encrypt_passphrase">Passphrase</string>
     <string name="encrypt_seed_bip_39">Mnemonic seed (BIP-39)</string>
     <string name="encrypt_seeds_example">Eg: abandon banana captain dance eagle fabric galaxy habit ice jacket kangaroo language…</string>
+    <string name="encrypt_next_step">Next step</string>
+    <string name="encrypt_passphrase_generator">Passphrase generator</string>
+    <string name="encrypt_characters_size">%d characters</string>
     <string name="encrypt">Encrypt</string>
+    <string name="encrypt_generate_passphrase">Generate passphrase</string>
+    <string name="encrypt_passphrase_generator_warning"><b>\u2022 Warning:</b> Enhanced security from a complex passphrase comes with an important reminder: safekeeping is essential. As memorization becomes more challenging, extra caution is imperative.</string>
 
     <!--Disclaimer-->
     <string name="encrypt_suggested_use"><b>\u2022 Suggested use:</b> It\'s highly suggested to use Seedcake on a device that\'s offline and formatted, if possible. Think of it as a temporary help or a quick fix when physical storage isn\'t available. Cryptosteel or similar offer long-term safety.</string>
@@ -18,8 +24,28 @@
     <string name="encrypt_consent_agreement">By checking the box, you confirm that you have read and understood this <b><i>Consent Agreement</i></b> and agree to abide by its terms.</string>
     <string name="encrypt_dialog_title_consent_unconfirmed">Consent Agreement Unconfirmed</string>
     <string name="encrypt_dialog_message_consent_unconfirmed">To proceed, you must confirm that you have read and understood the Consent Agreement. Please check the box to indicate your agreement.</string>
-    <string name="encrypt_passphrase_warning"><b>\u2022 Warning::</b> Seedcake does not store your passphrase locally or remotely. If you lose your passphrase, there\'s nothing we can do to assist you.
+    <string name="encrypt_passphrase_warning"><b>\u2022 Warning:</b> Seedcake does not store your passphrase locally or remotely. If you lose your passphrase, there\'s nothing we can do to assist you.
         \n\n<b>\u2022 Caution:</b> For your safety, establish a strong passphrase exclusive to this application. Never reuse a passphrase that\'s already in use.</string>
+
+    <!--Seed-->
+    <string name="encrypt_seed_title">Enter Your BIP-39 Mnemonic Seed</string>
+    <string name="encrypt_seed_length">seed phrase length: 12 or 24 words</string>
+    <string name="encrypt_choose_cipher_title">Seed Phrase Protection: Choose an encryption method</string>
+    <string name="encrypt_algorithm_recommended">%s (recommended)</string>
+    <string name="encrypt_algorithm_gcm_title">AES GCM</string>
+    <string name="encrypt_algorithm_gcm_details">Advanced Encryption Standard (AES) with Galois/Counter Mode (GCM) without padding.
+        \n\nOffers strong encryption with extra verification to keep your seed phrase safe and sound. Ideal for those seeking peace of mind with top-level security.</string>
+    <string name="encrypt_algorithm_cha_cha20_title">ChaCha20</string>
+    <string name="encrypt_algorithm_cha_cha20_details">ChaCha20 with Poly1305 for Message Authentication Code (MAC).
+        \n\nProvides robust protection with efficiency, making it a solid choice for safeguarding your seed phrase with cutting-edge security.</string>
+    <string name="encrypt_algorithm_ctr_title">AES CTR</string>
+    <string name="encrypt_algorithm_ctr_details">Advanced Encryption Standard (AES) with Counter Mode (CTR) without padding.
+        \n\nA reliable choice for secure encryption, keeping your seed phrase safe without any additional complexity.</string>
+    <string name="encrypt_algorithm_cbc_title">AES CBC</string>
+    <string name="encrypt_algorithm_cbc_details">Advanced Encryption Standard (AES) with Cipher Block Chaining (CBC) and PKCS5Padding.
+        \n\nA reliable, time-proven encryption method that offers a high level of security. Perfect for those who prefer the classic approach.</string>
+    <string name="encrypt_selection_tip">This screen allows you to select an encryption algorithm to secure your seed phrase. Each algorithm has unique features that offer different levels of protection.</string>
+    <string name="encrypt_algorithm_selection">Encryption mode: %s</string>
 
     <!--Result-->
     <string name="encrypt_details_considerations">Considerations</string>
@@ -27,5 +53,7 @@
     <string name="encrypt_encrypt_details_consideration_topic2">\u2022 For long term, consider a Cryptosteel or similar.</string>
     <string name="encrypt_details_consideration_topic3">\u2022 <b>IMPORTANT:</b> Seedcake doesn\'t store your passphrase. Without the correct passphrase, decryption is impossible!</string>
     <string name="encrypt_save_in_database">Save in database</string>
+    <string name="encrypt_save_in_database_error_message">Unable to complete encryption storage operation. A system issue prevented saving the data.</string>
+    <string name="encrypt_save_in_database_success_message">Encrypted data stored successfully.</string>
 
 </resources>

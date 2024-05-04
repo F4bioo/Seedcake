@@ -19,7 +19,7 @@ dependencies {
     implementation(libs.jodaTime)
     implementation(libs.securityCrypto)
     implementation(libs.testKotlinCoroutines)
-    implementation(libs.testJUnit)
+    implementation(libs.testJunit)
 
     // Modules
     implementation project(Modules.design)

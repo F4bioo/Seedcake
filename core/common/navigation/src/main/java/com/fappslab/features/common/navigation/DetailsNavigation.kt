@@ -14,5 +14,5 @@ data class DetailsArgs(
     val id: Int,
     val alias: String,
     val date: String,
-    val encryptedSeed: String
+    val unreadableSeedPhrase: String
 ) : Parcelable

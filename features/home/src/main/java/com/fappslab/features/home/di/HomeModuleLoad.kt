@@ -1,6 +1,6 @@
 package com.fappslab.features.home.di
 
-import com.fappslab.features.common.domain.usecase.GetSeedsUseCase
+import com.fappslab.features.common.domain.usecase.GetSeedPhrasesUseCase
 import com.fappslab.features.home.presentation.viewmodel.HomeViewModel
 import com.fappslab.seedcake.libraries.arch.koin.koinload.KoinLoad
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -12,7 +12,7 @@ internal object HomeModuleLoad : KoinLoad() {
     override val presentationModule: Module = module {
         viewModel {
             HomeViewModel(
-                getSeedsUseCase = GetSeedsUseCase(repository = get())
+                getSeedPhrasesUseCase = GetSeedPhrasesUseCase(repository = get())
             )
         }
     }

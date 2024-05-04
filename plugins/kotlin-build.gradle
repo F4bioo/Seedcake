@@ -1,0 +1,10 @@
+dependencies {
+    // TestLibs
+    testImplementation(libs.testJunit)
+    testImplementation(libs.testMockkUnit)
+    testImplementation(libs.testKotlin)
+    testImplementation(libs.testCoroutines)
+    testImplementation(libs.testTurbine)
+    testImplementation(libs.testKotlin)
+    testImplementation(libs.testKotlinJUnit)
+}

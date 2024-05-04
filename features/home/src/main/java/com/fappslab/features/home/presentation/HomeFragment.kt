@@ -42,6 +42,11 @@ class HomeFragment : Fragment(R.layout.home_fragment), KoinLazy {
         setupListeners()
     }
 
+    override fun onResume() {
+        viewModel.onResume()
+        super.onResume()
+    }
+
     private fun setupObservables() {
         onViewState(viewModel) { state ->
             adapterMain.submitList(state.seeds)
@@ -50,6 +55,7 @@ class HomeFragment : Fragment(R.layout.home_fragment), KoinLazy {
 
         onViewAction(viewModel) { action ->
             when (action) {
+                HomeViewAction.Resume -> resumeAction()
                 HomeViewAction.Add -> navigateToEncryptAction()
                 is HomeViewAction.AdapterItem -> navigateToDetailsAction(action.args)
             }
@@ -58,7 +64,6 @@ class HomeFragment : Fragment(R.layout.home_fragment), KoinLazy {
 
     private fun setupRecycler() = binding.run {
         recyclerSeeds.adapter = adapterMain
-        recyclerSeeds.itemAnimator = null
     }
 
     private fun setupListeners() = binding.run {
@@ -67,6 +72,10 @@ class HomeFragment : Fragment(R.layout.home_fragment), KoinLazy {
 
     private fun flipperChildState(childPosition: Int) = binding.run {
         flipperContainer.displayedChild = childPosition
+    }
+
+    private fun resumeAction() {
+        binding.addButton.show()
     }
 
     private fun navigateToEncryptAction() = context?.let {

@@ -13,7 +13,7 @@ inline fun <reified P : Parcelable> FragmentActivity.viewArgs(): ReadOnlyPropert
     }
 }
 
-inline fun <reified A : Activity> Context.toIntent(
+inline fun <reified A : Activity> Context.provideIntent(
     flags: Int? = null,
     params: Intent.() -> Unit = {}
 ): Intent {

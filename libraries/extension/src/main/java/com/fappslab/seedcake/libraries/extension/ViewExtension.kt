@@ -9,15 +9,20 @@ import android.graphics.Typeface.BOLD
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.text.SpannableString
+import android.text.Spanned
 import android.text.Spanned.SPAN_INCLUSIVE_EXCLUSIVE
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isInvisible
@@ -25,6 +30,7 @@ import androidx.core.view.isVisible
 import com.google.android.material.textfield.TextInputLayout
 import kotlin.math.min
 
+private const val DELIMITERS = " "
 private const val HIGHLIGHT_LENGTH = 7
 const val METADATA_TAG = ":END"
 
@@ -134,4 +140,70 @@ fun Context.openInBrowser(url: String) {
         intent.data = Uri.parse(url)
         startActivity(intent)
     }
+}
+
+fun RadioGroup.isEnable(enable: Boolean) {
+    for (i in 0 until childCount) {
+        val child = getChildAt(i)
+        child.isEnabled = enable
+    }
+}
+
+fun TextView.clear() {
+    text = ""
+}
+
+fun AppCompatTextView.showNumberedSeed(readableSeed: String, @ColorRes colorRes: Int) {
+    fun applyStyleToNumbers(formattedSeed: String): SpannableString {
+        var currentIndex = 0
+        val span = SpannableString(formattedSeed)
+        formattedSeed.splitToList("$DELIMITERS$DELIMITERS").forEachIndexed { index, _ ->
+            val numberString = "${index.inc()}$DELIMITERS"
+            val start = formattedSeed.indexOf(numberString, currentIndex)
+            val end = start + index.inc().toString().length
+            val baseColor = ContextCompat.getColor(context, colorRes)
+            span.setSpan(
+                ForegroundColorSpan(baseColor),
+                start,
+                end,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            currentIndex = start + numberString.length.inc()
+        }
+        return span
+    }
+
+    fun buildFormattedSeedString(): String {
+        val words = readableSeed.splitToList(DELIMITERS)
+        return words.mapIndexed { index, word ->
+            "${index.inc()}$DELIMITERS$word$DELIMITERS$DELIMITERS"
+        }.joinToString(emptyString()).trim()
+    }
+
+    fun formattedSeed(): SpannableString {
+        val formattedSeed = buildFormattedSeedString()
+        return applyStyleToNumbers(formattedSeed)
+    }
+
+    val formattedSeed = formattedSeed()
+    text = formattedSeed
+}
+
+fun RadioGroup.setOnCheckListener(block: (Int) -> Unit) {
+    for (index in 0 until this.childCount) {
+        val child = this.getChildAt(index)
+        child.setOnClickListener {
+            if (child is RadioButton) {
+                check(child.id)
+                block(child.id)
+            }
+        }
+    }
+}
+
+fun TextInputLayout.getTextOrHint(): String {
+    val hint = hint?.toString().orEmpty()
+    return editText?.text?.toString()?.trim()
+        ?.ifBlank { hint }
+        ?: hint
 }

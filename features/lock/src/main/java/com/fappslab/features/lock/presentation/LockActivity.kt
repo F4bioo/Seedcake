@@ -22,8 +22,8 @@ import com.fappslab.seedcake.libraries.design.pluto.customview.plutopinview.PinR
 import com.fappslab.seedcake.libraries.design.pluto.customview.plutopinview.ScreenType
 import com.fappslab.seedcake.libraries.design.viewbinding.viewBinding
 import com.fappslab.seedcake.libraries.extension.addBackPressedCallback
+import com.fappslab.seedcake.libraries.extension.args.provideIntent
 import com.fappslab.seedcake.libraries.extension.args.putArgs
-import com.fappslab.seedcake.libraries.extension.args.toIntent
 import com.fappslab.seedcake.libraries.extension.args.viewArgs
 import com.fappslab.seedcake.libraries.extension.biometricListeners
 import org.koin.androidx.scope.activityScope
@@ -57,17 +57,19 @@ class LockActivity : AppCompatActivity(R.layout.lock_activity), KoinLazy {
         viewModel.onShowLockScreen()
     }
 
-    private fun setupObservables() {
+    private fun setupObservables() = binding.run {
         onViewState(viewModel) { state ->
             screenTypeState(state.screenType)
-            pinLockWarningState(state.shouldShowPinLockWarning)
-            buttonBiometricState(state.shouldShowFingerPrintButton)
+            inputPin.setupPinPad(state.shouldShufflePin)
+            buttonBiometric.isVisible = state.shouldShowFingerPrintButton
+            textPinLockWarning.isVisible = state.shouldShowPinLockWarning
         }
 
         onViewAction(viewModel) { action ->
             when (action) {
                 LockViewAction.FinishView -> finish()
                 LockViewAction.FinishApp -> finishAffinity()
+                LockViewAction.ErrorPin -> inputPin.setupPinPad(shouldShuffle = true)
                 LockViewAction.ShowBiometric -> prompt.let(biometricPrompt::authenticate)
                 is LockViewAction.Preferences -> successValidationAction(action.result)
             }
@@ -77,6 +79,7 @@ class LockActivity : AppCompatActivity(R.layout.lock_activity), KoinLazy {
     private fun setupListeners() = binding.run {
         buttonBiometric.setOnClickListener { viewModel.onShowBiometric() }
         inputPin.validation = { viewModel.onSuccessPinValidation(result = it) }
+        inputPin.onWrongPin = { viewModel.onWrongPin() }
     }
 
     private fun setupBackPressed() {
@@ -89,14 +92,6 @@ class LockActivity : AppCompatActivity(R.layout.lock_activity), KoinLazy {
         screenType?.let(binding.inputPin::setPinType)
     }
 
-    private fun buttonBiometricState(shouldShow: Boolean) {
-        binding.buttonBiometric.isVisible = shouldShow
-    }
-
-    private fun pinLockWarningState(shouldShow: Boolean) {
-        binding.textPinLockWarning.isVisible = shouldShow
-    }
-
     private fun successValidationAction(result: PinResult) {
         val data = Intent()
         data.putExtra(EXTRA_LOCK_RESULT, result)
@@ -106,7 +101,7 @@ class LockActivity : AppCompatActivity(R.layout.lock_activity), KoinLazy {
 
     companion object {
         fun createIntent(context: Context, args: ScreenTypeArgs): Intent {
-            return context.toIntent<LockActivity>().putArgs(args)
+            return context.provideIntent<LockActivity>().putArgs(args)
         }
     }
 }

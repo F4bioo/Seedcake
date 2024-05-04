@@ -4,13 +4,16 @@ import androidx.biometric.BiometricPrompt
 import com.fappslab.features.common.domain.usecase.GetFingerprintStateUseCase
 import com.fappslab.features.common.domain.usecase.GetPinStateUseCase
 import com.fappslab.features.common.domain.usecase.GetPinUseCase
+import com.fappslab.features.common.domain.usecase.GetShufflePinStateUseCase
 import com.fappslab.features.common.navigation.ScreenTypeArgs
+import com.fappslab.features.preferences.domain.model.CheckBoxPreference
 import com.fappslab.seedcake.libraries.arch.viewmodel.ViewModel
 import com.fappslab.seedcake.libraries.design.pluto.customview.plutopinview.PinResult
 
 internal class PreferencesViewModel(
     private val getPinUseCase: GetPinUseCase,
     private val getPinStateUseCase: GetPinStateUseCase,
+    private val getShufflePinStateUseCase: GetShufflePinStateUseCase,
     private val getFingerprintStateUseCase: GetFingerprintStateUseCase
 ) : ViewModel<PreferencesViewState, PreferencesViewAction>(PreferencesViewState()) {
 
@@ -19,9 +22,12 @@ internal class PreferencesViewModel(
     }
 
     private fun getSecurityCheckBoxPreference() {
-        val isCheckBoxPinChecked = getPinStateUseCase()
-        val isCheckBoxFingerprintChecked = getFingerprintStateUseCase()
-        onState { it.securityCheckBoxState(isCheckBoxPinChecked, isCheckBoxFingerprintChecked) }
+        val checkBoxPreference = CheckBoxPreference(
+            isCheckBoxPinChecked = getPinStateUseCase(),
+            isCheckBoxShufflePinChecked = getShufflePinStateUseCase(),
+            isCheckBoxFingerprintChecked = getFingerprintStateUseCase()
+        )
+        onState { it.securityCheckBoxState(checkBoxPreference) }
     }
 
     fun onCheckBiometricAvailability(hasBiometric: Boolean) {
@@ -33,6 +39,14 @@ internal class PreferencesViewModel(
             ScreenTypeArgs.PreferencesValidate
         } ?: ScreenTypeArgs.PreferencesRegister
         onAction { PreferencesViewAction.ShowLockScreen(args) }
+    }
+
+    fun onShufflePin(isChecked: Boolean) {
+        onState { it.copy(isCheckBoxShufflePinChecked = isChecked) }
+    }
+
+    fun onBiometricPrompt() {
+        onAction { PreferencesViewAction.BiometricPrompt }
     }
 
     fun onBiometricError(errorCode: Int) {

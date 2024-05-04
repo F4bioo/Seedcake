@@ -8,19 +8,13 @@ internal data class ResultViewState(
     val args: ResultArgs,
     val progress: Int = Progress3.ordinal,
     val encryptedSeedBitmap: Bitmap? = null,
-    val shouldShowError: Boolean = false,
     val shouldEnableSaveButton: Boolean = true,
-    val shouldDisableBackButton: Boolean = false,
+    val shouldShowSaveErrorModal: Boolean = false,
     val shouldShowFullEncryptedSeedModal: Boolean = false
 ) {
 
     fun saveFailure() = copy(
         shouldEnableSaveButton = true,
-        shouldDisableBackButton = false
-    )
-
-    fun saveStart() = copy(
-        shouldEnableSaveButton = false,
-        shouldDisableBackButton = true
+        shouldShowSaveErrorModal = true
     )
 }

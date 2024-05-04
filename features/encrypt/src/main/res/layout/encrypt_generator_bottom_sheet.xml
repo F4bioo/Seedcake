@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageButton
+        android:id="@+id/button_close"
+        style="@style/PlutoImageIconButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="@dimen/plu_size_02"
+        android:contentDescription="@string/common_close"
+        android:src="@drawable/plu_ic_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/plu_size_04"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_close">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_title"
+            style="@style/PlutoTextHighlightLarge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/encrypt_passphrase_generator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/plu_size_06"
+            app:cardBackgroundColor="@color/plu_transparent"
+            app:cardCornerRadius="@dimen/plu_radius_mi"
+            app:cardElevation="@dimen/plu_size_none"
+            app:contentPadding="@dimen/plu_size_03"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_title">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_passphrase"
+                    style="@style/PlutoTextLarge"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    tools:text="u7aH.!nD" />
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/button_copy"
+                    style="@style/PlutoImageIconButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/plu_ic_content_copy" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_title_size"
+            style="@style/PlutoTextHighlightSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/plu_size_01"
+            android:paddingHorizontal="@dimen/plu_size_02"
+            app:layout_constraintEnd_toEndOf="@id/card_container"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintStart_toStartOf="@id/card_container"
+            app:layout_constraintTop_toBottomOf="@id/card_container"
+            tools:text="8 characters" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/slider_size"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/plu_size_10"
+            android:layout_marginTop="@dimen/plu_size_08"
+            android:stepSize="1"
+            android:value="8"
+            android:valueFrom="8"
+            android:valueTo="100"
+            app:labelBehavior="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_title_size"
+            app:thumbElevation="@dimen/plu_size_none"
+            app:tickColor="@color/plu_transparent"
+            tools:value="80" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/button_decrease"
+            style="@style/PlutoImageIconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/plu_ic_arrow_left"
+            app:layout_constraintBottom_toBottomOf="@id/slider_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/slider_size" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/button_increase"
+            style="@style/PlutoImageIconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/plu_ic_arrow_right"
+            app:layout_constraintBottom_toBottomOf="@id/slider_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/slider_size" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/button_random"
+            style="@style/PlutoImageIconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/plu_size_06"
+            android:src="@drawable/plu_ic_dice"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/slider_size"
+            app:tint="@color/plu_accent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/text_passphrase_generator_warning"
+            style="@style/PlutoBubbleTip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/plu_size_06"
+            android:text="@string/encrypt_passphrase_generator_warning"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_random" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_use"
+            style="@style/PlutoPrimaryButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/plu_size_06"
+            android:text="@string/common_use"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_passphrase_generator_warning" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

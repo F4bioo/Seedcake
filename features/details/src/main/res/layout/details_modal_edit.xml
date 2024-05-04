@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/plu_size_04"
-        android:hint="@string/alias"
+        android:hint="@string/alias_default"
         app:counterEnabled="true"
         app:counterMaxLength="60"
         app:endIconMode="clear_text"

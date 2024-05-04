@@ -1,36 +1,28 @@
 package com.fappslab.features.decrypt.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
-import com.fappslab.features.common.domain.usecase.DecodeSeedColorUseCase
-import com.fappslab.features.common.domain.usecase.DecryptSeedUseCase
+import com.fappslab.features.common.domain.usecase.DecodeSeedPhraseColorUseCase
+import com.fappslab.features.common.domain.usecase.DecryptParams
+import com.fappslab.features.common.domain.usecase.DecryptSeedPhraseUseCase
 import com.fappslab.features.decrypt.presentation.model.PageType
+import com.fappslab.libraries.security.model.ThrowableValidation
+import com.fappslab.libraries.security.model.ValidationType
 import com.fappslab.seedcake.features.decrypt.R
-import com.fappslab.seedcake.libraries.arch.exceptions.BlankColoredSeedException
-import com.fappslab.seedcake.libraries.arch.exceptions.BlankEncryptedSeedException
-import com.fappslab.seedcake.libraries.arch.exceptions.BlankPassphraseException
-import com.fappslab.seedcake.libraries.arch.exceptions.DecryptionFailedException
-import com.fappslab.seedcake.libraries.arch.exceptions.DecryptionTimeoutException
-import com.fappslab.seedcake.libraries.arch.exceptions.InvalidColorException
-import com.fappslab.seedcake.libraries.arch.exceptions.InvalidColorFormatException
-import com.fappslab.seedcake.libraries.arch.exceptions.InvalidEncryptedSeedException
-import com.fappslab.seedcake.libraries.arch.exceptions.InvalidEntropyLengthException
-import com.fappslab.seedcake.libraries.arch.exceptions.InvalidPassphraseException
-import com.fappslab.seedcake.libraries.arch.exceptions.InvalidWordException
 import com.fappslab.seedcake.libraries.arch.simplepermission.model.PermissionStatus
 import com.fappslab.seedcake.libraries.arch.viewmodel.ViewModel
 import kotlinx.coroutines.launch
 
 internal class DecryptViewModel(
     private val pageType: PageType,
-    private val decryptSeedUseCase: DecryptSeedUseCase,
-    private val decodeSeedColorUseCase: DecodeSeedColorUseCase
+    private val decryptSeedPhraseUseCase: DecryptSeedPhraseUseCase,
+    private val decodeSeedPhraseColorUseCase: DecodeSeedPhraseColorUseCase
 ) : ViewModel<DecryptViewState, DecryptViewAction>(DecryptViewState()) {
 
-    fun onDecryptSeed(passphrase: String) {
-        val encryptedSeed = state.value.encryptedSeed.orEmpty()
+    fun onUnlockSeed(passphrase: String) {
+        val params = DecryptParams(state.value.unreadableSeedPhrase.orEmpty(), passphrase)
         viewModelScope.launch {
             onState { it.copy(shouldShowProgressDialog = true) }
-                .runCatching { decryptSeedUseCase(encryptedSeed, passphrase) }
+                .runCatching { decryptSeedPhraseUseCase(params) }
                 .onFailure { unlockSeedFailure(cause = it) }
                 .onSuccess { onAction { DecryptViewAction.UnlockedSeed(readableSeed = it) } }
                 .also { onState { it.copy(shouldShowProgressDialog = false) } }
@@ -38,10 +30,10 @@ internal class DecryptViewModel(
     }
 
     private fun decodeSeedColor() {
-        val coloredSeed = state.value.coloredSeed.orEmpty()
+        val coloredSeed = state.value.coloredSeed
         viewModelScope.launch {
             onState { it.copy(shouldShowProgressDialog = true) }
-                .runCatching { decodeSeedColorUseCase(coloredSeed) }
+                .runCatching { decodeSeedPhraseColorUseCase(coloredSeed.orEmpty()) }
                 .onFailure { unlockSeedFailure(cause = it) }
                 .onSuccess { onAction { DecryptViewAction.UnlockedSeed(readableSeed = it) } }
                 .also { onState { it.copy(shouldShowProgressDialog = false) } }
@@ -50,42 +42,31 @@ internal class DecryptViewModel(
 
     private fun unlockSeedFailure(cause: Throwable) {
         when (cause) {
-            is BlankPassphraseException,
-            is InvalidPassphraseException -> notifyPassphraseError(cause)
+            is ThrowableValidation -> when (cause.type) {
+                ValidationType.PASSPHRASE_EMPTY,
+                ValidationType.PASSPHRASE_INVALID -> notifyPassphraseError(cause)
 
-            else -> notifyInputSeedError(cause)
+                else -> notifyInputSeedError(cause)
+            }
         }
     }
 
     private fun notifyPassphraseError(cause: Throwable) {
-        val inputSeedErrorRes = when (cause) {
-            is BlankPassphraseException -> R.string.blank_passphrase_error
-            is InvalidPassphraseException -> R.string.invalid_passphrase_error
-            else -> R.string.unexpected_crypto_error
-        }
-        onState { it.modalError(inputSeedErrorRes = inputSeedErrorRes) }
+        val dialogErrorPair = (cause as ThrowableValidation)
+            .type.messageRes to cause.message
+        onState { it.dialogError(dialogErrorPair) }
     }
 
     private fun notifyInputSeedError(cause: Throwable) {
-        val inputPassErrorRes = when (cause) {
-            // Encryptor
-            is BlankEncryptedSeedException -> R.string.blank_encrypted_seed_error
-            is InvalidEncryptedSeedException -> R.string.invalid_encrypted_seed_error
-            is DecryptionFailedException -> R.string.decryption_failed_error
-            is DecryptionTimeoutException -> R.string.decryption_timeout_error
-            // Bib39Colors
-            is BlankColoredSeedException -> R.string.blank_colored_seed_error
-            is InvalidWordException -> R.string.invalid_word_bip39_error
-            is InvalidColorFormatException -> R.string.invalid_color_format_error
-            is InvalidColorException -> R.string.invalid_bip39_colors_error
-            // Others
-            is InvalidEntropyLengthException -> R.string.invalid_entropy_length_error
-            else -> R.string.unexpected_crypto_error
-        }
-        onState { it.copy(inputSeedErrorRes = inputPassErrorRes) }
+        val errorPair = when (cause) {
+            is ThrowableValidation -> cause.type.messageRes
+            else -> R.string.unknown_error
+        } to cause.message
+        onState { it.copy(inputErrorPair = errorPair) }
     }
 
     fun onTextChangedUnreadableSeed(unreadableSeed: String) {
+        if (unreadableSeed.isEmpty()) onClear()
         onState { it.textChangedUnreadableSeed(pageType, unreadableSeed) }
     }
 
@@ -106,7 +87,7 @@ internal class DecryptViewModel(
         onState { it.copy(shouldShowDeniedPermissionModal = shouldShow) }
     }
 
-    fun onUnlockSeedErrorVisibility(shouldShow: Boolean) {
+    fun onUnlockSeedErrorVisibilityDialog(shouldShow: Boolean) {
         onState { it.copy(shouldShowUnlockSeedErrorModal = shouldShow) }
     }
 
@@ -118,8 +99,8 @@ internal class DecryptViewModel(
     }
 
     private fun decryptSeedOrNotify() = state.value.run {
-        if (encryptedSeed.isNullOrEmpty()) {
-            onState { it.copy(inputSeedErrorRes = R.string.blank_encrypted_seed_error) }
+        if (unreadableSeedPhrase.isNullOrEmpty()) {
+            onState { it.copy(inputErrorPair = R.string.encryption_phrase_empty to null) }
         } else onAction { DecryptViewAction.Validation }
     }
 
@@ -141,7 +122,7 @@ internal class DecryptViewModel(
 
     fun onEndIcon() = state.value.run {
         val isScannerAction = when (pageType) {
-            PageType.EncryptedSeed -> encryptedSeed.isNullOrEmpty()
+            PageType.EncryptedSeed -> unreadableSeedPhrase.isNullOrEmpty()
             PageType.ColoredSeed -> coloredSeed.isNullOrEmpty()
         }
         if (isScannerAction) {
