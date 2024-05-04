@@ -171,7 +171,7 @@ jobs:
 
       - name: Create Native Debug Symbols Zip File
         run: |
-          cd app/build/intermediates/merged_native_libs/release/out/lib
+          cd app/build/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib
           NATIVE_SYMBOLS_PATH="$GITHUB_WORKSPACE/server_artifacts/libs-v${{ env.RELEASE_TAG }}.zip"
           zip -r $NATIVE_SYMBOLS_PATH .
           cd -
