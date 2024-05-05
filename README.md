@@ -1,8 +1,8 @@
 # Self-Custody in a Digital and Physical World 🌍
 
-<img src="libraries/design/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" align="left" width="150" />
+<img src="libraries/design/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" align="left" alt="Seedcake Logo" width="150" />
 
-## Introduction 📖
+### Introduction 📖
 
 Welcome to <strong>Seedcake</strong> 🌱🍰, a secure and open-source solution for storing your Bitcoin seed phrases based on Bip-39. This project was born out of the need for a flexible yet secure alternative in scenarios where conventional physical storage methods like crypto steel 🤘, paper 🧻 etc... are impractical or risky.
 <br clear="left"/>
@@ -97,7 +97,7 @@ A seed like:
 Would have this kind of colored seed:
 `#B88F4D #9DCA22 #3DB611 #63A65C #258A72 #000065 #7B3AE8 #E0C6F8`
 
-<img src="sources/colored-seed.png" width="400" />
+<img src="sources/colored-seed.png" alt="Colored seed" width="400" />
 
 ### Light and Dark Theme App Screenshots 🎨
 
