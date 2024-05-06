@@ -1,7 +1,9 @@
 package com.fappslab.features.data.local.source
 
 import com.fappslab.features.common.domain.model.Seed
+import com.fappslab.features.common.domain.usecase.DecodeParams
 import com.fappslab.features.common.domain.usecase.DecryptParams
+import com.fappslab.features.common.domain.usecase.EncodeParams
 import com.fappslab.features.common.domain.usecase.EncryptParams
 import com.fappslab.features.data.local.model.SourceProvider
 import com.fappslab.features.data.local.model.extension.toSeedEntity
@@ -35,14 +37,14 @@ internal class SeedcakeDataSourceImpl(
             provider.cryptoManager.decrypt(params)
         }
 
-    override suspend fun encodeColor(readableSeedPhrase: String): List<Pair<String, String>> =
+    override suspend fun encodeColor(params: EncodeParams): List<Pair<String, String>> =
         withContext(dispatcher) {
-            provider.bIP39Colors.encodeSeedColor(readableSeedPhrase)
+            provider.bIP39Colors.encodeSeedColor(params)
         }
 
-    override suspend fun decodeColor(colorfulSeedPhrase: String): String =
+    override suspend fun decodeColor(params: DecodeParams): String =
         withContext(dispatcher) {
-            provider.bIP39Colors.decodeSeedColor(colorfulSeedPhrase)
+            provider.bIP39Colors.decodeSeedColor(params)
         }
 
     override suspend fun setSeedPhrase(seed: Seed) =
