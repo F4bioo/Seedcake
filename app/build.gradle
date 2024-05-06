@@ -56,6 +56,12 @@ tasks.withType(Detekt).configureEach {
     }
 }
 
+tasks.register('runAllTests') {
+    description = 'Runs both unit and instrumentation tests.'
+    group = 'verification'
+    dependsOn 'testDebugUnitTest', 'connectedDebugAndroidTest'
+}
+
 dependencies {
     // Libs
     implementation(libs.navigationFragment)

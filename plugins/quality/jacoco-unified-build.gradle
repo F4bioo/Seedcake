@@ -55,6 +55,28 @@ tasks.register('unifiedCodeCoverage', JacocoReport) {
         html.required.set(true)
         html.outputLocation.set(layout.buildDirectory.dir('reports/jacoco/unified-code-coverage'))
     }
+
+    def reportPath = layout.buildDirectory.dir('reports/jacoco/unified-code-coverage/index.html')
+            .get().asFile.absolutePath
+
+    doLast {
+        println("All tests and coverage reports have been executed.")
+
+        // Command to open the report folder, depending on the operating system
+        if (System.properties['os.name'].toLowerCase().contains('windows')) {
+            exec {
+                commandLine 'cmd', '/c', 'start', '', reportPath
+            }
+        } else if (System.properties['os.name'].toLowerCase().contains('mac')) {
+            exec {
+                commandLine 'open', reportPath
+            }
+        } else if (System.properties['os.name'].toLowerCase().contains('linux')) {
+            exec {
+                commandLine 'xdg-open', reportPath
+            }
+        }
+    }
 }
 
 tasks.register('verifyCodeCoverage', JacocoCoverageVerification) {
