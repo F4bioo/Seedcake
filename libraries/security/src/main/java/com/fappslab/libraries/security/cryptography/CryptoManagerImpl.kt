@@ -4,6 +4,9 @@ import com.fappslab.features.common.domain.usecase.DecryptParams
 import com.fappslab.features.common.domain.usecase.EncryptParams
 import com.fappslab.libraries.security.cryptography.model.extension.toMetadata
 import com.fappslab.libraries.security.model.ValidationType
+import com.fappslab.libraries.security.validation.extension.orParseError
+import com.fappslab.libraries.security.validation.factory.ValidationFactory
+import com.fappslab.libraries.security.validation.strategy.StrategyType
 import com.fappslab.seedcake.libraries.extension.METADATA_TAG
 import com.fappslab.seedcake.libraries.extension.blankString
 import com.fappslab.seedcake.libraries.extension.splitToList
@@ -22,10 +25,11 @@ class CryptoManagerImpl(
     private val wordList: List<String>
 ) : CryptoManager {
 
-    private val validator by lazy { CryptoValidator(wordList) }
+    private val validator by lazy { ValidationFactory(wordList) }
 
     override suspend fun encrypt(params: EncryptParams): String {
-        validator.encryptValidation(params.readableSeedPhrase, params.passphrase)
+        val validations = validator.getValidations(StrategyType.ENCRYPT, params)
+        validations.forEach { it.validate() }
 
         return runCatching {
             val metadata = params.cipherSpec.toMetadata()
@@ -46,7 +50,8 @@ class CryptoManagerImpl(
 
     override suspend fun decrypt(params: DecryptParams): String {
         val (unreadableSeedPhrase, passphrase) = params
-        validator.decryptValidation(unreadableSeedPhrase, passphrase)
+        val validations = validator.getValidations(StrategyType.DECRYPT, params)
+        validations.forEach { it.validate() }
 
         return runCatching {
             val (encryptedData64, metadataBase64) = unreadableSeedPhrase.splitToList(METADATA_TAG)

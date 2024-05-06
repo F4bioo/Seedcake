@@ -12,11 +12,13 @@ enum class ValidationType(@StringRes val messageRes: Int) {
     READABLE_SEED_PHRASE_INVALID_FORMAT(R.string.seed_phrase_invalid_format),
     UNREADABLE_SEED_PHRASE_EMPTY(R.string.encryption_phrase_empty),
     DECRYPTION_TIMEOUT(R.string.decryption_timeout),
+    DECODE_FAILED(R.string.decode_failed),
     ENCRYPTION_FAILED(R.string.encryption_failed),
     DECRYPTION_FAILED(R.string.decryption_failed),
     BLANK_COLORED_SEED_EXCEPTION(R.string.blank_colored_seed_exception),
     INVALID_COLOR_FORMAT_EXCEPTION(R.string.invalid_color_format_exception),
     INVALID_HEX_COLOR_EXCEPTION(R.string.invalid_hex_color_exception),
     SEQUENTIAL_COLOR_EXCEPTION(R.string.sequential_color_exception),
-    VERIFICATION_FAILED(R.string.error_verification_failed)
+    VERIFICATION_FAILED(R.string.error_verification_failed),
+    INDEX_OUT_OF_BOUNDS_COLOR_EXCEPTION(R.string.index_out_of_bounds_exception)
 }

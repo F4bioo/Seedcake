@@ -40,4 +40,5 @@ dependencies {
     implementation project(Modules.arch)
     implementation project(Modules.test)
     implementation project(Modules.security)
+    implementation project(Modules.extension)
 }

@@ -10,21 +10,25 @@
 
 package com.fappslab.libraries.security.bip39colors
 
+import com.fappslab.features.common.domain.usecase.DecodeParams
+import com.fappslab.features.common.domain.usecase.EncodeParams
 import com.fappslab.libraries.security.model.ThrowableValidation
 import com.fappslab.libraries.security.model.ValidationType
+import com.fappslab.libraries.security.validation.extension.orParseError
+import com.fappslab.libraries.security.validation.factory.ValidationFactory
+import com.fappslab.libraries.security.validation.strategy.StrategyType
 import com.fappslab.seedcake.libraries.extension.blankString
 import com.fappslab.seedcake.libraries.extension.emptyString
-import com.fappslab.seedcake.libraries.extension.splitToList
 
 class BIP39ColorsImpl(private val wordList: List<String>) : BIP39Colors {
 
-    private val validator by lazy { BIP39ColorsValidator(wordList) }
+    private val validator by lazy { ValidationFactory(wordList) }
 
-    override suspend fun encodeSeedColor(readableSeedPhrase: String): List<Pair<String, String>> {
-        val list = readableSeedPhrase.splitToList(blankString())
-        validator.encodeValidation(list)
+    override suspend fun encodeSeedColor(params: EncodeParams): List<Pair<String, String>> {
+        val validations = validator.getValidations(StrategyType.ENCODE, params)
+        validations.forEach { it.validate() }
 
-        val colors = mapSeedToColors(list)
+        val colors = mapSeedToColors(params.readableSeedPhrase)
         val rgbArr = colors.map { hexToRgb(it) }
         val colorHsv = rgbArr.map { mapOf("rgb" to it, "hsv" to rgbToHsv(it)) }
 
@@ -42,11 +46,11 @@ class BIP39ColorsImpl(private val wordList: List<String>) : BIP39Colors {
         }
     }
 
-    override suspend fun decodeSeedColor(colorfulSeedPhrase: String): String {
-        val list = colorfulSeedPhrase.splitToList(blankString())
-        validator.decodeValidation(list)
+    override suspend fun decodeSeedColor(params: DecodeParams): String {
+        val validations = validator.getValidations(StrategyType.DECODE, params)
+        validations.forEach { it.validate() }
 
-        val colorsInDecimal = list.map {
+        val colorsInDecimal = params.colorfulSeedPhrase.map {
             it.substring(startIndex = 1).toInt(radix = 16).toString()
                 .padStart(length = 8, padChar = '0')
         }.sorted()
@@ -55,7 +59,9 @@ class BIP39ColorsImpl(private val wordList: List<String>) : BIP39Colors {
             type = ValidationType.SEQUENTIAL_COLOR_EXCEPTION
         )
 
-        return convertDecimalColorsToWords(colorsInDecimal)
+        return runCatching {
+            convertDecimalColorsToWords(colorsInDecimal)
+        }.orParseError(defType = ValidationType.DECODE_FAILED)
     }
 
     private fun mapSeedToColors(readableSeedPhrase: List<String>): List<String> {
