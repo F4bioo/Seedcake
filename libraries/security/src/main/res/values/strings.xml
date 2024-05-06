@@ -9,9 +9,11 @@
     <string name="passphrase_invalid">The provided passphrase does not meet the security requirements.</string>
     <string name="encryption_phrase_empty">The encrypted seed phrase cannot be empty.</string>
     <string name="decryption_timeout">Decryption process timed out. Please try again.</string>
-    <string name="encryption_failed">Encryption failed. Please verify the input and try again.
+    <string name="decode_failed">Failed to decode the colored seed phrase. Please verify the input and try again.
         \n\n\u2022 Cause: %s.</string>
-    <string name="decryption_failed">Failed to decrypt the seed phrase. Please try again.
+    <string name="encryption_failed">Failed to encrypt the seed phrase. Please verify the input and try again.
+        \n\n\u2022 Cause: %s.</string>
+    <string name="decryption_failed">Failed to decrypt the seed phrase. Please verify the input and try again.
         \n\n\u2022 Cause: %s.</string>
     <string name="unknown_error">An unexpected error has occurred. Please try again.
         \n\n\u2022 Cause: %s.</string>
@@ -20,4 +22,5 @@
     <string name="invalid_hex_color_exception">The colored seed phrase contains invalid hexadecimal color values.</string>
     <string name="sequential_color_exception">The color sequence doesn\'t match the order of your seed phrase. Please check and ensure each color correctly represents the words of your seed phrase in sequence.</string>
     <string name="error_verification_failed">Unable to proceed. Please check the passphrase or any other details provided, and try again.</string>
+    <string name="index_out_of_bounds_exception">Invalid mnemonic. Length must be 12/24 words or decimals between [1–2048]</string>
 </resources>

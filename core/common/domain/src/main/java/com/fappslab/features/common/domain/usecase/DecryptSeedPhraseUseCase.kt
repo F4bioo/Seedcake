@@ -1,5 +1,6 @@
 package com.fappslab.features.common.domain.usecase
 
+import com.fappslab.features.common.domain.model.ParamsFactory
 import com.fappslab.features.common.domain.repository.ObfuscationRepository
 
 class DecryptSeedPhraseUseCase(
@@ -13,4 +14,4 @@ class DecryptSeedPhraseUseCase(
 data class DecryptParams(
     val unreadableSeedPhrase: String,
     val passphrase: String
-)
+) : ParamsFactory

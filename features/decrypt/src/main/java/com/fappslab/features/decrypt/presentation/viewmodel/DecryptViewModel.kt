@@ -1,6 +1,7 @@
 package com.fappslab.features.decrypt.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
+import com.fappslab.features.common.domain.usecase.DecodeParams
 import com.fappslab.features.common.domain.usecase.DecodeSeedPhraseColorUseCase
 import com.fappslab.features.common.domain.usecase.DecryptParams
 import com.fappslab.features.common.domain.usecase.DecryptSeedPhraseUseCase
@@ -10,6 +11,8 @@ import com.fappslab.libraries.security.model.ValidationType
 import com.fappslab.seedcake.features.decrypt.R
 import com.fappslab.seedcake.libraries.arch.simplepermission.model.PermissionStatus
 import com.fappslab.seedcake.libraries.arch.viewmodel.ViewModel
+import com.fappslab.seedcake.libraries.extension.blankString
+import com.fappslab.seedcake.libraries.extension.splitToList
 import kotlinx.coroutines.launch
 
 internal class DecryptViewModel(
@@ -30,10 +33,11 @@ internal class DecryptViewModel(
     }
 
     private fun decodeSeedColor() {
-        val coloredSeed = state.value.coloredSeed
+        val coloredSeed = state.value.coloredSeed.orEmpty()
+        val decodeParams = DecodeParams(coloredSeed.splitToList(blankString()))
         viewModelScope.launch {
             onState { it.copy(shouldShowProgressDialog = true) }
-                .runCatching { decodeSeedPhraseColorUseCase(coloredSeed.orEmpty()) }
+                .runCatching { decodeSeedPhraseColorUseCase(decodeParams) }
                 .onFailure { unlockSeedFailure(cause = it) }
                 .onSuccess { onAction { DecryptViewAction.UnlockedSeed(readableSeed = it) } }
                 .also { onState { it.copy(shouldShowProgressDialog = false) } }
@@ -48,6 +52,8 @@ internal class DecryptViewModel(
 
                 else -> notifyInputSeedError(cause)
             }
+
+            else -> notifyInputSeedError(cause)
         }
     }
 

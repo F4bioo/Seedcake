@@ -1,6 +1,9 @@
 package com.fappslab.libraries.security.bip39colors
 
+import com.fappslab.features.common.domain.usecase.DecodeParams
+import com.fappslab.features.common.domain.usecase.EncodeParams
+
 interface BIP39Colors {
-    suspend fun encodeSeedColor(readableSeedPhrase: String): List<Pair<String, String>>
-    suspend fun decodeSeedColor(colorfulSeedPhrase: String): String
+    suspend fun encodeSeedColor(params: EncodeParams): List<Pair<String, String>>
+    suspend fun decodeSeedColor(params: DecodeParams): String
 }

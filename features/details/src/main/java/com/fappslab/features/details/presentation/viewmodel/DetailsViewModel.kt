@@ -5,6 +5,7 @@ import com.fappslab.features.common.domain.model.Seed
 import com.fappslab.features.common.domain.usecase.DecryptParams
 import com.fappslab.features.common.domain.usecase.DecryptSeedPhraseUseCase
 import com.fappslab.features.common.domain.usecase.DeleteSeedPhraseUseCase
+import com.fappslab.features.common.domain.usecase.EncodeParams
 import com.fappslab.features.common.domain.usecase.EncodeSeedPhraseColorUseCase
 import com.fappslab.features.common.domain.usecase.SetSeedPhraseUseCase
 import com.fappslab.features.common.navigation.DetailsArgs
@@ -15,6 +16,8 @@ import com.fappslab.seedcake.features.details.R
 import com.fappslab.seedcake.libraries.arch.simplepermission.model.PermissionStatus
 import com.fappslab.seedcake.libraries.arch.viewmodel.ViewModel
 import com.fappslab.seedcake.libraries.design.pluto.activity.qrcode.creator.PlutoQrcodeCreator
+import com.fappslab.seedcake.libraries.extension.blankString
+import com.fappslab.seedcake.libraries.extension.splitToList
 import kotlinx.coroutines.launch
 
 internal class DetailsViewModel(
@@ -53,12 +56,13 @@ internal class DetailsViewModel(
     }
 
     fun onUnlockSeed(passphrase: String) {
-        val params = DecryptParams(args.unreadableSeedPhrase, passphrase)
+        val decryptParams = DecryptParams(args.unreadableSeedPhrase, passphrase)
         viewModelScope.launch {
             onState { it.copy(shouldShowProgressDialog = true) }
                 .runCatching {
-                    val readableSeedPhrase = decryptSeedPhraseUseCase(params)
-                    val colorfulSeedPhrase = encodeSeedPhraseColorUseCase(readableSeedPhrase)
+                    val readableSeedPhrase = decryptSeedPhraseUseCase(decryptParams)
+                    val encodeParams = EncodeParams(readableSeedPhrase.splitToList(blankString()))
+                    val colorfulSeedPhrase = encodeSeedPhraseColorUseCase(encodeParams)
                     readableSeedPhrase to colorfulSeedPhrase
                 }
                 .onFailure { unlockSeedFailure(cause = it) }
