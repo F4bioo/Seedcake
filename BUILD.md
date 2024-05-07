@@ -5,7 +5,7 @@ This guide outlines how to generate a release build of Sedcake using the Android
 ## Prerequisites
 
 - **JDK 17** — Ensure that JDK 17 is installed and configured, as the project is compiled with this version.
-- ![JDK 17](sources/wiki/build/build-0.png)
+<p><img src="sources/wiki/build/build-0.png" alt="JDK 17" /></p>
 
 ## Steps to Create a Release Build
 
@@ -13,35 +13,35 @@ This guide outlines how to generate a release build of Sedcake using the Android
 
 1. **Open Build Settings:**
    - In Android Studio, go to `Build > Generate Signed Bundle / APK...`.
-   - ![Build Settings](sources/wiki/build/build-1.png)
+   <p><img src="sources/wiki/build/build-1.png" alt="Build Settings" /></p>
 
 2. **Create a Keystore:**
    - Select the `APK` option and click `Next`.
-   - ![APK Selection](sources/wiki/build/build-2.png)
+   <p><img src="sources/wiki/build/build-2.png" alt="APK Selection" /></p>
    - Click on `Create new...` to start creating a new keystore.
-   - ![Create Keystore](sources/wiki/build/build-3.png)
+   <p><img src="sources/wiki/build/build-3.png" alt="Create Keystore" /></p>
    - Fill in the required details such as Alias, Keystore Password, Key Password, and personal certificate information.
-   - ![Keystore Details](sources/wiki/build/build-4.png)
+   <p><img src="sources/wiki/build/build-4.png" alt="Keystore Details" /></p>
    - Click `OK` to save the keystore.
 
 ### Step 2: Configure and Generate the Release Build
 
 3. **Select the Keystore:**
    - Choose the keystore you created, entering the Alias and Passwords accordingly.
-   - ![Keystore Selection](sources/wiki/build/build-5.png)
+   <p><img src="sources/wiki/build/build-5.png" alt="Keystore Selection" /></p>
 
 4. **Choose Build Type and Configure Options:**
    - Select `release` as the build type and confirm the settings.
    - Click `Next` and then `Create`.
-   - ![Build Configuration](sources/wiki/build/build-6.png)
+   <p><img src="sources/wiki/build/build-6.png" alt="Build Configuration" /></p>
 
 ### Step 3: Locate the Generated APK
 
 5. **Build Completion:**
    - A notification will indicate that the build was successfully completed. Click `locate` to open the folder where the APK was saved.
-   - ![Build Completed](sources/wiki/build/build-7.png)
+   <p><img src="sources/wiki/build/build-7.png" alt="Build Completed" /></p>
    - You will find the APK in the specified folder.
-   - ![Locate APK](sources/wiki/build/build-8.png)
+   <p><img src="sources/wiki/build/build-8.png" alt="Locate APK" /></p>
 
 ## Conclusion
 
