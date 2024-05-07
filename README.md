@@ -97,13 +97,13 @@ A seed like:
 Would have this kind of colored seed:
 `#B88F4D #9DCA22 #3DB611 #63A65C #258A72 #000065 #7B3AE8 #E0C6F8`
 
-<img src="sources/colored-seed.png" alt="Colored seed" width="400" />
+<img src="sources/readme/colored-seed.png" alt="Colored seed" width="400" />
 
 ### Light and Dark Theme App Screenshots 🎨
 
-![light-screen.png](sources/light-screen.png)
+![light-screen.png](sources/readme/light-screen.png)
 
-![dark-screens.png](sources/dark-screens.png)
+![dark-screens.png](sources/readme/dark-screens.png)
 
 ## Disclaimer 🛑
 
