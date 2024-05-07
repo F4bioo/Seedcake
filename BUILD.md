@@ -4,7 +4,7 @@ This guide outlines how to generate a release build of Sedcake using the Android
 
 ## Prerequisites
 
-- **Android Studio** — Assuming you already have Android Studio installed, we recommend using Android Studio Iguana | 2023.2.1 Patch 2, Build #AI-232.10300.40.2321.11668458, built on April 3, 2024. This will ensure compatibility with the project settings and features used in Sedcake.
+- **Android Studio** — Assuming you already have Android Studio installed, we recommend using Android Studio Iguana. This will ensure compatibility with the project settings and features used in Sedcake.
 - **JDK 17** — Ensure that JDK 17 is installed and configured, as the project is compiled with this version.
 <p><img src="sources/wiki/build/build-0.png" alt="JDK 17" /></p>
 
