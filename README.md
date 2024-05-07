@@ -17,7 +17,7 @@ For the latest stable version of Sedcake, visit our [Releases page](https://gith
 
 ## Build Instructions 🛠️
 
-For a step-by-step guide on building Sedcake from source, please see the [BUILD.md](BUILD.md) guide.
+For a step-by-step guide on building Sedcake from source, please see the [BUILD.md](BUILD.md).
 
 ---
 
