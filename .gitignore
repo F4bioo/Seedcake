@@ -42,3 +42,6 @@ temp_checksum_modified
 app/debug/
 app/release/
 app/staging/
+
+# Wiki build
+!/sources/wiki/build/
