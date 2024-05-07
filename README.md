@@ -7,7 +7,19 @@
 Welcome to <strong>Seedcake</strong> 🌱🍰, a secure and open-source solution for storing your Bitcoin seed phrases based on Bip-39. This project was born out of the need for a flexible yet secure alternative in scenarios where conventional physical storage methods like crypto steel 🤘, paper 🧻 etc... are impractical or risky.
 <br clear="left"/>
 
+## Download the Latest Release 📥
+
 <a href='https://play.google.com/store/apps/details?id=com.fappslab.seedcake'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width='200'/></a>
+
+**OR**
+
+For the latest stable version of Sedcake, visit our [Releases page](https://github.com/F4bioo/Sedcake/releases) and download the APK directly.
+
+## Build Instructions 🛠️
+
+For a step-by-step guide on building Sedcake from source, please see the [BUILD.md](BUILD.md) guide.
+
+---
 
 ## The Sacred Place of Self-Custody 🛡️
 
@@ -110,6 +122,3 @@ Would have this kind of colored seed:
 By using Seedcake, you acknowledge that you are fully responsible for the security of your assets and information. We do not store any passwords or passphrases locally or remotely, and as such, we cannot assist in password or asset recovery.
 
 Please be aware that Seedcake is designed to be a tool in your self-custody strategy, but using it comes with risks. You are responsible for safeguarding your `PIN Lock`, `passphrases`, and other sensitive information. Always exercise caution and make informed decisions.
-
-## Build Instructions 🛠️
-For instructions on how to build Seedcake, please refer to the [BUILD.md](BUILD.md) guide.
