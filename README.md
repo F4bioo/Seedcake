@@ -13,7 +13,7 @@ Welcome to <strong>Seedcake</strong> 🌱🍰, a secure and open-source solution
 
 **OR**
 
-For the latest stable version of Sedcake, visit our [Releases page](https://github.com/F4bioo/Sedcake/releases) and download the APK directly.
+For the latest stable version of Sedcake, visit our [Releases page](https://github.com/F4bioo/Seedcake/releases) and download the APK directly.
 
 ## Build Instructions 🛠️
 
