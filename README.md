@@ -110,3 +110,6 @@ Would have this kind of colored seed:
 By using Seedcake, you acknowledge that you are fully responsible for the security of your assets and information. We do not store any passwords or passphrases locally or remotely, and as such, we cannot assist in password or asset recovery.
 
 Please be aware that Seedcake is designed to be a tool in your self-custody strategy, but using it comes with risks. You are responsible for safeguarding your `PIN Lock`, `passphrases`, and other sensitive information. Always exercise caution and make informed decisions.
+
+## Build Instructions 🛠️
+For instructions on how to build Seedcake, please refer to the [BUILD.md](BUILD.md) guide.
