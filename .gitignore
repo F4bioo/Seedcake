@@ -44,4 +44,4 @@ app/release/
 app/staging/
 
 # Wiki build
-!/sources/wiki/build/
+!/sources/build/
